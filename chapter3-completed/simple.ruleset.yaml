@@ -1,0 +1,18 @@
+
+rules:
+  info-description-is-required:
+    message: "API definition files must have info.description defined"
+    severity: error
+    given: $.info
+    then:
+      field: description
+      function: truthy
+  uri-path-must-include-version:
+    description: The URI path must include the version
+    message: '{{description}}; {{property}} should start with /v{digit}/'
+    severity: error
+    given: '$.paths[*]~'
+    then:
+      function: pattern
+      functionOptions:
+        match: '^/v\d+/.*$'
