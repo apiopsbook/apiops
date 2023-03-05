@@ -1,0 +1,483 @@
+---
+
+openapi: 3.0.0
+info:
+  title: Product Catalog API
+  description: 'The Product Catalog API enables customers browse Acme Pet Supplies great range of pet products and their product reviews. '
+  contact:
+    name: John Smith
+    url: 'https://acme-pet-supplies.co.uk/docs'
+    email: john.smith@acme-pet-supplies.co.uk
+  version: '1.0'
+servers:
+  - url: 'https://{host}:{port}'
+    variables:
+      host:
+        default: localhost
+      port:
+        default: '8000'
+paths:
+  /v1/catalog/categories:
+    get:
+      tags:
+        - Categories
+      summary: List all categories
+      description: List all categories.
+      operationId: listCategories
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoriesResponse'
+              examples:
+                example-1:
+                  value:
+                    data:
+                      - name: Dogs
+                        categoryId: 1e32231d-b8a1-4145-b539-820301c2af64
+                    pagination:
+                      self: 'https://api.acme-pet-supplies.com/v1/catalog/categories?cursor=bccf5512'
+                      first: 'https://api.acme-pet-supplies.com/v1/catalog/categories?cursor=fa0a11ec'
+                      prev: 'https://api.acme-pet-supplies.com/v1/catalog/categories?cursor=0242ac120'
+                      next: 'https://api.acme-pet-supplies.com/v1/catalog/categories?cursor=651b1f06'
+                      last: 'https://api.acme-pet-supplies.com/v1/catalog/categories?cursor=3a1893e2'
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401Error'
+              examples:
+                example-1:
+                  value:
+                    message: Invalid authentication credentials
+
+  /v1/catalog/products:
+    get:
+      tags:
+        - Products
+      summary: List all products
+      description: List all products.
+      operationId: listProducts
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductsResponse'
+              examples:
+                example-1:
+                  value:
+                    data:
+                      - productId: dcd53ddb-8104-4e48-8cc0-5df1088c6113
+                        name: Acme Uber Dog Rope Toy
+                        description: 'Acme Uber Dog Rope Toy provides hours of fun for your dog. Great for bouncing, throwing and catching. '
+                        price: 100
+                        keywords:
+                          - dog toy
+                        categories:
+                          - name: Dogs
+                            categoryId: 1e32231d-b8a1-4145-b539-820301c2af64
+                        reviewRating: 5
+                        numberOfReviews: 10
+                    pagination:
+                      self: 'https://api.acme-pet-supplies.com/v1/catalog/products?cursor=bccf5512'
+                      first: 'https://api.acme-pet-supplies.com/v1/catalog/products?cursor=fa0a11ec'
+                      prev: 'https://api.acme-pet-supplies.com/v1/catalog/products?cursor=0242ac120'
+                      next: 'https://api.acme-pet-supplies.com/v1/catalog/products?cursor=651b1f06'
+                      last: 'https://api.acme-pet-supplies.com/v1/catalog/products?cursor=3a1893e2'
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401Error'
+              examples:
+                example-1:
+                  value:
+                    message: Invalid authentication credentials
+      deprecated: false
+  '/v1/catalog/products/{productId}':
+    get:
+      tags:
+        - Products
+      summary: View a product's details
+      description: View a product's details.
+      operationId: viewProduct
+      parameters:
+        - name: productId
+          in: path
+          description: ''
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+              examples:
+                example-1:
+                  value:
+                    productId: dcd53ddb-8104-4e48-8cc0-5df1088c6113
+                    name: Acme Uber Dog Rope Toy
+                    description: 'Acme Uber Dog Rope Toy provides hours of fun for your dog. Great for bouncing, throwing and catching. '
+                    price: 100
+                    keywords:
+                      - dog toy
+                    categories:
+                      - categoryId: 1e32231d-b8a1-4145-b539-820301c2af64
+                        name: Dogs
+                    reviewRating: 5
+                    numberOfReviews: 10
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401Error'
+              examples:
+                example-1:
+                  value:
+                    message: Invalid authentication credentials
+        '404':
+          description: Not Found
+          headers: {}
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                example-1:
+                  value:
+                    type: /problems/resource-not-found
+                    title: Not Found
+                    status: 404
+                    detail: The requested resource with ID '651295a4-40da-4742-a567-8fdddf6898c1' is not found. Please check you are requesting the right resource.
+                    instance: /problems/resource-not-found#log-22ce59a8-f263-4164-8d6d-18952a940748
+      deprecated: false
+  /v1/catalog/reviews:
+    get:
+      tags:
+        - Reviews
+      summary: Get all reviews
+      description: Get all reviews.
+      operationId: listProductReviews
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewsResponse'
+              examples:
+                example-1:
+                  value:
+                    data:
+                      - productReviewId: a264188f-b5ba-4c5c-8f9c-d0e9348b14dc
+                        content: This dog toy is great! My dog loved to play with it. I thoroughly recommend.
+                        rating: 5
+                        authorName: Jill Baker
+                        submittedDate: '2022-04-12T23:20:50.52Z'
+                        productId: dcd53ddb-8104-4e48-8cc0-5df1088c6113
+                    pagination:
+                      self: 'https://api.acme-pet-supplies.com/v1/catalog/reviews?cursor=bccf5512'
+                      first: 'https://api.acme-pet-supplies.com/v1/catalog/reviews?cursor=fa0a11ec'
+                      prev: 'https://api.acme-pet-supplies.com/v1/catalog/reviews?cursor=0242ac120'
+                      next: 'https://api.acme-pet-supplies.com/v1/catalog/reviews?cursor=651b1f06'
+                      last: 'https://api.acme-pet-supplies.com/v1/catalog/reviews?cursor=3a1893e2'
+        '401':
+          description: Unauthorized
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401Error'
+              examples:
+                example-1:
+                  value:
+                    message: Invalid authentication credentials
+      deprecated: false
+components:
+  schemas:
+    Category:
+      title: Category
+      required:
+        - categoryId
+        - name
+      type: object
+      additionalProperties: false
+      properties:
+        categoryId:
+          type: string
+          description: Identifier of the category.
+          example: 1e32231d-b8a1-4145-b539-820301c2af64
+        name:
+          maxLength: 20
+          minLength: 0
+          type: string
+          description: Name of the product category.
+          example: Dogs
+      description: A product category.
+      example:
+        categoryId: 1e32231d-b8a1-4145-b539-820301c2af64
+        name: Dogs
+    Product:
+      title: Product
+      required:
+        - productId
+        - name
+        - price
+      type: object
+      additionalProperties: false
+      properties:
+        productId:
+          type: string
+          description: Identifier for the product.
+          example: dcd53ddb-8104-4e48-8cc0-5df1088c6113
+        name:
+          maxLength: 50
+          minLength: 1
+          type: string
+          description: Name of the product.
+          example: Acme Uber Dog Rope Toy
+        description:
+          maxLength: 300
+          minLength: 0
+          type: string
+          description: A description of the product.
+          example: 'Acme Uber Dog Rope Toy provides hours of fun for your dog. Great for bouncing, throwing and catching. '
+        price:
+          maximum: 1000000
+          minimum: 0
+          type: number
+          description: Price of the product.
+          example: 100
+        keywords:
+          maxItems: 20
+          minItems: 0
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+          description: 'A colleciton of words that describe the product, used for searching for it.'
+        categories:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+          description: The links and names of the product categories to which the product belongs.
+        reviewRating:
+          maximum: 5
+          minimum: 1
+          type: integer
+          description: Average product review rating.
+          format: int32
+          example: 5
+        numberOfReviews:
+          type: integer
+          description: Number of product reviews.
+          format: int32
+          example: 10
+      description: An item in Acme's pet supplies catalog.
+      example:
+        productId: dcd53ddb-8104-4e48-8cc0-5df1088c6113
+        name: Acme Uber Dog Rope Toy
+        description: 'Acme Uber Dog Rope Toy provides hours of fun for your dog. Great for bouncing, throwing and catching. '
+        price: 100
+        keywords:
+          - dog toy
+        categories:
+          - categoryId: 1e32231d-b8a1-4145-b539-820301c2af64
+            name: Dogs
+        reviewRating: 5
+        numberOfReviews: 10
+    Review:
+      title: Review
+      required:
+        - productReviewId
+        - content
+        - rating
+        - authorName
+        - submittedDate
+        - productId
+      type: object
+      properties:
+        productReviewId:
+          type: string
+          description: Identifier for a product review.
+          example: a264188f-b5ba-4c5c-8f9c-d0e9348b14dc
+        content:
+          maxLength: 500
+          minLength: 0
+          type: string
+          description: Review content.
+          example: This dog toy is great! My dog loved to play with it. I thoroughly recommend.
+        rating:
+          maximum: 5
+          minimum: 1
+          type: integer
+          description: 'The rating of the review. A number in the range 1 to 5, 1 for lowest and 5 for highest.'
+          format: int32
+          example: 5
+        authorName:
+          type: string
+          description: Name of the author of the review.
+          example: Jill Baker
+        submittedDate:
+          type: string
+          description: Date the review was submitted.
+          example: '2022-04-12T23:20:50.52Z'
+        productId:
+          type: string
+          description: Product this review is for.
+      description: A review for a product.
+    Pagination:
+      title: Pagination
+      required:
+        - self
+      type: object
+      additionalProperties: false
+      properties:
+        self:
+          type: string
+          format: uri
+          description: Cursor pointing to the current page.
+        first:
+          type: string
+          format: uri
+          description: Cursor to the first page.
+        prev:
+          type: string
+          format: uri
+          description: Cursor to the previous page.
+        next:
+          type: string
+          format: uri
+          description: Cursor to the next page.
+        last:
+          type: string
+          description: Cursor to the last page.
+      description: An object containing pagination information
+      example:
+        self: 'https://api.acme-pet-supplies.com/v1/catalog/categories?cursor=bccf5512'
+        first: 'https://api.acme-pet-supplies.com/v1/catalog/categories?cursor=fa0a11ec'
+        prev: 'https://api.acme-pet-supplies.com/v1/catalog/categories?cursor=0242ac120'
+        next: 'https://api.acme-pet-supplies.com/v1/catalog/categories?cursor=651b1f06'
+        last: 'https://api.acme-pet-supplies.com/v1/catalog/categories?cursor=3a1893e2'
+    Problem:
+      title: Problem
+      required:
+        - type
+        - title
+        - status
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+          description: A URI reference that identifies the problem type. It is recommended but not necessary that the URI should resolve to human-readable HTML documentation describing the type. The problem type provides information that is more specific than the HTTP status code.
+        title:
+          type: string
+          description: 'A short, human-readable description of the problem type. The title should be the same for given types.'
+        status:
+          maximum: 599
+          # exclusiveMaximum: true
+          minimum: 100
+          type: integer
+          description: The HTTP status generated by the origin server.Conveys the HTTP status code used for the convenience of the consumer.
+          format: int32
+        detail:
+          type: string
+          description: 'A human-readable description of the problem instance, explaining why the problem occurred in this specific case. Should focus on helping the client correct the problem, rather than giving debugging information.'
+        instance:
+          type: string
+          description: A URI reference that identifies the specific occurrence of the problem.  It may or may not yield further information if dereferenced.
+    401Error:
+      title: 401 Error
+      type: object
+      additionalProperties: false
+      properties:
+        message:
+          type: string
+          description: Invalid authentication credentials.
+          example: Invalid authentication credentials
+      required:
+        - message
+    CategoriesResponse:
+      title: CategoriesResponse
+      required:
+        - data
+        - pagination
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          maxItems: 25
+          items:
+            $ref: '#/components/schemas/Category'
+          description: ''
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    ProductsResponse:
+      title: ProductsResponse
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          maxItems: 25
+          items:
+            $ref: '#/components/schemas/Product'
+          description: ''
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    ReviewsResponse:
+      title: ReviewsResponse
+      required:
+        - data
+        - pagination
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          maxItems: 25
+          items:
+            $ref: '#/components/schemas/Review'
+          description: ''
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      description: API key
+      name: x-api-key
+      in: header
+security:
+  - ApiKeyAuth: []
+tags:
+  - name: Categories
+    description: A category is a class of products with common characteristics
+  - name: Products
+    description: A product is an item for sale on the store.
+  - name: Reviews
+    description: A review is a critical assesment of a product by a customer.
