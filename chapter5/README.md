@@ -1,6 +1,6 @@
-# chapter4
+# chapter5
 
-Acme's API definition repository containing the Product Catalog API. 
+API reviews on Product Catalog API.
 
 ## Installation
 
