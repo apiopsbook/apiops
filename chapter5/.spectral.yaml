@@ -1,0 +1,1 @@
+extends: [spectral:oas, "./style-guides/json-api.style.yaml", "@stoplight/spectral-owasp-ruleset"]
