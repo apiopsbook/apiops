@@ -1,0 +1,79 @@
+openapi: 3.0.3
+info:
+  title: Acme Product Catalog API
+  version: 0.0.1
+paths: {}
+components:
+  schemas:
+    Review:
+      title: Review
+      required:
+        - productReviewId
+        - content
+        - rating
+        - authorName
+        - submittedDate
+        - productId
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifier for a product review.
+        type:
+          type: string
+          maxLength: 6
+          example: review
+        attributes:
+          type: object
+          additionalProperties: false
+          required:
+            - content
+            - rating
+            - authorName
+            - submittedDate
+          properties:
+            content:
+              maxLength: 500
+              minLength: 0
+              type: string
+              description: Review content.
+              example: >-
+                This dog toy is great! My dog loved to play with it. I thoroughly
+                recommend.
+            rating:
+              maximum: 5
+              minimum: 1
+              type: integer
+              description: >-
+                The rating of the review. A number in the range 1 to 5, 1 for lowest
+                and 5 for highest.
+              format: int32
+              example: 5
+            authorName:
+              type: string
+              description: Name of the author of the review.
+              maxLength: 30
+              example: Jill Baker
+            submittedDate:
+              type: string
+              format: date-time
+              description: Date the review was submitted.
+              example: '2022-04-12T23:20:50.52Z'
+        relationships:
+          type: object
+          additionalProperties: false
+          properties:
+            for_product:
+              type: object
+              properties:
+                links:
+                  type: object
+                  properties:
+                    related:
+                      type: string
+                      format: uri
+                      maxLength: 100
+                      example: >-
+                        https://api.acme-pet-supplies.com/v1/catalog/products/dcd53ddb-8104-4e48-8cc0-5df1088c6113
+      description: A review for a product.

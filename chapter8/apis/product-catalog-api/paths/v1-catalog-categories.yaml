@@ -1,0 +1,40 @@
+openapi: 3.0.3
+info:
+  title: Acme Product Catalog API
+  version: 0.0.1
+paths:
+  /v1/catalog/categories:
+   get:
+     tags:
+       - Categories
+     summary: List all categories
+     description: List all categories.
+     operationId: listCategories
+     parameters: []
+     responses:
+       '200':
+         description: OK
+         headers:
+           RateLimit-Limit:
+             $ref: '../components/headers/rateLimit.yaml#/components/headers/rateLimit'
+           RateLimit-Remaining:
+             $ref: '../components/headers/rateLimitRemaining.yaml#/components/headers/rateLimitRemaining'
+           RateLimit-Reset:
+             $ref: '../components/headers/rateLimitReset.yaml#/components/headers/rateLimitReset'
+         content:
+           application/vnd.api+json:
+             schema:
+               $ref: '../components/schemas/CategoriesResponse.yaml#/components/schemas/CategoriesResponse'
+       '401':
+         $ref: '../components/responses/401Response.yaml#/components/responses/401Response'
+       '403':
+         $ref: '../components/responses/403Response.yaml#/components/responses/403Response'
+       '406':
+         $ref: '../components/responses/406Response.yaml#/components/responses/406Response'
+       '415':
+         $ref: '../components/responses/415Response.yaml#/components/responses/415Response'
+       '429':
+         $ref: '../components/responses/429Response.yaml#/components/responses/429Response'
+       '500':
+         $ref: '../components/responses/500Response.yaml#/components/responses/500Response'
+     deprecated: false

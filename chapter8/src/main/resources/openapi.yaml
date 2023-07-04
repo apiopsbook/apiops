@@ -1,0 +1,1734 @@
+openapi: 3.0.3
+info:
+  contact:
+    email: john.smith@acme-pet-supplies.co.uk
+    name: John Smith
+    url: https://acme-pet-supplies.co.uk/docs
+  description: 'The Product Catalog API enables customers browse Acme Pet Supplies
+    great range of pet products and their product reviews. '
+  title: Product Catalog API
+  version: "1.0"
+servers:
+- url: https://api.acme-pet-supplies.co.uk
+security:
+- OAuth2: []
+tags:
+- description: A category is a class of products with common characteristics
+  name: Categories
+- description: A product is an item for sale on the store.
+  name: Products
+- description: A review is a critical assessment of a product by a customer.
+  name: Reviews
+paths:
+  /v1/catalog/categories:
+    get:
+      deprecated: false
+      description: List all categories.
+      operationId: listCategories
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/CategoriesResponse'
+          description: OK
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/rateLimit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/rateLimitRemaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/rateLimitReset'
+        "401":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: Not authorized
+                  status: 401
+                  detail: Authentication failure.
+                  id: 8011c394-30c9-11ed-a261-0242ac120002
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not authorized
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "403":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: Forbidden
+                  status: 403
+                  detail: Access to this resource is forbidden. Please check you are
+                    authorized to access this resource.
+                  id: 747c7b00-30c9-11ed-a261-0242ac120002
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "406":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: Not Acceptable
+                  status: 406
+                  detail: Accept header contains the JSON:API media type and instances
+                    of that media type are modified with media type parameters.
+                  id: 64ef46ea-30c9-11ed-a261-0242ac120002
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Acceptable
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "415":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: 415 Unsupported Media Type
+                  status: 415
+                  detail: "Request specifies the header Content-Type: application/vnd.api+json\
+                    \ with media type parameters."
+                  id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: 415 Unsupported Media Type
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "429":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: 429 Too Many Requests
+                  status: 429
+                  detail: Too many requests. Request quota exceeded in time window.
+                    Try again soon
+                  id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: 429 Too Many Requests
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            Retry-After:
+              description: "If request limit exceeded, retry after this time window."
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "500":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: 500 Internal Server Error
+                  status: 500
+                  detail: Internal server error
+                  id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: 500 Internal Server Error
+      summary: List all categories
+      tags:
+      - Categories
+      x-accepts: application/vnd.api+json
+      x-tags:
+      - tag: Categories
+  /v1/catalog/products:
+    get:
+      deprecated: false
+      description: List all products.
+      operationId: listProducts
+      parameters:
+      - description: List of included related resources
+        explode: true
+        in: query
+        name: include
+        required: false
+        schema:
+          example: category
+          maxLength: 30
+          type: string
+        style: form
+      - description: Filter by category ID.
+        explode: true
+        in: query
+        name: filterCategory
+        required: false
+        schema:
+          example: 1e32231d-b8a1-4145-b539-820301c2af64
+          format: uuid
+          maxLength: 40
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/ProductsResponse'
+          description: OK
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/rateLimit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/rateLimitRemaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/rateLimitReset'
+        "401":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: Not authorized
+                  status: 401
+                  detail: Authentication failure.
+                  id: 8011c394-30c9-11ed-a261-0242ac120002
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not authorized
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "403":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: Forbidden
+                  status: 403
+                  detail: Access to this resource is forbidden. Please check you are
+                    authorized to access this resource.
+                  id: 747c7b00-30c9-11ed-a261-0242ac120002
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "406":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: Not Acceptable
+                  status: 406
+                  detail: Accept header contains the JSON:API media type and instances
+                    of that media type are modified with media type parameters.
+                  id: 64ef46ea-30c9-11ed-a261-0242ac120002
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Acceptable
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "415":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: 415 Unsupported Media Type
+                  status: 415
+                  detail: "Request specifies the header Content-Type: application/vnd.api+json\
+                    \ with media type parameters."
+                  id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: 415 Unsupported Media Type
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "429":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: 429 Too Many Requests
+                  status: 429
+                  detail: Too many requests. Request quota exceeded in time window.
+                    Try again soon
+                  id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: 429 Too Many Requests
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            Retry-After:
+              description: "If request limit exceeded, retry after this time window."
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "500":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: 500 Internal Server Error
+                  status: 500
+                  detail: Internal server error
+                  id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: 500 Internal Server Error
+      summary: List all products
+      tags:
+      - Products
+      x-accepts: application/vnd.api+json
+      x-tags:
+      - tag: Products
+  /v1/catalog/products/{id}:
+    get:
+      deprecated: false
+      description: View a product's details.
+      operationId: viewProduct
+      parameters:
+      - description: Product identifier
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/viewProduct_200_response'
+          description: OK
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/rateLimit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/rateLimitRemaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/rateLimitReset'
+        "400":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: Bad Request
+                  status: 400
+                  detail: Bad request. Please check the request is valid.
+                  id: 8011c394-30c9-11ed-a261-0242ac120002
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "401":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: Not authorized
+                  status: 401
+                  detail: Authentication failure.
+                  id: 8011c394-30c9-11ed-a261-0242ac120002
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not authorized
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "403":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: Forbidden
+                  status: 403
+                  detail: Access to this resource is forbidden. Please check you are
+                    authorized to access this resource.
+                  id: 747c7b00-30c9-11ed-a261-0242ac120002
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "404":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: Not Found
+                  status: 404
+                  detail: Resource not found.
+                  id: 6c4a6b54-30c9-11ed-a261-0242ac120002
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "406":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: Not Acceptable
+                  status: 406
+                  detail: Accept header contains the JSON:API media type and instances
+                    of that media type are modified with media type parameters.
+                  id: 64ef46ea-30c9-11ed-a261-0242ac120002
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Acceptable
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "415":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: 415 Unsupported Media Type
+                  status: 415
+                  detail: "Request specifies the header Content-Type: application/vnd.api+json\
+                    \ with media type parameters."
+                  id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: 415 Unsupported Media Type
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "429":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: 429 Too Many Requests
+                  status: 429
+                  detail: Too many requests. Request quota exceeded in time window.
+                    Try again soon
+                  id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: 429 Too Many Requests
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            Retry-After:
+              description: "If request limit exceeded, retry after this time window."
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "500":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: 500 Internal Server Error
+                  status: 500
+                  detail: Internal server error
+                  id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: 500 Internal Server Error
+      summary: View a product's details
+      tags:
+      - Products
+      x-accepts: application/vnd.api+json
+      x-tags:
+      - tag: Products
+  /v1/catalog/products/{id}/reviews:
+    get:
+      deprecated: false
+      description: List all reviews for a product.
+      operationId: listProductReviews
+      parameters:
+      - description: Product identifier
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/ReviewsResponse'
+          description: OK
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/rateLimit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/rateLimitRemaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/rateLimitReset'
+        "400":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: Bad Request
+                  status: 400
+                  detail: Bad request. Please check the request is valid.
+                  id: 8011c394-30c9-11ed-a261-0242ac120002
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "401":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: Not authorized
+                  status: 401
+                  detail: Authentication failure.
+                  id: 8011c394-30c9-11ed-a261-0242ac120002
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not authorized
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "403":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: Forbidden
+                  status: 403
+                  detail: Access to this resource is forbidden. Please check you are
+                    authorized to access this resource.
+                  id: 747c7b00-30c9-11ed-a261-0242ac120002
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "406":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: Not Acceptable
+                  status: 406
+                  detail: Accept header contains the JSON:API media type and instances
+                    of that media type are modified with media type parameters.
+                  id: 64ef46ea-30c9-11ed-a261-0242ac120002
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Acceptable
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "415":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: 415 Unsupported Media Type
+                  status: 415
+                  detail: "Request specifies the header Content-Type: application/vnd.api+json\
+                    \ with media type parameters."
+                  id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: 415 Unsupported Media Type
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "429":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: 429 Too Many Requests
+                  status: 429
+                  detail: Too many requests. Request quota exceeded in time window.
+                    Try again soon
+                  id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: 429 Too Many Requests
+          headers:
+            RateLimit-Limit:
+              description: The quota units associated to the client in the current
+                time-window.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Remaining:
+              description: Remaining quota units associated to the client.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            RateLimit-Reset:
+              description: Number of seconds until the quota resets.
+              explode: false
+              schema:
+                type: integer
+              style: simple
+            Retry-After:
+              description: "If request limit exceeded, retry after this time window."
+              explode: false
+              schema:
+                type: integer
+              style: simple
+        "500":
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - title: 500 Internal Server Error
+                  status: 500
+                  detail: Internal server error
+                  id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: 500 Internal Server Error
+      summary: List reviews
+      tags:
+      - Reviews
+      x-accepts: application/vnd.api+json
+      x-tags:
+      - tag: Reviews
+components:
+  headers:
+    rateLimit:
+      description: The quota units associated to the client in the current time-window.
+      explode: false
+      schema:
+        type: integer
+      style: simple
+    rateLimitRemaining:
+      description: Remaining quota units associated to the client.
+      explode: false
+      schema:
+        type: integer
+      style: simple
+    rateLimitReset:
+      description: Number of seconds until the quota resets.
+      explode: false
+      schema:
+        type: integer
+      style: simple
+  parameters:
+    productId:
+      description: Product identifier
+      explode: false
+      in: path
+      name: id
+      required: true
+      schema:
+        format: uuid
+        type: string
+      style: simple
+    filterCategory:
+      description: Filter by category ID.
+      explode: true
+      in: query
+      name: filterCategory
+      required: false
+      schema:
+        example: 1e32231d-b8a1-4145-b539-820301c2af64
+        format: uuid
+        maxLength: 40
+        type: string
+      style: form
+    include:
+      description: List of included related resources
+      explode: true
+      in: query
+      name: include
+      required: false
+      schema:
+        example: category
+        maxLength: 30
+        type: string
+      style: form
+  responses:
+    "401Response":
+      content:
+        application/vnd.api+json:
+          example:
+            errors:
+            - title: Not authorized
+              status: 401
+              detail: Authentication failure.
+              id: 8011c394-30c9-11ed-a261-0242ac120002
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not authorized
+      headers:
+        RateLimit-Limit:
+          description: The quota units associated to the client in the current time-window.
+          explode: false
+          schema:
+            type: integer
+          style: simple
+        RateLimit-Remaining:
+          description: Remaining quota units associated to the client.
+          explode: false
+          schema:
+            type: integer
+          style: simple
+        RateLimit-Reset:
+          description: Number of seconds until the quota resets.
+          explode: false
+          schema:
+            type: integer
+          style: simple
+    "403Response":
+      content:
+        application/vnd.api+json:
+          example:
+            errors:
+            - title: Forbidden
+              status: 403
+              detail: Access to this resource is forbidden. Please check you are authorized
+                to access this resource.
+              id: 747c7b00-30c9-11ed-a261-0242ac120002
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden
+      headers:
+        RateLimit-Limit:
+          description: The quota units associated to the client in the current time-window.
+          explode: false
+          schema:
+            type: integer
+          style: simple
+        RateLimit-Remaining:
+          description: Remaining quota units associated to the client.
+          explode: false
+          schema:
+            type: integer
+          style: simple
+        RateLimit-Reset:
+          description: Number of seconds until the quota resets.
+          explode: false
+          schema:
+            type: integer
+          style: simple
+    "406Response":
+      content:
+        application/vnd.api+json:
+          example:
+            errors:
+            - title: Not Acceptable
+              status: 406
+              detail: Accept header contains the JSON:API media type and instances
+                of that media type are modified with media type parameters.
+              id: 64ef46ea-30c9-11ed-a261-0242ac120002
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not Acceptable
+      headers:
+        RateLimit-Limit:
+          description: The quota units associated to the client in the current time-window.
+          explode: false
+          schema:
+            type: integer
+          style: simple
+        RateLimit-Remaining:
+          description: Remaining quota units associated to the client.
+          explode: false
+          schema:
+            type: integer
+          style: simple
+        RateLimit-Reset:
+          description: Number of seconds until the quota resets.
+          explode: false
+          schema:
+            type: integer
+          style: simple
+    "415Response":
+      content:
+        application/vnd.api+json:
+          example:
+            errors:
+            - title: 415 Unsupported Media Type
+              status: 415
+              detail: "Request specifies the header Content-Type: application/vnd.api+json\
+                \ with media type parameters."
+              id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: 415 Unsupported Media Type
+      headers:
+        RateLimit-Limit:
+          description: The quota units associated to the client in the current time-window.
+          explode: false
+          schema:
+            type: integer
+          style: simple
+        RateLimit-Remaining:
+          description: Remaining quota units associated to the client.
+          explode: false
+          schema:
+            type: integer
+          style: simple
+        RateLimit-Reset:
+          description: Number of seconds until the quota resets.
+          explode: false
+          schema:
+            type: integer
+          style: simple
+    "429Response":
+      content:
+        application/vnd.api+json:
+          example:
+            errors:
+            - title: 429 Too Many Requests
+              status: 429
+              detail: Too many requests. Request quota exceeded in time window. Try
+                again soon
+              id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: 429 Too Many Requests
+      headers:
+        RateLimit-Limit:
+          description: The quota units associated to the client in the current time-window.
+          explode: false
+          schema:
+            type: integer
+          style: simple
+        RateLimit-Remaining:
+          description: Remaining quota units associated to the client.
+          explode: false
+          schema:
+            type: integer
+          style: simple
+        RateLimit-Reset:
+          description: Number of seconds until the quota resets.
+          explode: false
+          schema:
+            type: integer
+          style: simple
+        Retry-After:
+          description: "If request limit exceeded, retry after this time window."
+          explode: false
+          schema:
+            type: integer
+          style: simple
+    "500Response":
+      content:
+        application/vnd.api+json:
+          example:
+            errors:
+            - title: 500 Internal Server Error
+              status: 500
+              detail: Internal server error
+              id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: 500 Internal Server Error
+    "400Response":
+      content:
+        application/vnd.api+json:
+          example:
+            errors:
+            - title: Bad Request
+              status: 400
+              detail: Bad request. Please check the request is valid.
+              id: 8011c394-30c9-11ed-a261-0242ac120002
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad Request
+      headers:
+        RateLimit-Limit:
+          description: The quota units associated to the client in the current time-window.
+          explode: false
+          schema:
+            type: integer
+          style: simple
+        RateLimit-Remaining:
+          description: Remaining quota units associated to the client.
+          explode: false
+          schema:
+            type: integer
+          style: simple
+        RateLimit-Reset:
+          description: Number of seconds until the quota resets.
+          explode: false
+          schema:
+            type: integer
+          style: simple
+    "404Response":
+      content:
+        application/vnd.api+json:
+          example:
+            errors:
+            - title: Not Found
+              status: 404
+              detail: Resource not found.
+              id: 6c4a6b54-30c9-11ed-a261-0242ac120002
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not Found
+      headers:
+        RateLimit-Limit:
+          description: The quota units associated to the client in the current time-window.
+          explode: false
+          schema:
+            type: integer
+          style: simple
+        RateLimit-Remaining:
+          description: Remaining quota units associated to the client.
+          explode: false
+          schema:
+            type: integer
+          style: simple
+        RateLimit-Reset:
+          description: Number of seconds until the quota resets.
+          explode: false
+          schema:
+            type: integer
+          style: simple
+  schemas:
+    Category:
+      additionalProperties: false
+      description: A product category.
+      properties:
+        id:
+          description: Identifier of the category.
+          example: 1e32231d-b8a1-4145-b539-820301c2af64
+          format: uuid
+          type: string
+        type:
+          example: category
+          maxLength: 8
+          type: string
+        attributes:
+          $ref: '#/components/schemas/Category_attributes'
+        relationships:
+          $ref: '#/components/schemas/Category_relationships'
+      required:
+      - attributes
+      - id
+      - type
+      title: Category
+      type: object
+    Product:
+      additionalProperties: false
+      description: An item in Acme's pet supplies catalog.
+      properties:
+        id:
+          description: Identifier for the product.
+          example: dcd53ddb-8104-4e48-8cc0-5df1088c6113
+          type: string
+        type:
+          example: product
+          maxLength: 7
+          type: string
+        attributes:
+          $ref: '#/components/schemas/Product_attributes'
+        relationships:
+          $ref: '#/components/schemas/Product_relationships'
+      required:
+      - attributes
+      - id
+      - relationships
+      - type
+      title: Product
+      type: object
+    Review:
+      description: A review for a product.
+      properties:
+        id:
+          description: Identifier for a product review.
+          format: uuid
+          type: string
+        type:
+          example: review
+          maxLength: 6
+          type: string
+        attributes:
+          $ref: '#/components/schemas/Review_attributes'
+        relationships:
+          $ref: '#/components/schemas/Review_relationships'
+      required:
+      - authorName
+      - content
+      - productId
+      - productReviewId
+      - rating
+      - submittedDate
+      title: Review
+      type: object
+    Pagination:
+      additionalProperties: false
+      description: An object containing pagination   information
+      properties:
+        self:
+          description: Relative uri cursor pointing to the current page.
+          format: uri
+          maxLength: 100
+          type: string
+        first:
+          description: Cursor to the first page.
+          format: uri
+          maxLength: 100
+          type: string
+        prev:
+          description: Relative uri cursor to the previous page.
+          format: uri
+          maxLength: 100
+          type: string
+        next:
+          description: Relative uri  cursor to the next page.
+          format: uri
+          maxLength: 100
+          type: string
+        last:
+          description: Relative uri cursor to the last page.
+          format: uri
+          type: string
+      required:
+      - self
+      title: Pagination
+      type: object
+    CategoriesResponse:
+      additionalProperties: false
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Category'
+          maxItems: 25
+          type: array
+        links:
+          $ref: '#/components/schemas/CategoriesResponse_links'
+      required:
+      - data
+      - links
+      title: CategoriesResponse
+      type: object
+    ProductsResponse:
+      additionalProperties: false
+      properties:
+        data:
+          description: ""
+          items:
+            $ref: '#/components/schemas/Product'
+          maxItems: 25
+          type: array
+        included:
+          items:
+            $ref: '#/components/schemas/Category'
+          type: array
+          uniqueItems: true
+        links:
+          $ref: '#/components/schemas/ProductsResponse_links'
+      title: ProductsResponse
+      type: object
+    ReviewsResponse:
+      additionalProperties: false
+      properties:
+        data:
+          description: ""
+          items:
+            $ref: '#/components/schemas/Review'
+          maxItems: 25
+          type: array
+        links:
+          $ref: '#/components/schemas/ReviewsResponse_links'
+      required:
+      - data
+      - links
+      title: ReviewsResponse
+      type: object
+    Link:
+      description: a structured representation of a URL
+      properties:
+        href:
+          example: https://example.com/
+          maxLength: 200
+          type: string
+        meta:
+          additionalProperties: false
+          type: object
+      required:
+      - href
+      title: Link Object
+      type: object
+    Error:
+      description: A JSON:API-compliant error response. This object is inherited by
+        the specific response type.
+      properties:
+        errors:
+          description: An array of Error objects
+          items:
+            $ref: '#/components/schemas/Error_errors_inner'
+          minItems: 1
+          type: array
+      required:
+      - errors
+      title: Error Response
+      type: object
+    viewProduct_200_response:
+      properties:
+        data:
+          $ref: '#/components/schemas/Product'
+      type: object
+    Category_attributes:
+      additionalProperties: false
+      properties:
+        name:
+          description: Name of the product category.
+          example: Dogs
+          maxLength: 20
+          minLength: 0
+          type: string
+      type: object
+    Category_relationships_contains_products_link:
+      additionalProperties: false
+      properties:
+        related:
+          example: "https://api.acme-pet-supplies.com/v1/catalog/products?fields[catgory]=1e32231d-b8a1-4145-b539-820301c2af64"
+          maxLength: 150
+          type: string
+      type: object
+    Category_relationships_contains_products:
+      additionalProperties: false
+      properties:
+        link:
+          $ref: '#/components/schemas/Category_relationships_contains_products_link'
+      type: object
+    Category_relationships:
+      additionalProperties: false
+      properties:
+        contains_products:
+          $ref: '#/components/schemas/Category_relationships_contains_products'
+      type: object
+    Product_attributes:
+      additionalProperties: false
+      properties:
+        name:
+          description: Name of the product.
+          example: Acme Uber Dog Rope Toy
+          maxLength: 50
+          minLength: 1
+          type: string
+        description:
+          description: A description of the product.
+          example: "Acme Uber Dog Rope Toy provides hours of fun for your dog. Great\
+            \ for bouncing, throwing and catching. "
+          maxLength: 300
+          minLength: 0
+          type: string
+        price:
+          description: Price of the product.
+          example: 100
+          maximum: 1000000
+          minimum: 0
+          type: number
+        keywords:
+          description: "A colleciton of words that describe the product, used for\
+            \ searching for it."
+          items:
+            type: string
+          maxItems: 20
+          minItems: 0
+          type: array
+          uniqueItems: true
+        reviewRating:
+          description: Average product review rating.
+          example: 5
+          format: int32
+          maximum: 5
+          minimum: 1
+          type: integer
+        numberOfReviews:
+          description: Number of product reviews.
+          example: 10
+          format: int32
+          type: integer
+      type: object
+    Product_relationships_in_categories_data_inner:
+      properties:
+        id:
+          example: 1e32231d-b8a1-4145-b539-820301c2af64
+          format: uuid
+          type: string
+        type:
+          example: category
+          maxLength: 8
+          type: string
+      type: object
+    Product_relationships_in_categories:
+      additionalProperties: false
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Product_relationships_in_categories_data_inner'
+          type: array
+      type: object
+      uniqueItems: true
+    Product_relationships_has_reviews_links:
+      additionalProperties: false
+      properties:
+        related:
+          example: https://api.acme-pet-supplies.com/v1/catalog/products/dcd53ddb-8104-4e48-8cc0-5df1088c6113/reviews
+          maxLength: 100
+          type: string
+      type: object
+    Product_relationships_has_reviews:
+      additionalProperties: false
+      properties:
+        links:
+          $ref: '#/components/schemas/Product_relationships_has_reviews_links'
+      type: object
+    Product_relationships:
+      additionalProperties: false
+      properties:
+        in_categories:
+          $ref: '#/components/schemas/Product_relationships_in_categories'
+        has_reviews:
+          $ref: '#/components/schemas/Product_relationships_has_reviews'
+      type: object
+    Review_attributes:
+      additionalProperties: false
+      properties:
+        content:
+          description: Review content.
+          example: This dog toy is great! My dog loved to play with it. I thoroughly
+            recommend.
+          maxLength: 500
+          minLength: 0
+          type: string
+        rating:
+          description: "The rating of the review. A number in the range 1 to 5, 1\
+            \ for lowest and 5 for highest."
+          example: 5
+          format: int32
+          maximum: 5
+          minimum: 1
+          type: integer
+        authorName:
+          description: Name of the author of the review.
+          example: Jill Baker
+          maxLength: 30
+          type: string
+        submittedDate:
+          description: Date the review was submitted.
+          example: 2022-04-12T23:20:50.52Z
+          format: date-time
+          type: string
+      required:
+      - authorName
+      - content
+      - rating
+      - submittedDate
+      type: object
+    Review_relationships_for_product_links:
+      properties:
+        related:
+          example: https://api.acme-pet-supplies.com/v1/catalog/products/dcd53ddb-8104-4e48-8cc0-5df1088c6113
+          format: uri
+          maxLength: 100
+          type: string
+      type: object
+    Review_relationships_for_product:
+      properties:
+        links:
+          $ref: '#/components/schemas/Review_relationships_for_product_links'
+      type: object
+    Review_relationships:
+      additionalProperties: false
+      properties:
+        for_product:
+          $ref: '#/components/schemas/Review_relationships_for_product'
+      type: object
+    CategoriesResponse_links:
+      allOf:
+      - $ref: '#/components/schemas/Pagination'
+      - example:
+          self: https://api.acme-pet-supplies.com/v1/catalog/categories?cursor=bccf5512
+          first: https://api.acme-pet-supplies.com/v1/catalog/categories?cursor=fa0a11ec
+          prev: https://api.acme-pet-supplies.com/v1/catalog/categories?cursor=0242ac120
+          next: https://api.acme-pet-supplies.com/v1/catalog/categories?cursor=651b1f06
+          last: https://api.acme-pet-supplies.com/v1/catalog/categories?cursor=3a1893e2
+    ProductsResponse_links:
+      allOf:
+      - $ref: '#/components/schemas/Pagination'
+      - example:
+          self: https://api.acme-pet-supplies.com/v1/catalog/products?cursor=bccf5512
+          first: https://api.acme-pet-supplies.com/v1/catalog/products?cursor=fa0a11ec
+          prev: https://api.acme-pet-supplies.com/v1/catalog/products?cursor=0242ac120
+          next: https://api.acme-pet-supplies.com/v1/catalog/products?cursor=651b1f06
+          last: https://api.acme-pet-supplies.com/v1/catalog/products?cursor=3a1893e2
+    ReviewsResponse_links:
+      allOf:
+      - $ref: '#/components/schemas/Pagination'
+      - example:
+          self: https://api.acme-pet-supplies.com/v1/catalog/reviews?cursor=bccf5512
+          first: https://api.acme-pet-supplies.com/v1/catalog/reviews?cursor=fa0a11ec
+          prev: https://api.acme-pet-supplies.com/v1/catalog/reviews?cursor=0242ac120
+          next: https://api.acme-pet-supplies.com/v1/catalog/reviews?cursor=651b1f06
+          last: https://api.acme-pet-supplies.com/v1/catalog/reviews?cursor=3a1893e2
+    Error_errors_inner_links:
+      description: a link to further details about this particular occurrence of the
+        problem
+      properties:
+        about:
+          $ref: '#/components/schemas/Link'
+      type: object
+    Error_errors_inner_source:
+      description: contains references to the source of the error
+      properties:
+        pointer:
+          description: "a JSON Pointer [RFC6901] to the associated entity in the request\
+            \ document"
+          maxLength: 500
+          type: string
+        parameter:
+          description: indicates which URI query parameter caused the error
+          maxLength: 50
+          type: string
+      type: object
+    Error_errors_inner:
+      additionalProperties: false
+      description: A JSON:API-compliant error object.
+      properties:
+        id:
+          description: a unique identifier for this particular occurrence of the problem
+          format: uuid
+          type: string
+        links:
+          $ref: '#/components/schemas/Error_errors_inner_links'
+        status:
+          description: the HTTP status code applicable to this problem
+          type: integer
+        code:
+          description: an application-specific error code
+          maxLength: 10
+          type: string
+        title:
+          description: "a short, human-readable summary of the problem that SHOULD\
+            \ NOT change from occurrence to occurrence of the problem, except for\
+            \ purposes of localization"
+          maxLength: 100
+          type: string
+        detail:
+          description: "a human-readable explanation specific to this occurrence of\
+            \ the problem. Like title, this field’s value can be localized"
+          maxLength: 150
+          type: string
+        source:
+          $ref: '#/components/schemas/Error_errors_inner_source'
+        meta:
+          additionalProperties: false
+          description: a JSON meta object with non-standard meta-information about
+            the error
+          type: object
+      required:
+      - status
+      - title
+      type: object
+  securitySchemes:
+    OAuth2:
+      description: "OAuth2 security scheme. JWTs follow RFC8725 recommendations. For\
+        \ more information, please see https://acme-pet-supplies.co.uk/docs/oauth"
+      flows:
+        authorizationCode:
+          authorizationUrl: https://acme-pet-supplies.co.uk/oauth/authorize
+          scopes:
+            read: Read catalog information
+          tokenUrl: https://acme-pet-supplies.co.uk/oauth/token
+      type: oauth2

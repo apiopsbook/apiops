@@ -1,0 +1,37 @@
+openapi: 3.0.3
+info:
+  title: Acme Product Catalog API
+  version: 0.0.1
+paths: {}
+components:
+  schemas:
+    ProductsResponse:
+      title: ProductsResponse
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          maxItems: 25
+          items:
+            $ref: './Product.yaml#/components/schemas/Product'
+          description: ''
+        included:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: './Category.yaml#/components/schemas/Category'
+        links:
+          allOf:
+            - $ref: './Pagination.yaml#/components/schemas/Pagination'
+            - example:
+                self: >-
+                  https://api.acme-pet-supplies.com/v1/catalog/products?cursor=bccf5512
+                first: >-
+                  https://api.acme-pet-supplies.com/v1/catalog/products?cursor=fa0a11ec
+                prev: >-
+                  https://api.acme-pet-supplies.com/v1/catalog/products?cursor=0242ac120
+                next: >-
+                  https://api.acme-pet-supplies.com/v1/catalog/products?cursor=651b1f06
+                last: >-
+                  https://api.acme-pet-supplies.com/v1/catalog/products?cursor=3a1893e2

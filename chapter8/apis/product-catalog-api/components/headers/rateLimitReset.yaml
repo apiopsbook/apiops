@@ -1,0 +1,11 @@
+openapi: 3.0.3
+info:
+  title: Acme Product Catalog API
+  version: 0.0.1
+paths: {}
+components:
+  headers:
+    rateLimitReset:
+      description: Number of seconds until the quota resets.
+      schema:
+        type: integer

@@ -1,2 +1,5 @@
 .DS_Store
 .recycle
+.idea
+*/target/**
+*/kong/kong_dir

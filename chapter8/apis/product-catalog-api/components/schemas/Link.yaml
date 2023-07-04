@@ -1,0 +1,21 @@
+openapi: 3.0.3
+info:
+  title: Acme Product Catalog API
+  version: 0.0.1
+paths: {}
+components:
+  schemas:
+    Link:
+      title: Link Object
+      description: a structured representation of a URL
+      type: object
+      required:
+        - href
+      properties:
+        href:
+          type: string
+          example: https://example.com/
+          maxLength: 200
+        meta:
+          type: object
+          additionalProperties: false

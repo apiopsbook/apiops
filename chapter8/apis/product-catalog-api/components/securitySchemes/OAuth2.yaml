@@ -1,0 +1,19 @@
+openapi: 3.0.3
+info:
+  title: Acme Product Catalog API
+  version: 0.0.1
+paths: {}
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: >-
+        OAuth2 security scheme. JWTs follow RFC8725 recommendations. For more
+        information, please see https://acme-pet-supplies.co.uk/docs/oauth
+      flows:
+        authorizationCode:
+          authorizationUrl: https://acme-pet-supplies.co.uk/oauth/authorize
+          tokenUrl: https://acme-pet-supplies.co.uk/oauth/token
+          scopes:
+            read: Read catalog information
+

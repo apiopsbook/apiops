@@ -1,0 +1,16 @@
+openapi: 3.0.3
+info:
+  title: Acme Product Catalog API
+  version: 0.0.1
+paths: {}
+components:
+  parameters:
+    include:
+      name: include
+      in: query
+      description: List of included related resources
+      required: false
+      schema:
+        type: string
+        maxLength: 30
+        example: category

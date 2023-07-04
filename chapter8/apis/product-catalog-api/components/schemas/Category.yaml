@@ -1,0 +1,53 @@
+openapi: 3.0.3
+info:
+  title: Acme Product Catalog API
+  version: 0.0.1
+paths: {}
+components:
+  schemas:
+    Category:
+      title: Category
+      required:
+        - id
+        - type
+        - attributes
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifier of the category.
+          example: 1e32231d-b8a1-4145-b539-820301c2af64
+        type:
+          type: string
+          maxLength: 8
+          example: category
+        attributes:
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              maxLength: 20
+              minLength: 0
+              type: string
+              description: Name of the product category.
+              example: Dogs
+        relationships:
+          type: object
+          additionalProperties: false
+          properties:
+            contains_products:
+              type: object
+              additionalProperties: false
+              properties:
+                link:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    related:
+                      type: string
+                      maxLength: 150
+                      example: >-
+                        https://api.acme-pet-supplies.com/v1/catalog/products?fields[catgory]=1e32231d-b8a1-4145-b539-820301c2af64
+      description: A product category.

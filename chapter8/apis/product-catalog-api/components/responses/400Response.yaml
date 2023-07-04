@@ -1,0 +1,32 @@
+openapi: 3.0.3
+info:
+  title: Acme Product Catalog API
+  version: 0.0.1
+paths: {}
+components:
+  responses:
+    400Response:
+      description: Bad Request
+      headers:
+        RateLimit-Limit:
+          description: The quota units associated to the client in the current time-window.
+          schema:
+            type: integer
+        RateLimit-Remaining:
+          description: Remaining quota units associated to the client.
+          schema:
+            type: integer
+        RateLimit-Reset:
+          description: Number of seconds until the quota resets.
+          schema:
+            type: integer
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '../schemas/Error.yaml#/components/schemas/Error'
+          example:
+            errors:
+              - title: Bad Request
+                status: 400
+                detail: Bad request. Please check the request is valid.
+                id: 8011c394-30c9-11ed-a261-0242ac120002
