@@ -1,0 +1,2 @@
+The Acme Products API  is a REST API based on the JSON:API specification. 
+It uses standard HTTP response codes, authentication and verbs. When using the REST API,  all requests should have the header `Content-Type: application/vnd.api+json`.

@@ -1,0 +1,19 @@
+openapi: 3.0.3
+info:
+  title: Acme Product Catalog API
+  version: 0.0.1
+paths: { }
+components:
+  responses:
+    500Response:
+      description: 500 Internal Server Error
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '../schemas/Error.yaml#/components/schemas/Error'
+          example:
+            errors:
+              - title: 500 Internal Server Error
+                status: 500
+                detail: Internal server error
+                id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1

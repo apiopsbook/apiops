@@ -1,0 +1,34 @@
+openapi: 3.0.3
+info:
+  title: Product Catalog API
+  description: >-
+    The Product Catalog API enables customers browse Acme Pet Supplies great
+    range of pet products and their product reviews. 
+  contact:
+    name: John Smith
+    url: https://acme-pet-supplies.co.uk/docs
+    email: john.smith@acme-pet-supplies.co.uk
+  version: '1.0'
+servers:
+  - url: https://api.acme-pet-supplies.co.uk
+tags:
+  - name: Categories
+    description: A category is a class of products with common characteristics
+  - name: Products
+    description: A product is an item for sale on the store.
+  - name: Reviews
+    description: A review is a critical assessment of a product by a customer.
+paths:
+  /v1/catalog/categories:
+    $ref: 'paths/v1-catalog-categories.yaml#/paths/~1v1~1catalog~1categories'
+  /v1/catalog/products:
+    $ref: 'paths/v1-catalog-products.yaml#/paths/~1v1~1catalog~1products'
+  /v1/catalog/products/{id}:
+    $ref: 'paths/v1-catalog-products-id.yaml#/paths/~1v1~1catalog~1products~1{id}'
+  /v1/catalog/products/{id}/reviews:
+    $ref: 'paths/v1-catalog-products-id-reviews.yaml#/paths/~1v1~1catalog~1products~1{id}~1reviews'
+components:
+  securitySchemes:
+    $ref: 'components/securitySchemes/OAuth2.yaml#/components/securitySchemes'
+security:
+  - OAuth2: []

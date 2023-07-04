@@ -1,0 +1,34 @@
+openapi: 3.0.3
+info:
+  title: Acme Product Catalog API
+  version: 0.0.1
+paths: { }
+components:
+  responses:
+    403Response:
+      description: Forbidden
+      headers:
+        RateLimit-Limit:
+          description: The quota units associated to the client in the current time-window.
+          schema:
+            type: integer
+        RateLimit-Remaining:
+          description: Remaining quota units associated to the client.
+          schema:
+            type: integer
+        RateLimit-Reset:
+          description: Number of seconds until the quota resets.
+          schema:
+            type: integer
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '../schemas/Error.yaml#/components/schemas/Error'
+          example:
+            errors:
+              - title: Forbidden
+                status: 403
+                detail: >-
+                  Access to this resource is forbidden. Please check you are
+                  authorized to access this resource.
+                id: 747c7b00-30c9-11ed-a261-0242ac120002

@@ -1,0 +1,40 @@
+openapi: 3.0.3
+info:
+  title: Acme Product Catalog API
+  version: 0.0.1
+paths: {}
+components:
+  schemas:
+    Pagination:
+      title: Pagination
+      required:
+        - self
+      type: object
+      additionalProperties: false
+      properties:
+        self:
+          type: string
+          format: uri
+          maxLength: 100
+          description: Relative uri cursor pointing to the current page.
+        first:
+          type: string
+          format: uri
+          maxLength: 100
+          description: Cursor to the first page.
+        prev:
+          type: string
+          format: uri
+          maxLength: 100
+          description: Relative uri cursor to the previous page.
+        next:
+          type: string
+          format: uri
+          maxLength: 100
+          description: Relative uri  cursor to the next page.
+        last:
+          type: string
+          format: uri
+          description: Relative uri cursor to the last page.
+      description: An object containing pagination   information
+      

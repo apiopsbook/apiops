@@ -1,0 +1,11 @@
+openapi: 3.0.3
+info:
+  title: Acme Product Catalog API
+  version: 0.0.1
+paths: {}
+components:
+  headers:
+    rateLimit:
+      description: The quota units associated to the client in the current time-window.
+      schema:
+        type: integer

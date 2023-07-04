@@ -1,0 +1,61 @@
+name: PR build workflow
+
+on: 
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  pr-code-build:
+    name: Build and test source code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout out pr branch
+        uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: Compile
+        run: |
+          cd chapter8
+          mvn --batch-mode clean compile
+      - name: Unit test
+        run: |
+          cd chapter8
+          mvn --batch-mode test
+  pr-api-minium-review-criteria:
+    name: Minimum design review criteria (MDRC) checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout out pr branch
+        uses: actions/checkout@v3
+        with:
+          path: pr-branch
+      - name: Check PR title
+        run: ./pr-branch/chapter8/pr-title.sh "'${{ github.event.pull_request.title }}'"
+      - name: Run API linting
+        run: | 
+          npx @stoplight/spectral-cli lint "./pr-branch/chapter8/apis/product-catalog.oas.yaml" --ruleset "./pr-branch/chapter8/apis/rulesets/json-api.ruleset.yaml"
+      - name: Check out main branch
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          path: base
+      - name: Breaking change checks
+        uses: oasdiff/oasdiff-action/check-breaking@main
+        with:
+          base: './base/chapter8/apis/product-catalog.oas.yaml'
+          revision: './pr-branch/chapter8/apis/product-catalog.oas.yaml'
+          fail-on-diff: true
+      - name: Prose Linting
+        run: | 
+          wget -nv  https://github.com/errata-ai/vale/releases/download/v2.15.4/vale_2.15.4_Linux_64-bit.tar.gz
+          mkdir bin && tar -xvzf vale_2.15.4_Linux_64-bit.tar.gz -C bin
+          export PATH=./bin:"$PATH"
+          
+          vale sync --config='pr-branch/chapter8/.vale.ini'
+          vale pr-branch/chapter8/apis/docs --config='pr-branch/chapter8/.vale.ini'
+       

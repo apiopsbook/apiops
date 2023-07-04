@@ -1,0 +1,107 @@
+openapi: 3.0.3
+info:
+  title: Acme Product Catalog API
+  version: 0.0.1
+paths: {}
+components:
+  schemas:
+    Product:
+      title: Product
+      required:
+        - id
+        - type
+        - attributes
+        - relationships
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: Identifier for the product.
+          example: dcd53ddb-8104-4e48-8cc0-5df1088c6113
+        type:
+          type: string
+          maxLength: 7
+          example: product
+        attributes:
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              maxLength: 50
+              minLength: 1
+              type: string
+              description: Name of the product.
+              example: Acme Uber Dog Rope Toy
+            description:
+              maxLength: 300
+              minLength: 0
+              type: string
+              description: A description of the product.
+              example: >-
+                Acme Uber Dog Rope Toy provides hours of fun for your dog. Great for
+                bouncing, throwing and catching.
+            price:
+              maximum: 1000000
+              minimum: 0
+              type: number
+              description: Price of the product.
+              example: 100
+            keywords:
+              maxItems: 20
+              minItems: 0
+              uniqueItems: true
+              type: array
+              items:
+                type: string
+              description: >-
+                A colleciton of words that describe the product, used for searching
+                for it.
+            reviewRating:
+              maximum: 5
+              minimum: 1
+              type: integer
+              description: Average product review rating.
+              format: int32
+              example: 5
+            numberOfReviews:
+              type: integer
+              description: Number of product reviews.
+              format: int32
+              example: 10
+        relationships:
+          type: object
+          additionalProperties: false
+          properties:
+            in_categories:
+              type: object
+              additionalProperties: false
+              uniqueItems: true
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        example: 1e32231d-b8a1-4145-b539-820301c2af64
+                      type:
+                        type: string
+                        maxLength: 8
+                        example: category
+            has_reviews:
+              type: object
+              additionalProperties: false
+              properties:
+                links:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    related:
+                      type: string
+                      maxLength: 100
+                      example: >-
+                        https://api.acme-pet-supplies.com/v1/catalog/products/dcd53ddb-8104-4e48-8cc0-5df1088c6113/reviews
+      description: An item in Acme's pet supplies catalog.

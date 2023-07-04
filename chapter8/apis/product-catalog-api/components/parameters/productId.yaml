@@ -1,0 +1,16 @@
+openapi: 3.0.3
+info:
+  title: Acme Product Catalog API
+  version: 0.0.1
+paths: {}
+components:
+  parameters:
+    productId:
+      name: id
+      in: path
+      description: Product identifier
+      required: true
+      style: simple
+      schema:
+        type: string
+        format: uuid
