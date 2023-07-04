@@ -1,0 +1,28 @@
+name: PR build workflow
+
+on: 
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  pr-code-build:
+    name: Build and test source code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout out pr branch
+        uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: Compile
+        run: |
+          cd chapter8
+          mvn --batch-mode clean compile
+      - name: Unit test
+        run: |
+          cd chapter8
+          mvn --batch-mode test
