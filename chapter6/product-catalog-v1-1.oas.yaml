@@ -1,0 +1,241 @@
+openapi: 3.0.3
+info:
+  title: Product Catalog API
+  description: >-
+    The Product Catalog API enables customers browse Acme Pet Supplies great
+    range of pet products and their product reviews.
+  contact:
+    name: John Smith
+    url: https://acme-pet-supplies.com/docs
+    email: john.smith@acme-pet-supplies.com
+  version: "1.0"
+servers:
+  - url: http://api.acme-pet-supplies.com
+tags:
+  - name: Products
+    description: A product is an item for sale on the store.
+
+paths:
+  /v1/catalog/products/{id}:
+    get:
+      tags:
+        - Products
+      summary: View a product's details
+      description: View a product's details.
+      operationId: viewProduct
+      parameters:
+        - $ref: "#/components/parameters/productId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "400":
+          $ref: "#/components/responses/400Response"
+        "401":
+          $ref: "#/components/responses/401Response"
+        "403":
+          $ref: "#/components/responses/403Response"
+        "404":
+          $ref: "#/components/responses/404Response"
+        "429":
+          $ref: "#/components/responses/429Response"
+        "500":
+          $ref: "#/components/responses/500Response"
+      deprecated: false
+
+components:
+  parameters:
+    productId:
+      name: id
+      in: path
+      description: Product identifier
+      required: true
+      style: simple
+      examples:
+        UUID1: 
+          summary: Example UUID 1
+          value: c05aed25-97cd-4cbc-b299-3796538eee9c
+        UUID2: 
+          summary: Example UUID 2
+          value: 6210282e-605b-4a35-a6ef-79430b876f70
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    Product:
+      title: Product
+      required:
+        - id
+        - name
+        - description
+        - price
+        - keywords
+        - reviewRating
+        - numberOfReviews
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifier for the product.
+          example: dcd53ddb-8104-4e48-8cc0-5df1088c6113
+        name:
+          maxLength: 50
+          minLength: 1
+          type: string
+          description: Name of the product.
+          example: Acme Uber Dog Rope Toy
+        description:
+          maxLength: 300
+          minLength: 0
+          type: string
+          description: A description of the product.
+          example: >-
+            Acme Uber Dog Rope Toy provides hours of fun for your dog. Great
+            for bouncing, throwing and catching.
+        price:
+          maximum: 1000000
+          minimum: 0
+          type: number
+          description: Price of the product.
+          example: 100
+        keywords:
+          maxItems: 20
+          minItems: 0
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+          description: >-
+            A colleciton of words that describe the product, used for
+            searching for it.
+        reviewRating:
+          maximum: 5
+          minimum: 1
+          type: integer
+          description: Average product review rating.
+          format: int32
+          example: 5
+        numberOfReviews:
+          type: integer
+          description: Number of product reviews.
+          format: int32
+          example: 10
+      description: An item in Acme's pet supplies catalog.
+    Error:
+      title: Error Response
+      description: >-
+        An error response.
+      type: object
+      required:
+        - status
+        - title
+      properties:
+        id:
+          description: >-
+            a unique identifier for this particular occurrence of the
+            problem
+          type: string
+          format: uuid
+        status:
+          description: the HTTP status code applicable to this problem
+          type: integer
+        code:
+          description: an application-specific error code
+          type: string
+          maxLength: 100
+        title:
+          description: >-
+            a short, human-readable summary of the problem that SHOULD NOT
+            change from occurrence to occurrence of the problem, except
+            for purposes of localization
+          type: string
+          maxLength: 100
+        detail:
+          description: >-
+            a human-readable explanation specific to this occurrence of
+            the problem. Like title, this field’s value can be localized
+          type: string
+          maxLength: 150
+  securitySchemes:
+    ApiKeyAuth:      
+      type: apiKey
+      in: header  
+      name: x-api-key
+  responses:
+    401Response:
+      description: Not authorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+              title: Not authorized
+              status: 401
+              detail: Authentication failure.
+              id: 8011c394-30c9-11ed-a261-0242ac120002
+    403Response:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example: 
+            title: Forbidden
+            status: 403
+            detail: >-
+                  Access to this resource is forbidden. Please check you are
+                  authorized to access this resource.
+            id: 747c7b00-30c9-11ed-a261-0242ac120002
+    429Response:
+      description: 429 Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+                title: 429 Too Many Requests
+                status: 429
+                detail: >-
+                  Too many requests. Request quota exceeded in time window. Try
+                  again soon
+                id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+    500Response:
+      description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+                title: 500 Internal Server Error
+                status: 500
+                detail: Internal server error
+                id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+    400Response:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+                title: Bad Request
+                status: 400
+                detail: Bad request. Please check the request is valid.
+                id: 8011c394-30c9-11ed-a261-0242ac120002
+    404Response:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+                title: Not Found
+                status: 404
+                detail: Resource not found.
+                id: 6c4a6b54-30c9-11ed-a261-0242ac120002
+security:
+  - ApiKeyAuth: []
