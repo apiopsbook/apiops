@@ -1,0 +1,14 @@
+README.md
+pom.xml
+src/main/java/com/acmepetsupplies/OpenApiGeneratorApplication.java
+src/main/java/com/acmepetsupplies/RFC3339DateFormat.java
+src/main/java/com/acmepetsupplies/configuration/HomeController.java
+src/main/java/com/acmepetsupplies/configuration/SpringDocConfiguration.java
+src/main/java/com/acmepetsupplies/controller/ApiUtil.java
+src/main/java/com/acmepetsupplies/controller/ProductsApi.java
+src/main/java/com/acmepetsupplies/controller/ProductsApiController.java
+src/main/java/com/acmepetsupplies/model/Error.java
+src/main/java/com/acmepetsupplies/model/Product.java
+src/main/resources/application.properties
+src/main/resources/openapi.yaml
+src/test/java/com/acmepetsupplies/OpenApiGeneratorApplicationTests.java
