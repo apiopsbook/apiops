@@ -1,0 +1,29 @@
+
+_format_version: "1.1"                                                                            
+services:
+  - name: Product_Catalog_API
+    protocol: http
+    host: localhost
+    port: 8080
+    path:  /
+    routes:
+      - tags:
+          - Product Catalog
+        name: viewProduct
+        methods:
+          - GET
+        hosts:
+          - api.acme-pet-supplies.com
+        paths:
+          - /v1/catalog/products/(.+)$
+        strip_path: false
+    plugins:
+      - name: key-auth
+        config: 
+          key_names:
+          - x-api-key
+
+consumers:
+- username: my_api_consumer
+  keyauth_credentials:
+  - key: my_secret_api_key

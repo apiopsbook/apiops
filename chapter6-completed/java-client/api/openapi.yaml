@@ -1,0 +1,317 @@
+openapi: 3.0.3
+info:
+  contact:
+    email: john.smith@acme-pet-supplies.com
+    name: John Smith
+    url: https://acme-pet-supplies.com/docs
+  description: The Product Catalog API enables customers browse Acme Pet Supplies
+    great range of pet products and their product reviews.
+  title: Product Catalog API
+  version: "1.0"
+servers:
+- url: http://api.acme-pet-supplies.com
+security:
+- ApiKeyAuth: []
+tags:
+- description: A product is an item for sale on the store.
+  name: Products
+paths:
+  /v1/catalog/products/{id}:
+    get:
+      deprecated: false
+      description: View a product's details.
+      operationId: viewProduct
+      parameters:
+      - description: Product identifier
+        examples:
+          UUID1:
+            summary: Example UUID 1
+            value: c05aed25-97cd-4cbc-b299-3796538eee9c
+          UUID2:
+            summary: Example UUID 2
+            value: 6210282e-605b-4a35-a6ef-79430b876f70
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: OK
+        "400":
+          content:
+            application/json:
+              example:
+                title: Bad Request
+                status: 400
+                detail: Bad request. Please check the request is valid.
+                id: 8011c394-30c9-11ed-a261-0242ac120002
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              example:
+                title: Not authorized
+                status: 401
+                detail: Authentication failure.
+                id: 8011c394-30c9-11ed-a261-0242ac120002
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not authorized
+        "403":
+          content:
+            application/json:
+              example:
+                title: Forbidden
+                status: 403
+                detail: Access to this resource is forbidden. Please check you are
+                  authorized to access this resource.
+                id: 747c7b00-30c9-11ed-a261-0242ac120002
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              example:
+                title: Not Found
+                status: 404
+                detail: Resource not found.
+                id: 6c4a6b54-30c9-11ed-a261-0242ac120002
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "429":
+          content:
+            application/json:
+              example:
+                title: 429 Too Many Requests
+                status: 429
+                detail: Too many requests. Request quota exceeded in time window.
+                  Try again soon
+                id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: 429 Too Many Requests
+        "500":
+          content:
+            application/json:
+              example:
+                title: 500 Internal Server Error
+                status: 500
+                detail: Internal server error
+                id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: 500 Internal Server Error
+      summary: View a product's details
+      tags:
+      - Products
+      x-accepts: application/json
+components:
+  parameters:
+    productId:
+      description: Product identifier
+      examples:
+        UUID1:
+          summary: Example UUID 1
+          value: c05aed25-97cd-4cbc-b299-3796538eee9c
+        UUID2:
+          summary: Example UUID 2
+          value: 6210282e-605b-4a35-a6ef-79430b876f70
+      explode: false
+      in: path
+      name: id
+      required: true
+      schema:
+        format: uuid
+        type: string
+      style: simple
+  responses:
+    "401Response":
+      content:
+        application/json:
+          example:
+            title: Not authorized
+            status: 401
+            detail: Authentication failure.
+            id: 8011c394-30c9-11ed-a261-0242ac120002
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not authorized
+    "403Response":
+      content:
+        application/json:
+          example:
+            title: Forbidden
+            status: 403
+            detail: Access to this resource is forbidden. Please check you are authorized
+              to access this resource.
+            id: 747c7b00-30c9-11ed-a261-0242ac120002
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden
+    "429Response":
+      content:
+        application/json:
+          example:
+            title: 429 Too Many Requests
+            status: 429
+            detail: Too many requests. Request quota exceeded in time window. Try
+              again soon
+            id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: 429 Too Many Requests
+    "500Response":
+      content:
+        application/json:
+          example:
+            title: 500 Internal Server Error
+            status: 500
+            detail: Internal server error
+            id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: 500 Internal Server Error
+    "400Response":
+      content:
+        application/json:
+          example:
+            title: Bad Request
+            status: 400
+            detail: Bad request. Please check the request is valid.
+            id: 8011c394-30c9-11ed-a261-0242ac120002
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad Request
+    "404Response":
+      content:
+        application/json:
+          example:
+            title: Not Found
+            status: 404
+            detail: Resource not found.
+            id: 6c4a6b54-30c9-11ed-a261-0242ac120002
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not Found
+  schemas:
+    Product:
+      additionalProperties: false
+      description: An item in Acme's pet supplies catalog.
+      example:
+        keywords:
+        - keywords
+        - keywords
+        - keywords
+        - keywords
+        - keywords
+        price: 100
+        numberOfReviews: 10
+        name: Acme Uber Dog Rope Toy
+        description: "Acme Uber Dog Rope Toy provides hours of fun for your dog. Great\
+          \ for bouncing, throwing and catching."
+        id: dcd53ddb-8104-4e48-8cc0-5df1088c6113
+        reviewRating: 5
+      properties:
+        id:
+          description: Identifier for the product.
+          example: dcd53ddb-8104-4e48-8cc0-5df1088c6113
+          format: uuid
+          type: string
+        name:
+          description: Name of the product.
+          example: Acme Uber Dog Rope Toy
+          maxLength: 50
+          minLength: 1
+          type: string
+        description:
+          description: A description of the product.
+          example: "Acme Uber Dog Rope Toy provides hours of fun for your dog. Great\
+            \ for bouncing, throwing and catching."
+          maxLength: 300
+          minLength: 0
+          type: string
+        price:
+          description: Price of the product.
+          example: 100
+          maximum: 1000000
+          minimum: 0
+          type: number
+        keywords:
+          description: "A colleciton of words that describe the product, used for\
+            \ searching for it."
+          items:
+            type: string
+          maxItems: 20
+          minItems: 0
+          type: array
+          uniqueItems: true
+        reviewRating:
+          description: Average product review rating.
+          example: 5
+          format: int32
+          maximum: 5
+          minimum: 1
+          type: integer
+        numberOfReviews:
+          description: Number of product reviews.
+          example: 10
+          format: int32
+          type: integer
+      required:
+      - description
+      - id
+      - keywords
+      - name
+      - numberOfReviews
+      - price
+      - reviewRating
+      title: Product
+      type: object
+    Error:
+      description: An error response.
+      properties:
+        id:
+          description: a unique identifier for this particular occurrence of the problem
+          format: uuid
+          type: string
+        status:
+          description: the HTTP status code applicable to this problem
+          type: integer
+        code:
+          description: an application-specific error code
+          maxLength: 100
+          type: string
+        title:
+          description: "a short, human-readable summary of the problem that SHOULD\
+            \ NOT change from occurrence to occurrence of the problem, except for\
+            \ purposes of localization"
+          maxLength: 100
+          type: string
+        detail:
+          description: "a human-readable explanation specific to this occurrence of\
+            \ the problem. Like title, this field’s value can be localized"
+          maxLength: 150
+          type: string
+      required:
+      - status
+      - title
+      title: Error Response
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      in: header
+      name: x-api-key
+      type: apiKey
+
