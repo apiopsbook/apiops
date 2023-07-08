@@ -1,0 +1,29 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+      "title": "An example API",
+      "version": "0.0.1"
+    },
+    "paths": {
+      "/v1/products/{id}": {
+        "delete": {
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Product deleted."
+            }
+          }
+        }
+      }
+    }
+  }
+  
