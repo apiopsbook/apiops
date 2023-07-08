@@ -1,0 +1,509 @@
+{
+  "_": {
+    "postman_id": "dfb86068-2b45-4aa9-ac94-eb54941cb250"
+  },
+  "item": [
+    {
+      "id": "d336896a-0a2e-4702-a8cd-74ba6858a158",
+      "name": "Products",
+      "description": {
+        "content": "A product is an item for sale on the store.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b8835965-0079-494e-a6d3-76859cf8fd9a",
+          "name": "View a product's details",
+          "request": {
+            "name": "View a product's details",
+            "description": {
+              "content": "View a product's details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "catalog",
+                "products",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) Product identifier",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "c05aed25-97cd-4cbc-b299-3796538eee9c",
+                  "key": "id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "disabled": false,
+                "key": "Host",
+                "value": "api.acme-pet-supplies.com"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "_": {
+                "postman_previewlanguage": "json"
+              },
+              "id": "4f4988b2-cee1-43df-add5-2a6a84845565",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "catalog",
+                    "products",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Product identifier",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "c05aed25-97cd-4cbc-b299-3796538eee9c",
+                      "key": "id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"dcd53ddb-8104-4e48-8cc0-5df1088c6113\",\n  \"name\": \"Acme Uber Dog Rope Toy\",\n  \"description\": \"Acme Uber Dog Rope Toy provides hours of fun for your dog. Great for bouncing, throwing and catching.\",\n  \"price\": 100,\n  \"keywords\": [\n    \"mollit ad Duis elit\",\n    \"cupidatat nulla dolore irure\",\n    \"in sit incididunt\",\n    \"proident cupidatat deserunt\",\n    \"adipisicing do proident nostrud\",\n    \"magna elit ullamco tempor\",\n    \"deserunt\",\n    \"cillum incididunt aute in\",\n    \"amet do ipsum adipisicing\",\n    \"velit quis Excepteur\",\n    \"sint nostrud nulla eiusmod magna\",\n    \"veniam cupidatat nostrud dolore elit\",\n    \"id officia in Lorem\",\n    \"incididunt nostrud cupidatat Lorem\",\n    \"ad tempor officia est do\",\n    \"ullamco in\",\n    \"sit ut in in in\",\n    \"Du\",\n    \"Excepteur amet\",\n    \"cupidatat dolor\"\n  ],\n  \"reviewRating\": 5,\n  \"numberOfReviews\": 10\n}",
+              "cookie": []
+            },
+            {
+              "_": {
+                "postman_previewlanguage": "json"
+              },
+              "id": "6296768d-8233-4003-8333-92d8528dd2e7",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "catalog",
+                    "products",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Product identifier",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "c05aed25-97cd-4cbc-b299-3796538eee9c",
+                      "key": "id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Bad Request\",\n  \"status\": 400,\n  \"detail\": \"Bad request. Please check the request is valid.\",\n  \"id\": \"8011c394-30c9-11ed-a261-0242ac120002\"\n}",
+              "cookie": []
+            },
+            {
+              "_": {
+                "postman_previewlanguage": "json"
+              },
+              "id": "fdbbddbb-8d83-4aea-9729-bf5ae52c288e",
+              "name": "Not authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "catalog",
+                    "products",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Product identifier",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "c05aed25-97cd-4cbc-b299-3796538eee9c",
+                      "key": "id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Not authorized\",\n  \"status\": 401,\n  \"detail\": \"Authentication failure.\",\n  \"id\": \"8011c394-30c9-11ed-a261-0242ac120002\"\n}",
+              "cookie": []
+            },
+            {
+              "_": {
+                "postman_previewlanguage": "json"
+              },
+              "id": "c5312bb6-be3b-4977-b3fb-d6bba4c80b5e",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "catalog",
+                    "products",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Product identifier",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "c05aed25-97cd-4cbc-b299-3796538eee9c",
+                      "key": "id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Forbidden\",\n  \"status\": 403,\n  \"detail\": \"Access to this resource is forbidden. Please check you are authorized to access this resource.\",\n  \"id\": \"747c7b00-30c9-11ed-a261-0242ac120002\"\n}",
+              "cookie": []
+            },
+            {
+              "_": {
+                "postman_previewlanguage": "json"
+              },
+              "id": "227a076d-50fb-4ea4-90b7-ba308b95866c",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "catalog",
+                    "products",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Product identifier",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "c05aed25-97cd-4cbc-b299-3796538eee9c",
+                      "key": "id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Not Found\",\n  \"status\": 404,\n  \"detail\": \"Resource not found.\",\n  \"id\": \"6c4a6b54-30c9-11ed-a261-0242ac120002\"\n}",
+              "cookie": []
+            },
+            {
+              "_": {
+                "postman_previewlanguage": "json"
+              },
+              "id": "b782b4b2-f93c-43a9-ad71-9ede2da56095",
+              "name": "429 Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "catalog",
+                    "products",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Product identifier",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "c05aed25-97cd-4cbc-b299-3796538eee9c",
+                      "key": "id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"429 Too Many Requests\",\n  \"status\": 429,\n  \"detail\": \"Too many requests. Request quota exceeded in time window. Try again soon\",\n  \"id\": \"ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1\"\n}",
+              "cookie": []
+            },
+            {
+              "_": {
+                "postman_previewlanguage": "json"
+              },
+              "id": "9799b7f6-93b6-4522-8152-8bfa4a3c7052",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "catalog",
+                    "products",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Product identifier",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "c05aed25-97cd-4cbc-b299-3796538eee9c",
+                      "key": "id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"500 Internal Server Error\",\n  \"status\": 500,\n  \"detail\": \"Internal server error\",\n  \"id\": \"ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1\"\n}",
+              "cookie": []
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "b9d314fb-2bd3-4245-b605-7e52c696869e",
+                "type": "text/javascript",
+                "exec": [
+                  "// Validate status 2xx \npm.test(\"[GET]::/v1/catalog/products/:id - Status code is 2xx\", function () {\n   pm.response.to.be.success;\n});\n",
+                  "// Response Validation\nconst schema = {\"title\":\"Product\",\"required\":[\"id\",\"name\",\"description\",\"price\",\"keywords\",\"reviewRating\",\"numberOfReviews\"],\"type\":\"object\",\"additionalProperties\":false,\"properties\":{\"id\":{\"type\":\"string\",\"format\":\"uuid\",\"description\":\"Identifier for the product.\",\"example\":\"dcd53ddb-8104-4e48-8cc0-5df1088c6113\"},\"name\":{\"maxLength\":50,\"minLength\":1,\"type\":\"string\",\"description\":\"Name of the product.\",\"example\":\"Acme Uber Dog Rope Toy\"},\"description\":{\"maxLength\":300,\"minLength\":0,\"type\":\"string\",\"description\":\"A description of the product.\",\"example\":\"Acme Uber Dog Rope Toy provides hours of fun for your dog. Great for bouncing, throwing and catching.\"},\"price\":{\"maximum\":1000000,\"minimum\":0,\"type\":\"number\",\"description\":\"Price of the product.\",\"example\":100},\"keywords\":{\"maxItems\":20,\"minItems\":0,\"uniqueItems\":true,\"type\":\"array\",\"items\":{\"type\":\"string\"},\"description\":\"A colleciton of words that describe the product, used for searching for it.\"},\"reviewRating\":{\"maximum\":5,\"minimum\":1,\"type\":\"integer\",\"description\":\"Average product review rating.\",\"format\":\"int32\",\"example\":5},\"numberOfReviews\":{\"type\":\"integer\",\"description\":\"Number of product reviews.\",\"format\":\"int32\",\"example\":10}},\"description\":\"An item in Acme's pet supplies catalog.\"}\n\n// Validate if response matches JSON schema \npm.test(\"[GET]::/v1/catalog/products/:id - Schema is valid\", function() {\n    pm.response.to.have.jsonSchema(schema,{unknownFormats: [\"int32\", \"int64\", \"float\", \"double\"]});\n});\n",
+                  "// Validate if response header has matching content-type\npm.test(\"[GET]::/v1/catalog/products/:id - Content-Type is application/json\", function () {\n   pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\n});\n",
+                  "// Validate if response has JSON Body \npm.test(\"[GET]::/v1/catalog/products/:id - Response has JSON Body\", function () {\n    pm.response.to.have.jsonBody();\n});\n"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "event": []
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "type": "any",
+        "value": "X-API-Key",
+        "key": "key"
+      },
+      {
+        "type": "any",
+        "value": "{{apiKey}}",
+        "key": "value"
+      },
+      {
+        "type": "any",
+        "value": "header",
+        "key": "in"
+      }
+    ]
+  },
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8000",
+      "key": "baseUrl"
+    },
+    {
+      "type": "string",
+      "value": "my_secret_api_key",
+      "key": "apiKey"
+    }
+  ],
+  "info": {
+    "_postman_id": "dfb86068-2b45-4aa9-ac94-eb54941cb250",
+    "name": "Product Catalog API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Product Catalog API enables customers browse Acme Pet Supplies great range of pet products and their product reviews.\n\nContact Support:\n Name: John Smith\n Email: john.smith@acme-pet-supplies.com",
+      "type": "text/plain"
+    }
+  }
+}

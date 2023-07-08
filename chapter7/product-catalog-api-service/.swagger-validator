@@ -1,0 +1,4 @@
+defaultLevel=ERROR
+validation.request=ERROR
+validation.response=ERROR
+validation.response.body.missing=ERROR

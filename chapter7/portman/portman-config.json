@@ -1,0 +1,58 @@
+{
+  "version": 1.0,
+  "overwrites": [
+    {
+      "openApiOperation": "*::/*",
+      "overwriteRequestHeaders": [
+        {
+          "key": "Host",
+          "value": "api.acme-pet-supplies.com",
+          "overwrite": true
+        }
+      ]
+    }
+  ],
+  "tests": {
+    "contractTests": [
+      {
+        "openApiOperation": "*::/*",
+        "statusSuccess": {
+          "enabled": true
+        }
+      },
+      {
+        "openApiOperation": "*::/*",
+        "schemaValidation": {
+          "enabled": true
+        }
+      },
+      {
+        "openApiOperation": "*::/*",
+        "contentType": {
+          "enabled": true
+        }
+      },
+      {
+        "openApiOperation": "*::/*",
+        "jsonBody": {
+          "enabled": true
+        }
+      },
+      {
+        "openApiOperation": "*::/*",
+        "headersPresent": {
+          "enabled": true
+        }
+      }
+    ]
+  },
+
+  "globals": {
+    "securityOverwrites": {
+      "apiKey": {
+        "key": "X-API-Key",
+        "value": "{{apiKey}}"
+      }
+    }
+  }
+}

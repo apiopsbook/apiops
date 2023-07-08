@@ -3,3 +3,7 @@
 .idea
 **/target/**
 */kong/kong_dir
+**/.hypothesis
+**/__pycache__
+**/cassette.yaml
+**/tmp
