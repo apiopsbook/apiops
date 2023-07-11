@@ -1,0 +1,415 @@
+2023/01/08 01:40:17 [notice] 52387#0: [lua] regex.lua:431: parse_regex_opts(): regex compilation cache disabled in init phase under macOS
+2023/01/08 01:40:17 [notice] 52387#0: [lua] regex.lua:435: parse_regex_opts(): regex compilation disabled in init phase under macOS
+2023/01/08 01:40:17 [notice] 52387#0: [lua] regex.lua:435: parse_regex_opts(): regex compilation disabled in init phase under macOS
+2023/01/08 01:40:17 [notice] 52387#0: [lua] regex.lua:431: parse_regex_opts(): regex compilation cache disabled in init phase under macOS
+2023/01/08 01:40:17 [notice] 52387#0: [lua] regex.lua:431: parse_regex_opts(): regex compilation cache disabled in init phase under macOS
+2023/01/08 01:40:17 [notice] 52387#0: [lua] regex.lua:435: parse_regex_opts(): regex compilation disabled in init phase under macOS
+2023/01/08 01:40:17 [notice] 52387#0: using the "kqueue" event method
+2023/01/08 01:40:17 [notice] 52387#0: openresty/1.21.4.1
+2023/01/08 01:40:17 [notice] 52387#0: OS: Darwin 21.6.0
+2023/01/08 01:40:17 [notice] 52387#0: hw.ncpu: 12
+2023/01/08 01:40:17 [notice] 52387#0: net.inet.tcp.sendspace: 131072
+2023/01/08 01:40:17 [notice] 52387#0: kern.ipc.somaxconn: 128
+2023/01/08 01:40:17 [notice] 52387#0: getrlimit(RLIMIT_NOFILE): 256:9223372036854775807
+2023/01/08 01:40:17 [notice] 52396#0: start worker processes
+2023/01/08 01:40:17 [notice] 52396#0: start worker process 52397
+2023/01/08 01:40:17 [notice] 52396#0: start worker process 52398
+2023/01/08 01:40:17 [notice] 52396#0: start worker process 52399
+2023/01/08 01:40:17 [notice] 52396#0: start worker process 52400
+2023/01/08 01:40:17 [notice] 52396#0: start worker process 52401
+2023/01/08 01:40:17 [notice] 52396#0: start worker process 52402
+2023/01/08 01:40:17 [notice] 52396#0: start worker process 52403
+2023/01/08 01:40:17 [notice] 52396#0: start worker process 52404
+2023/01/08 01:40:17 [notice] 52396#0: start worker process 52405
+2023/01/08 01:40:17 [notice] 52396#0: start worker process 52406
+2023/01/08 01:40:17 [notice] 52396#0: start worker process 52407
+2023/01/08 01:40:17 [notice] 52396#0: start worker process 52408
+2023/01/08 01:40:17 [notice] 52401#0: *1 [lua] init.lua:240: purge(): [DB cache] purging (local) cache, context: init_worker_by_lua*
+2023/01/08 01:40:17 [notice] 52401#0: *1 [lua] init.lua:240: purge(): [DB cache] purging (local) cache, context: init_worker_by_lua*
+2023/01/08 01:40:17 [notice] 52401#0: *1 [kong] init.lua:453 declarative config loaded from ./kong.yml, context: init_worker_by_lua*
+2023/01/08 01:40:17 [notice] 52399#0: *2 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+2023/01/08 01:40:17 [notice] 52407#0: *6 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+2023/01/08 01:40:17 [notice] 52398#0: *4 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+2023/01/08 01:40:18 [notice] 52404#0: *9 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:40:18 [notice] 52401#0: *1 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:40:18 [notice] 52397#0: *5 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:40:18 [notice] 52406#0: *10 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:40:18 [notice] 52407#0: *6 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:40:18 [notice] 52398#0: *4 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:40:18 [notice] 52402#0: *8 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:40:18 [notice] 52399#0: *2 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:40:18 [notice] 52400#0: *3 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:40:18 [notice] 52405#0: *7 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:40:18 [notice] 52403#0: *11 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:40:18 [notice] 52408#0: *12 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:40:18 [notice] 52396#0: signal 23 (SIGIO) received from 52404
+2023/01/08 01:40:18 [notice] 52396#0: signal 23 (SIGIO) received
+2023/01/08 01:40:18 [notice] 52396#0: signal 23 (SIGIO) received from 52406
+2023/01/08 01:40:18 [notice] 52396#0: signal 23 (SIGIO) received from 52407
+2023/01/08 01:40:18 [notice] 52396#0: signal 23 (SIGIO) received from 52398
+2023/01/08 01:40:18 [notice] 52396#0: signal 23 (SIGIO) received
+2023/01/08 01:40:18 [notice] 52396#0: signal 23 (SIGIO) received from 52398
+2023/01/08 01:40:18 [notice] 52396#0: signal 23 (SIGIO) received
+2023/01/08 01:40:18 [notice] 52396#0: signal 23 (SIGIO) received from 52402
+2023/01/08 01:40:18 [notice] 52396#0: signal 23 (SIGIO) received from 52399
+2023/01/08 01:40:18 [notice] 52396#0: signal 23 (SIGIO) received from 52400
+2023/01/08 01:40:18 [notice] 52396#0: signal 23 (SIGIO) received
+2023/01/08 01:40:18 [notice] 52396#0: signal 23 (SIGIO) received
+2023/01/08 01:40:18 [notice] 52396#0: signal 23 (SIGIO) received
+2023/01/08 01:40:18 [notice] 52396#0: signal 23 (SIGIO) received
+2023/01/08 01:40:18 [notice] 52396#0: signal 23 (SIGIO) received from 52405
+2023/01/08 01:40:18 [notice] 52396#0: signal 23 (SIGIO) received from 52403
+2023/01/08 01:40:18 [notice] 52396#0: signal 23 (SIGIO) received
+2023/01/08 01:43:05 [notice] 52396#0: signal 15 (SIGTERM) received from 52673, exiting
+2023/01/08 01:43:05 [notice] 52398#0: exiting
+2023/01/08 01:43:05 [notice] 52408#0: exiting
+2023/01/08 01:43:05 [notice] 52402#0: exiting
+2023/01/08 01:43:05 [notice] 52403#0: exiting
+2023/01/08 01:43:05 [notice] 52396#0: signal 23 (SIGIO) received from 52406
+2023/01/08 01:43:05 [notice] 52406#0: exiting
+2023/01/08 01:43:05 [notice] 52404#0: exiting
+2023/01/08 01:43:05 [notice] 52396#0: signal 23 (SIGIO) received
+2023/01/08 01:43:05 [notice] 52405#0: exiting
+2023/01/08 01:43:05 [notice] 52396#0: signal 23 (SIGIO) received
+2023/01/08 01:43:05 [notice] 52407#0: exiting
+2023/01/08 01:43:05 [notice] 52399#0: exiting
+2023/01/08 01:43:05 [notice] 52400#0: exiting
+2023/01/08 01:43:05 [notice] 52397#0: exiting
+2023/01/08 01:43:05 [notice] 52401#0: exiting
+2023/01/08 01:43:05 [notice] 52396#0: signal 23 (SIGIO) received from 52397
+2023/01/08 01:43:05 [notice] 52396#0: signal 23 (SIGIO) received
+2023/01/08 01:43:05 [notice] 52396#0: signal 14 (SIGALRM) received
+2023/01/08 01:43:05 [notice] 52406#0: exit
+2023/01/08 01:43:05 [notice] 52396#0: signal 20 (SIGCHLD) received from 52406
+2023/01/08 01:43:05 [notice] 52396#0: worker process 52406 exited with code 0
+2023/01/08 01:43:05 [notice] 52396#0: signal 23 (SIGIO) received
+2023/01/08 01:43:05 [notice] 52403#0: exit
+2023/01/08 01:43:05 [notice] 52396#0: signal 20 (SIGCHLD) received from 52403
+2023/01/08 01:43:05 [notice] 52396#0: worker process 52403 exited with code 0
+2023/01/08 01:43:05 [notice] 52396#0: signal 23 (SIGIO) received
+2023/01/08 01:43:05 [notice] 52399#0: exit
+2023/01/08 01:43:05 [notice] 52398#0: exit
+2023/01/08 01:43:05 [notice] 52401#0: exit
+2023/01/08 01:43:05 [notice] 52397#0: exit
+2023/01/08 01:43:05 [notice] 52402#0: exit
+2023/01/08 01:43:05 [notice] 52404#0: exit
+2023/01/08 01:43:05 [notice] 52396#0: signal 20 (SIGCHLD) received from 52399
+2023/01/08 01:43:05 [notice] 52396#0: worker process 52399 exited with code 0
+2023/01/08 01:43:05 [notice] 52396#0: signal 23 (SIGIO) received
+2023/01/08 01:43:05 [notice] 52396#0: signal 20 (SIGCHLD) received from 52398
+2023/01/08 01:43:05 [notice] 52396#0: worker process 52398 exited with code 0
+2023/01/08 01:43:05 [notice] 52396#0: signal 23 (SIGIO) received
+2023/01/08 01:43:05 [notice] 52407#0: exit
+2023/01/08 01:43:05 [notice] 52400#0: exit
+2023/01/08 01:43:05 [notice] 52396#0: signal 20 (SIGCHLD) received from 52401
+2023/01/08 01:43:05 [notice] 52396#0: worker process 52401 exited with code 0
+2023/01/08 01:43:05 [notice] 52396#0: signal 23 (SIGIO) received
+2023/01/08 01:43:05 [notice] 52405#0: exit
+2023/01/08 01:43:05 [notice] 52396#0: signal 20 (SIGCHLD) received from 52397
+2023/01/08 01:43:05 [notice] 52396#0: worker process 52397 exited with code 0
+2023/01/08 01:43:05 [notice] 52396#0: signal 23 (SIGIO) received
+2023/01/08 01:43:05 [notice] 52408#0: exit
+2023/01/08 01:43:05 [notice] 52396#0: signal 20 (SIGCHLD) received from 52402
+2023/01/08 01:43:05 [notice] 52396#0: worker process 52404 exited with code 0
+2023/01/08 01:43:05 [notice] 52396#0: worker process 52402 exited with code 0
+2023/01/08 01:43:05 [notice] 52396#0: signal 23 (SIGIO) received
+2023/01/08 01:43:05 [notice] 52396#0: signal 20 (SIGCHLD) received from 52400
+2023/01/08 01:43:05 [notice] 52396#0: worker process 52407 exited with code 0
+2023/01/08 01:43:05 [notice] 52396#0: worker process 52400 exited with code 0
+2023/01/08 01:43:05 [notice] 52396#0: signal 23 (SIGIO) received
+2023/01/08 01:43:05 [notice] 52396#0: signal 20 (SIGCHLD) received from 52405
+2023/01/08 01:43:05 [notice] 52396#0: worker process 52405 exited with code 0
+2023/01/08 01:43:05 [notice] 52396#0: signal 23 (SIGIO) received
+2023/01/08 01:43:05 [notice] 52396#0: signal 23 (SIGIO) received from 52408
+2023/01/08 01:43:05 [notice] 52396#0: signal 20 (SIGCHLD) received from 52408
+2023/01/08 01:43:05 [notice] 52396#0: worker process 52408 exited with code 0
+2023/01/08 01:43:05 [notice] 52396#0: signal 23 (SIGIO) received
+2023/01/08 01:43:05 [notice] 52396#0: exit
+2023/01/08 01:43:19 [notice] 52744#0: [lua] regex.lua:431: parse_regex_opts(): regex compilation cache disabled in init phase under macOS
+2023/01/08 01:43:19 [notice] 52744#0: [lua] regex.lua:435: parse_regex_opts(): regex compilation disabled in init phase under macOS
+2023/01/08 01:43:19 [notice] 52744#0: [lua] regex.lua:435: parse_regex_opts(): regex compilation disabled in init phase under macOS
+2023/01/08 01:43:19 [notice] 52744#0: [lua] regex.lua:431: parse_regex_opts(): regex compilation cache disabled in init phase under macOS
+2023/01/08 01:43:19 [notice] 52744#0: [lua] regex.lua:431: parse_regex_opts(): regex compilation cache disabled in init phase under macOS
+2023/01/08 01:43:19 [notice] 52744#0: [lua] regex.lua:435: parse_regex_opts(): regex compilation disabled in init phase under macOS
+2023/01/08 01:43:20 [notice] 52744#0: using the "kqueue" event method
+2023/01/08 01:43:20 [notice] 52744#0: openresty/1.21.4.1
+2023/01/08 01:43:20 [notice] 52744#0: OS: Darwin 21.6.0
+2023/01/08 01:43:20 [notice] 52744#0: hw.ncpu: 12
+2023/01/08 01:43:20 [notice] 52744#0: net.inet.tcp.sendspace: 131072
+2023/01/08 01:43:20 [notice] 52744#0: kern.ipc.somaxconn: 128
+2023/01/08 01:43:20 [notice] 52744#0: getrlimit(RLIMIT_NOFILE): 256:9223372036854775807
+2023/01/08 01:43:20 [notice] 52751#0: start worker processes
+2023/01/08 01:43:20 [notice] 52751#0: start worker process 52752
+2023/01/08 01:43:20 [notice] 52751#0: start worker process 52753
+2023/01/08 01:43:20 [notice] 52751#0: start worker process 52754
+2023/01/08 01:43:20 [notice] 52751#0: start worker process 52755
+2023/01/08 01:43:20 [notice] 52751#0: start worker process 52756
+2023/01/08 01:43:20 [notice] 52751#0: start worker process 52757
+2023/01/08 01:43:20 [notice] 52751#0: start worker process 52758
+2023/01/08 01:43:20 [notice] 52751#0: start worker process 52759
+2023/01/08 01:43:20 [notice] 52751#0: start worker process 52760
+2023/01/08 01:43:20 [notice] 52751#0: start worker process 52761
+2023/01/08 01:43:20 [notice] 52751#0: start worker process 52762
+2023/01/08 01:43:20 [notice] 52751#0: start worker process 52763
+2023/01/08 01:43:20 [notice] 52753#0: *1 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52757#0: *6 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52752#0: *5 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52755#0: *3 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52760#0: *7 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52759#0: *8 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52757#0: *6 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.002 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52760#0: *7 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.002 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52755#0: *3 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.002 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52752#0: *5 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.002 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52761#0: *10 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52753#0: *1 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.002 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52754#0: *2 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52761#0: *10 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.002 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52757#0: *6 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.004 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52760#0: *7 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.004 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52752#0: *5 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.004 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52755#0: *3 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.004 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52759#0: *8 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.002 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52753#0: *1 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.004 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52754#0: *2 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.002 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52761#0: *10 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.004 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52756#0: *4 [lua] init.lua:240: purge(): [DB cache] purging (local) cache, context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52756#0: *4 [lua] init.lua:240: purge(): [DB cache] purging (local) cache, context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52756#0: *4 [kong] init.lua:453 declarative config loaded from ./kong.yml, context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52757#0: *6 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.008 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52752#0: *5 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.008 seconds), context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52756#0: *4 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52760#0: *7 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52759#0: *8 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52755#0: *3 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52753#0: *1 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52758#0: *9 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52754#0: *2 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52761#0: *10 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52757#0: *6 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52752#0: *5 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52763#0: *12 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52762#0: *11 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received from 52753
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received from 52753
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received from 52753
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received from 52754
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received from 52752
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received from 52752
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received from 52752
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received from 52755
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received from 52755
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received from 52755
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received from 52755
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received from 52755
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received from 52755
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received from 52757
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received from 52760
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received from 52758
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received from 52758
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received from 52758
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received from 52756
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received from 52761
+2023/01/08 01:43:20 [notice] 52751#0: signal 23 (SIGIO) received from 52762
+2023/01/08 01:45:30 [notice] 52751#0: signal 15 (SIGTERM) received from 52841, exiting
+2023/01/08 01:45:30 [notice] 52752#0: exiting
+2023/01/08 01:45:30 [notice] 52751#0: signal 23 (SIGIO) received
+2023/01/08 01:45:30 [notice] 52761#0: exiting
+2023/01/08 01:45:30 [notice] 52753#0: exiting
+2023/01/08 01:45:30 [notice] 52757#0: exiting
+2023/01/08 01:45:30 [notice] 52760#0: exiting
+2023/01/08 01:45:30 [notice] 52762#0: exiting
+2023/01/08 01:45:30 [notice] 52756#0: exiting
+2023/01/08 01:45:30 [notice] 52763#0: exiting
+2023/01/08 01:45:30 [notice] 52754#0: exiting
+2023/01/08 01:45:30 [notice] 52755#0: exiting
+2023/01/08 01:45:30 [notice] 52758#0: exiting
+2023/01/08 01:45:30 [notice] 52759#0: exiting
+2023/01/08 01:45:30 [notice] 52751#0: signal 23 (SIGIO) received
+2023/01/08 01:45:30 [notice] 52751#0: signal 23 (SIGIO) received
+2023/01/08 01:45:30 [notice] 52751#0: signal 14 (SIGALRM) received
+2023/01/08 01:45:30 [notice] 52756#0: exit
+2023/01/08 01:45:30 [notice] 52760#0: exit
+2023/01/08 01:45:30 [notice] 52751#0: signal 20 (SIGCHLD) received from 52756
+2023/01/08 01:45:30 [notice] 52751#0: worker process 52756 exited with code 0
+2023/01/08 01:45:30 [notice] 52751#0: worker process 52760 exited with code 0
+2023/01/08 01:45:30 [notice] 52762#0: exit
+2023/01/08 01:45:30 [notice] 52751#0: signal 23 (SIGIO) received
+2023/01/08 01:45:30 [notice] 52751#0: signal 20 (SIGCHLD) received from 52760
+2023/01/08 01:45:30 [notice] 52752#0: exit
+2023/01/08 01:45:30 [notice] 52758#0: exit
+2023/01/08 01:45:30 [notice] 52751#0: signal 20 (SIGCHLD) received from 52762
+2023/01/08 01:45:30 [notice] 52751#0: worker process 52762 exited with code 0
+2023/01/08 01:45:30 [notice] 52751#0: signal 23 (SIGIO) received
+2023/01/08 01:45:30 [notice] 52755#0: exit
+2023/01/08 01:45:30 [notice] 52761#0: exit
+2023/01/08 01:45:30 [notice] 52751#0: signal 20 (SIGCHLD) received from 52752
+2023/01/08 01:45:30 [notice] 52751#0: worker process 52752 exited with code 0
+2023/01/08 01:45:30 [notice] 52751#0: signal 23 (SIGIO) received
+2023/01/08 01:45:30 [notice] 52751#0: signal 20 (SIGCHLD) received from 52758
+2023/01/08 01:45:30 [notice] 52751#0: worker process 52758 exited with code 0
+2023/01/08 01:45:30 [notice] 52751#0: signal 23 (SIGIO) received
+2023/01/08 01:45:30 [notice] 52759#0: exit
+2023/01/08 01:45:30 [notice] 52751#0: signal 20 (SIGCHLD) received from 52755
+2023/01/08 01:45:30 [notice] 52751#0: worker process 52755 exited with code 0
+2023/01/08 01:45:30 [notice] 52751#0: signal 23 (SIGIO) received
+2023/01/08 01:45:30 [notice] 52751#0: signal 20 (SIGCHLD) received from 52761
+2023/01/08 01:45:30 [notice] 52751#0: worker process 52761 exited with code 0
+2023/01/08 01:45:30 [notice] 52751#0: signal 23 (SIGIO) received
+2023/01/08 01:45:30 [notice] 52763#0: exit
+2023/01/08 01:45:30 [notice] 52754#0: exit
+2023/01/08 01:45:30 [notice] 52751#0: signal 20 (SIGCHLD) received from 52759
+2023/01/08 01:45:30 [notice] 52751#0: worker process 52759 exited with code 0
+2023/01/08 01:45:30 [notice] 52751#0: signal 23 (SIGIO) received
+2023/01/08 01:45:30 [notice] 52757#0: exit
+2023/01/08 01:45:30 [notice] 52753#0: exit
+2023/01/08 01:45:30 [notice] 52751#0: signal 20 (SIGCHLD) received from 52763
+2023/01/08 01:45:30 [notice] 52751#0: worker process 52763 exited with code 0
+2023/01/08 01:45:30 [notice] 52751#0: signal 23 (SIGIO) received
+2023/01/08 01:45:30 [notice] 52751#0: signal 20 (SIGCHLD) received from 52754
+2023/01/08 01:45:30 [notice] 52751#0: worker process 52757 exited with code 0
+2023/01/08 01:45:30 [notice] 52751#0: worker process 52754 exited with code 0
+2023/01/08 01:45:30 [notice] 52751#0: signal 23 (SIGIO) received
+2023/01/08 01:45:30 [notice] 52751#0: signal 20 (SIGCHLD) received from 52753
+2023/01/08 01:45:30 [notice] 52751#0: worker process 52753 exited with code 0
+2023/01/08 01:45:30 [notice] 52751#0: exit
+2023/01/08 01:45:43 [notice] 52965#0: [lua] regex.lua:431: parse_regex_opts(): regex compilation cache disabled in init phase under macOS
+2023/01/08 01:45:43 [notice] 52965#0: [lua] regex.lua:435: parse_regex_opts(): regex compilation disabled in init phase under macOS
+2023/01/08 01:45:43 [notice] 52965#0: [lua] regex.lua:431: parse_regex_opts(): regex compilation cache disabled in init phase under macOS
+2023/01/08 01:45:43 [notice] 52965#0: [lua] regex.lua:435: parse_regex_opts(): regex compilation disabled in init phase under macOS
+2023/01/08 01:45:43 [notice] 52965#0: [lua] regex.lua:435: parse_regex_opts(): regex compilation disabled in init phase under macOS
+2023/01/08 01:45:43 [notice] 52965#0: [lua] regex.lua:431: parse_regex_opts(): regex compilation cache disabled in init phase under macOS
+2023/01/08 01:45:43 [notice] 52965#0: using the "kqueue" event method
+2023/01/08 01:45:43 [notice] 52965#0: openresty/1.21.4.1
+2023/01/08 01:45:43 [notice] 52965#0: OS: Darwin 21.6.0
+2023/01/08 01:45:43 [notice] 52965#0: hw.ncpu: 12
+2023/01/08 01:45:43 [notice] 52965#0: net.inet.tcp.sendspace: 131072
+2023/01/08 01:45:43 [notice] 52965#0: kern.ipc.somaxconn: 128
+2023/01/08 01:45:43 [notice] 52965#0: getrlimit(RLIMIT_NOFILE): 256:9223372036854775807
+2023/01/08 01:45:43 [notice] 52971#0: start worker processes
+2023/01/08 01:45:43 [notice] 52971#0: start worker process 52972
+2023/01/08 01:45:43 [notice] 52971#0: start worker process 52973
+2023/01/08 01:45:43 [notice] 52971#0: start worker process 52974
+2023/01/08 01:45:43 [notice] 52971#0: start worker process 52975
+2023/01/08 01:45:43 [notice] 52971#0: start worker process 52976
+2023/01/08 01:45:43 [notice] 52971#0: start worker process 52977
+2023/01/08 01:45:43 [notice] 52971#0: start worker process 52978
+2023/01/08 01:45:43 [notice] 52971#0: start worker process 52979
+2023/01/08 01:45:43 [notice] 52971#0: start worker process 52980
+2023/01/08 01:45:43 [notice] 52971#0: start worker process 52981
+2023/01/08 01:45:43 [notice] 52971#0: start worker process 52982
+2023/01/08 01:45:43 [notice] 52971#0: start worker process 52983
+2023/01/08 01:45:43 [notice] 52973#0: *3 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52973#0: *3 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.002 seconds), context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52972#0: *6 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52975#0: *5 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52977#0: *4 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52972#0: *6 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.002 seconds), context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52973#0: *3 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.004 seconds), context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52975#0: *5 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.002 seconds), context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52977#0: *4 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.002 seconds), context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52980#0: *7 [lua] globalpatches.lua:66: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52974#0: *1 [lua] init.lua:240: purge(): [DB cache] purging (local) cache, context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52974#0: *1 [lua] init.lua:240: purge(): [DB cache] purging (local) cache, context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52974#0: *1 [kong] init.lua:453 declarative config loaded from ./kong.yml, context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52980#0: *7 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52974#0: *1 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52975#0: *5 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52977#0: *4 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52972#0: *6 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52981#0: *10 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52973#0: *3 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52979#0: *8 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52976#0: *2 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52982#0: *9 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52978#0: *11 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52983#0: *12 [lua] init.lua:415: every(): [timer-ng] fallback to ngx.timer.every [interval = 86400], context: init_worker_by_lua*
+2023/01/08 01:45:43 [notice] 52971#0: signal 23 (SIGIO) received from 52977
+2023/01/08 01:45:43 [notice] 52971#0: signal 23 (SIGIO) received
+2023/01/08 01:45:43 [notice] 52971#0: signal 23 (SIGIO) received from 52974
+2023/01/08 01:45:43 [notice] 52971#0: signal 23 (SIGIO) received from 52981
+2023/01/08 01:45:43 [notice] 52971#0: signal 23 (SIGIO) received from 52982
+2023/01/08 01:45:43 [notice] 52971#0: signal 23 (SIGIO) received from 52974
+2023/01/08 01:45:43 [notice] 52971#0: signal 23 (SIGIO) received
+2023/01/08 01:45:43 [notice] 52971#0: signal 23 (SIGIO) received from 52973
+2023/01/08 01:45:43 [notice] 52971#0: signal 23 (SIGIO) received from 52973
+2023/01/08 01:45:43 [notice] 52971#0: signal 23 (SIGIO) received from 52973
+2023/01/08 01:45:43 [notice] 52971#0: signal 23 (SIGIO) received from 52973
+2023/01/08 01:45:43 [notice] 52971#0: signal 23 (SIGIO) received
+2023/01/08 01:45:43 [notice] 52971#0: signal 23 (SIGIO) received from 52973
+2023/01/08 01:45:43 [notice] 52971#0: signal 23 (SIGIO) received from 52979
+2023/01/08 01:45:43 [notice] 52971#0: signal 23 (SIGIO) received
+2023/01/08 01:45:43 [notice] 52971#0: signal 23 (SIGIO) received from 52976
+2023/01/08 01:45:43 [notice] 52971#0: signal 23 (SIGIO) received from 52976
+2023/01/08 01:45:43 [notice] 52971#0: signal 23 (SIGIO) received
+2023/01/08 01:45:43 [notice] 52971#0: signal 23 (SIGIO) received from 52978
+2023/01/08 01:45:43 [notice] 52971#0: signal 23 (SIGIO) received from 52978
+2023/01/08 01:48:56 [notice] 52971#0: signal 15 (SIGTERM) received from 53128, exiting
+2023/01/08 01:48:56 [notice] 52972#0: exiting
+2023/01/08 01:48:56 [notice] 52971#0: signal 23 (SIGIO) received from 52983
+2023/01/08 01:48:56 [notice] 52973#0: exiting
+2023/01/08 01:48:56 [notice] 52978#0: exiting
+2023/01/08 01:48:56 [notice] 52982#0: exiting
+2023/01/08 01:48:56 [notice] 52976#0: exiting
+2023/01/08 01:48:56 [notice] 52975#0: exiting
+2023/01/08 01:48:56 [notice] 52977#0: exiting
+2023/01/08 01:48:56 [notice] 52981#0: exiting
+2023/01/08 01:48:56 [notice] 52983#0: exiting
+2023/01/08 01:48:56 [notice] 52980#0: exiting
+2023/01/08 01:48:56 [notice] 52979#0: exiting
+2023/01/08 01:48:56 [notice] 52974#0: exiting
+2023/01/08 01:48:56 [notice] 52971#0: signal 14 (SIGALRM) received
+2023/01/08 01:48:56 [notice] 52978#0: exit
+2023/01/08 01:48:56 [notice] 52972#0: exit
+2023/01/08 01:48:56 [notice] 52971#0: signal 20 (SIGCHLD) received from 52978
+2023/01/08 01:48:56 [notice] 52971#0: worker process 52978 exited with code 0
+2023/01/08 01:48:56 [notice] 52971#0: signal 23 (SIGIO) received
+2023/01/08 01:48:56 [notice] 52982#0: exit
+2023/01/08 01:48:56 [notice] 52971#0: signal 20 (SIGCHLD) received from 52972
+2023/01/08 01:48:56 [notice] 52971#0: worker process 52972 exited with code 0
+2023/01/08 01:48:56 [notice] 52971#0: signal 23 (SIGIO) received
+2023/01/08 01:48:56 [notice] 52973#0: exit
+2023/01/08 01:48:56 [notice] 52983#0: exit
+2023/01/08 01:48:56 [notice] 52979#0: exit
+2023/01/08 01:48:56 [notice] 52981#0: exit
+2023/01/08 01:48:56 [notice] 52980#0: exit
+2023/01/08 01:48:56 [notice] 52971#0: signal 20 (SIGCHLD) received from 52982
+2023/01/08 01:48:56 [notice] 52971#0: worker process 52982 exited with code 0
+2023/01/08 01:48:56 [notice] 52971#0: signal 23 (SIGIO) received
+2023/01/08 01:48:56 [notice] 52971#0: signal 20 (SIGCHLD) received from 52973
+2023/01/08 01:48:56 [notice] 52971#0: worker process 52973 exited with code 0
+2023/01/08 01:48:56 [notice] 52971#0: signal 23 (SIGIO) received
+2023/01/08 01:48:56 [notice] 52971#0: signal 20 (SIGCHLD) received from 52983
+2023/01/08 01:48:56 [notice] 52971#0: worker process 52983 exited with code 0
+2023/01/08 01:48:56 [notice] 52971#0: signal 23 (SIGIO) received
+2023/01/08 01:48:56 [notice] 52971#0: signal 20 (SIGCHLD) received from 52980
+2023/01/08 01:48:56 [notice] 52971#0: worker process 52980 exited with code 0
+2023/01/08 01:48:56 [notice] 52971#0: signal 23 (SIGIO) received
+2023/01/08 01:48:56 [notice] 52971#0: signal 20 (SIGCHLD) received from 52979
+2023/01/08 01:48:56 [notice] 52971#0: worker process 52979 exited with code 0
+2023/01/08 01:48:56 [notice] 52971#0: signal 23 (SIGIO) received
+2023/01/08 01:48:56 [notice] 52971#0: signal 20 (SIGCHLD) received from 52981
+2023/01/08 01:48:56 [notice] 52971#0: worker process 52981 exited with code 0
+2023/01/08 01:48:56 [notice] 52971#0: signal 23 (SIGIO) received
+2023/01/08 01:48:56 [notice] 52977#0: exit
+2023/01/08 01:48:56 [notice] 52974#0: exit
+2023/01/08 01:48:56 [notice] 52975#0: exit
+2023/01/08 01:48:56 [notice] 52976#0: exit
+2023/01/08 01:48:56 [notice] 52971#0: signal 20 (SIGCHLD) received from 52977
+2023/01/08 01:48:56 [notice] 52971#0: worker process 52977 exited with code 0
+2023/01/08 01:48:56 [notice] 52971#0: signal 23 (SIGIO) received
+2023/01/08 01:48:56 [notice] 52971#0: signal 23 (SIGIO) received
+2023/01/08 01:48:56 [notice] 52971#0: signal 23 (SIGIO) received
+2023/01/08 01:48:56 [notice] 52971#0: signal 20 (SIGCHLD) received from 52974
+2023/01/08 01:48:56 [notice] 52971#0: worker process 52976 exited with code 0
+2023/01/08 01:48:56 [notice] 52971#0: worker process 52975 exited with code 0
+2023/01/08 01:48:56 [notice] 52971#0: worker process 52974 exited with code 0
+2023/01/08 01:48:56 [notice] 52971#0: exit
