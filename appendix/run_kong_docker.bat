@@ -11,4 +11,4 @@ docker run -d --name kong-dbless ^
   -p 8443:8443 ^
   -p 127.0.0.1:8001:8001 ^
   -p 127.0.0.1:8444:8444 ^
-  kong:3.3.1.0
+  kong/kong-gateway:3.3.1.0
