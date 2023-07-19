@@ -1,8 +1,8 @@
-# openapi-java-client
+# acmepetsupplies-java-client
 
 Product Catalog API
 - API version: 1.0
-  - Build date: 2022-12-30T21:49:13.443346Z[Europe/London]
+  - Build date: 2023-07-19T07:01:25.799362+01:00[Europe/London]
 
 The Product Catalog API enables customers browse Acme Pet Supplies great range of pet products and their product reviews.
 
@@ -39,8 +39,8 @@ Add this dependency to your project's POM:
 
 ```xml
 <dependency>
-  <groupId>org.openapitools</groupId>
-  <artifactId>openapi-java-client</artifactId>
+  <groupId>com.acmepetsupplies</groupId>
+  <artifactId>acmepetsupplies-java-client</artifactId>
   <version>1.0</version>
   <scope>compile</scope>
 </dependency>
@@ -52,12 +52,12 @@ Add this dependency to your project's build file:
 
 ```groovy
   repositories {
-    mavenCentral()     // Needed if the 'openapi-java-client' jar has been published to maven central.
-    mavenLocal()       // Needed if the 'openapi-java-client' jar has been published to the local maven repo.
+    mavenCentral()     // Needed if the 'acmepetsupplies-java-client' jar has been published to maven central.
+    mavenLocal()       // Needed if the 'acmepetsupplies-java-client' jar has been published to the local maven repo.
   }
 
   dependencies {
-     implementation "org.openapitools:openapi-java-client:1.0"
+     implementation "com.acmepetsupplies:acmepetsupplies-java-client:1.0"
   }
 ```
 
@@ -71,7 +71,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-1.0.jar`
+* `target/acmepetsupplies-java-client-1.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -81,12 +81,12 @@ Please follow the [installation](#installation) instruction and execute the foll
 ```java
 
 // Import classes:
-import org.openapitools.client.ApiClient;
-import org.openapitools.client.ApiException;
-import org.openapitools.client.Configuration;
-import org.openapitools.client.auth.*;
-import org.openapitools.client.models.*;
-import org.openapitools.client.api.ProductsApi;
+import com.acmepetsupplies.client.ApiClient;
+import com.acmepetsupplies.client.ApiException;
+import com.acmepetsupplies.client.Configuration;
+import com.acmepetsupplies.client.auth.*;
+import com.acmepetsupplies.client.models.*;
+import com.acmepetsupplies.api.ProductsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -131,9 +131,12 @@ Class | Method | HTTP request | Description
  - [Product](docs/Product.md)
 
 
+<a id="documentation-for-authorization"></a>
 ## Documentation for Authorization
 
+
 Authentication schemes defined for the API:
+<a id="ApiKeyAuth"></a>
 ### ApiKeyAuth
 
 - **Type**: API key
