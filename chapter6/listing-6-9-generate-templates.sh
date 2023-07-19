@@ -1,0 +1,1 @@
+openapi-generator-cli author template  --generator-name spring --library spring-boot --output out
