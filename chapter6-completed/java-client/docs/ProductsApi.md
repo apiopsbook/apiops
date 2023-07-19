@@ -7,7 +7,7 @@ All URIs are relative to *http://api.acme-pet-supplies.com*
 | [**viewProduct**](ProductsApi.md#viewProduct) | **GET** /v1/catalog/products/{id} | View a product&#39;s details |
 
 
-<a name="viewProduct"></a>
+<a id="viewProduct"></a>
 # **viewProduct**
 > Product viewProduct(id)
 
@@ -18,12 +18,12 @@ View a product&#39;s details.
 ### Example
 ```java
 // Import classes:
-import org.openapitools.client.ApiClient;
-import org.openapitools.client.ApiException;
-import org.openapitools.client.Configuration;
-import org.openapitools.client.auth.*;
-import org.openapitools.client.models.*;
-import org.openapitools.client.api.ProductsApi;
+import com.acmepetsupplies.client.ApiClient;
+import com.acmepetsupplies.client.ApiException;
+import com.acmepetsupplies.client.Configuration;
+import com.acmepetsupplies.client.auth.*;
+import com.acmepetsupplies.client.models.*;
+import com.acmepetsupplies.api.ProductsApi;
 
 public class Example {
   public static void main(String[] args) {

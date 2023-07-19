@@ -1,7 +1,7 @@
 lazy val root = (project in file(".")).
   settings(
-    organization := "org.openapitools",
-    name := "openapi-java-client",
+    organization := "com.acmepetsupplies",
+    name := "acmepetsupplies-java-client",
     version := "1.0",
     scalaVersion := "2.11.4",
     scalacOptions ++= Seq("-feature"),
@@ -16,7 +16,7 @@ lazy val root = (project in file(".")).
       "org.apache.commons" % "commons-lang3" % "3.12.0",
       "javax.ws.rs" % "jsr311-api" % "1.1.1",
       "javax.ws.rs" % "javax.ws.rs-api" % "2.1.1",
-      "org.openapitools" % "jackson-databind-nullable" % "0.2.4",
+      "org.openapitools" % "jackson-databind-nullable" % "0.2.6",
       "io.gsonfire" % "gson-fire" % "1.8.5" % "compile",
       "jakarta.annotation" % "jakarta.annotation-api" % "1.3.5" % "compile",
       "com.google.code.findbugs" % "jsr305" % "3.0.2" % "compile",
