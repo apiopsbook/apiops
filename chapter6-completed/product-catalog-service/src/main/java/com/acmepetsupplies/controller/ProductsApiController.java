@@ -1,13 +1,16 @@
 package com.acmepetsupplies.controller;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import java.math.BigDecimal;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Arrays;
+
 import com.acmepetsupplies.model.Error;
 import com.acmepetsupplies.model.Product;
-
-import java.math.BigDecimal;
-import java.util.*;
+import java.util.UUID;
 
 
-import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,9 +29,12 @@ import org.springframework.web.context.request.NativeWebRequest;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-12-31T13:20:55.039973Z[Europe/London]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-07-19T04:39:56.526272+01:00[Europe/London]")
 @Controller
 @RequestMapping("${openapi.productCatalog.base-path:}")
 public class ProductsApiController implements ProductsApi {
@@ -45,16 +51,25 @@ public class ProductsApiController implements ProductsApi {
         return Optional.ofNullable(request);
     }
 
-    @Override
-    public ResponseEntity<Product> viewProduct(
-            @Parameter(name = "id", description = "Product identifier", required = true) @PathVariable("id") UUID id){
-        Product product = new Product();
-        product.setId(id);
-        product.setName("Acme Uber Dog Rope Toy");
-        product.setDescription("Acme Uber Dog Rope Toy provides hours of fun for your dog.");
-        product.setPrice(new BigDecimal(50));
-        Set<String> keywords = new HashSet<>(Arrays.asList("rope", "toy", "dog"));
-        product.setKeywords(keywords);
-        return new ResponseEntity<Product>(product, HttpStatus.OK);
-    }
+
+@Override
+public ResponseEntity<Product> viewProduct(
+        @Parameter(name = "id", description = "Product identifier",
+                required = true)
+        @PathVariable("id") UUID id) {
+    Product product = new Product();
+    product.setId(id);
+    product.setName("Acme Uber Dog Rope Toy");
+    product.setDescription
+            ("Acme Uber Dog Rope Toy provides hours of fun for your dog.");
+    product.setPrice(new BigDecimal(50));
+    Set<String> keywords = new HashSet<>(Arrays.asList("rope", "toy",
+            "dog"));
+    product.setKeywords(keywords);
+    product.setNumberOfReviews(11);    
+    product.setReviewRating(3);    
+    return new ResponseEntity<Product>(product, HttpStatus.OK);
+}
+
+
 }
