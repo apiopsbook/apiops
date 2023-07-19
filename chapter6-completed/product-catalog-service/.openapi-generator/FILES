@@ -6,7 +6,6 @@ src/main/java/com/acmepetsupplies/configuration/HomeController.java
 src/main/java/com/acmepetsupplies/configuration/SpringDocConfiguration.java
 src/main/java/com/acmepetsupplies/controller/ApiUtil.java
 src/main/java/com/acmepetsupplies/controller/ProductsApi.java
-src/main/java/com/acmepetsupplies/controller/ProductsApiController.java
 src/main/java/com/acmepetsupplies/model/Error.java
 src/main/java/com/acmepetsupplies/model/Product.java
 src/main/resources/application.properties
