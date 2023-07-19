@@ -219,10 +219,12 @@ components:
         - keywords
         - keywords
         price: 100
+        numberOfReviews: 10
         name: Acme Uber Dog Rope Toy
         description: "Acme Uber Dog Rope Toy provides hours of fun for your dog. Great\
           \ for bouncing, throwing and catching."
         id: dcd53ddb-8104-4e48-8cc0-5df1088c6113
+        reviewRating: 5
       properties:
         id:
           description: Identifier for the product.
@@ -257,12 +259,26 @@ components:
           minItems: 0
           type: array
           uniqueItems: true
+        reviewRating:
+          description: Average product review rating.
+          example: 5
+          format: int32
+          maximum: 5
+          minimum: 1
+          type: integer
+        numberOfReviews:
+          description: Number of product reviews.
+          example: 10
+          format: int32
+          type: integer
       required:
       - description
       - id
       - keywords
       - name
+      - numberOfReviews
       - price
+      - reviewRating
       title: Product
       type: object
     Error:

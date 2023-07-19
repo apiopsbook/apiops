@@ -20,23 +20,35 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "Error", description = "An error response.")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-12-31T13:20:55.039973Z[Europe/London]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-07-19T06:47:55.870725+01:00[Europe/London]")
 public class Error {
 
-  @JsonProperty("id")
   private UUID id;
 
-  @JsonProperty("status")
   private Integer status;
 
-  @JsonProperty("code")
   private String code;
 
-  @JsonProperty("title")
   private String title;
 
-  @JsonProperty("detail")
   private String detail;
+
+  /**
+   * Default constructor
+   * @deprecated Use {@link Error#Error(Integer, String)}
+   */
+  @Deprecated
+  public Error() {
+    super();
+  }
+
+  /**
+   * Constructor with only required parameters
+   */
+  public Error(Integer status, String title) {
+    this.status = status;
+    this.title = title;
+  }
 
   public Error id(UUID id) {
     this.id = id;
@@ -48,7 +60,8 @@ public class Error {
    * @return id
   */
   @Valid 
-  @Schema(name = "id", description = "a unique identifier for this particular occurrence of the problem", required = false)
+  @Schema(name = "id", description = "a unique identifier for this particular occurrence of the problem", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("id")
   public UUID getId() {
     return id;
   }
@@ -67,7 +80,8 @@ public class Error {
    * @return status
   */
   @NotNull 
-  @Schema(name = "status", description = "the HTTP status code applicable to this problem", required = true)
+  @Schema(name = "status", description = "the HTTP status code applicable to this problem", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("status")
   public Integer getStatus() {
     return status;
   }
@@ -86,7 +100,8 @@ public class Error {
    * @return code
   */
   @Size(max = 100) 
-  @Schema(name = "code", description = "an application-specific error code", required = false)
+  @Schema(name = "code", description = "an application-specific error code", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("code")
   public String getCode() {
     return code;
   }
@@ -105,7 +120,8 @@ public class Error {
    * @return title
   */
   @NotNull @Size(max = 100) 
-  @Schema(name = "title", description = "a short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization", required = true)
+  @Schema(name = "title", description = "a short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("title")
   public String getTitle() {
     return title;
   }
@@ -124,7 +140,8 @@ public class Error {
    * @return detail
   */
   @Size(max = 150) 
-  @Schema(name = "detail", description = "a human-readable explanation specific to this occurrence of the problem. Like title, this field’s value can be localized", required = false)
+  @Schema(name = "detail", description = "a human-readable explanation specific to this occurrence of the problem. Like title, this field’s value can be localized", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("detail")
   public String getDetail() {
     return detail;
   }

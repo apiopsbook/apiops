@@ -24,24 +24,45 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "Product", description = "An item in Acme's pet supplies catalog.")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-12-31T13:20:55.039973Z[Europe/London]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2023-07-19T06:47:55.870725+01:00[Europe/London]")
 public class Product {
 
-  @JsonProperty("id")
   private UUID id;
 
-  @JsonProperty("name")
   private String name;
 
-  @JsonProperty("description")
   private String description;
 
-  @JsonProperty("price")
   private BigDecimal price;
 
-  @JsonProperty("keywords")
   @Valid
   private Set<String> keywords = new LinkedHashSet<>();
+
+  private Integer reviewRating;
+
+  private Integer numberOfReviews;
+
+  /**
+   * Default constructor
+   * @deprecated Use {@link Product#Product(UUID, String, String, BigDecimal, Set<String>, Integer, Integer)}
+   */
+  @Deprecated
+  public Product() {
+    super();
+  }
+
+  /**
+   * Constructor with only required parameters
+   */
+  public Product(UUID id, String name, String description, BigDecimal price, Set<String> keywords, Integer reviewRating, Integer numberOfReviews) {
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.price = price;
+    this.keywords = keywords;
+    this.reviewRating = reviewRating;
+    this.numberOfReviews = numberOfReviews;
+  }
 
   public Product id(UUID id) {
     this.id = id;
@@ -53,7 +74,8 @@ public class Product {
    * @return id
   */
   @NotNull @Valid 
-  @Schema(name = "id", example = "dcd53ddb-8104-4e48-8cc0-5df1088c6113", description = "Identifier for the product.", required = true)
+  @Schema(name = "id", example = "dcd53ddb-8104-4e48-8cc0-5df1088c6113", description = "Identifier for the product.", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("id")
   public UUID getId() {
     return id;
   }
@@ -72,7 +94,8 @@ public class Product {
    * @return name
   */
   @NotNull @Size(min = 1, max = 50) 
-  @Schema(name = "name", example = "Acme Uber Dog Rope Toy", description = "Name of the product.", required = true)
+  @Schema(name = "name", example = "Acme Uber Dog Rope Toy", description = "Name of the product.", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("name")
   public String getName() {
     return name;
   }
@@ -91,7 +114,8 @@ public class Product {
    * @return description
   */
   @NotNull @Size(min = 0, max = 300) 
-  @Schema(name = "description", example = "Acme Uber Dog Rope Toy provides hours of fun for your dog. Great for bouncing, throwing and catching.", description = "A description of the product.", required = true)
+  @Schema(name = "description", example = "Acme Uber Dog Rope Toy provides hours of fun for your dog. Great for bouncing, throwing and catching.", description = "A description of the product.", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("description")
   public String getDescription() {
     return description;
   }
@@ -112,7 +136,8 @@ public class Product {
    * @return price
   */
   @NotNull @Valid @DecimalMin("0") @DecimalMax("1000000") 
-  @Schema(name = "price", example = "100", description = "Price of the product.", required = true)
+  @Schema(name = "price", example = "100", description = "Price of the product.", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("price")
   public BigDecimal getPrice() {
     return price;
   }
@@ -127,6 +152,9 @@ public class Product {
   }
 
   public Product addKeywordsItem(String keywordsItem) {
+    if (this.keywords == null) {
+      this.keywords = new LinkedHashSet<>();
+    }
     this.keywords.add(keywordsItem);
     return this;
   }
@@ -136,7 +164,8 @@ public class Product {
    * @return keywords
   */
   @NotNull @Size(min = 0, max = 20) 
-  @Schema(name = "keywords", description = "A colleciton of words that describe the product, used for searching for it.", required = true)
+  @Schema(name = "keywords", description = "A colleciton of words that describe the product, used for searching for it.", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("keywords")
   public Set<String> getKeywords() {
     return keywords;
   }
@@ -144,6 +173,48 @@ public class Product {
   @JsonDeserialize(as = LinkedHashSet.class)
   public void setKeywords(Set<String> keywords) {
     this.keywords = keywords;
+  }
+
+  public Product reviewRating(Integer reviewRating) {
+    this.reviewRating = reviewRating;
+    return this;
+  }
+
+  /**
+   * Average product review rating.
+   * minimum: 1
+   * maximum: 5
+   * @return reviewRating
+  */
+  @NotNull @Min(1) @Max(5) 
+  @Schema(name = "reviewRating", example = "5", description = "Average product review rating.", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("reviewRating")
+  public Integer getReviewRating() {
+    return reviewRating;
+  }
+
+  public void setReviewRating(Integer reviewRating) {
+    this.reviewRating = reviewRating;
+  }
+
+  public Product numberOfReviews(Integer numberOfReviews) {
+    this.numberOfReviews = numberOfReviews;
+    return this;
+  }
+
+  /**
+   * Number of product reviews.
+   * @return numberOfReviews
+  */
+  @NotNull 
+  @Schema(name = "numberOfReviews", example = "10", description = "Number of product reviews.", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("numberOfReviews")
+  public Integer getNumberOfReviews() {
+    return numberOfReviews;
+  }
+
+  public void setNumberOfReviews(Integer numberOfReviews) {
+    this.numberOfReviews = numberOfReviews;
   }
 
   @Override
@@ -159,12 +230,14 @@ public class Product {
         Objects.equals(this.name, product.name) &&
         Objects.equals(this.description, product.description) &&
         Objects.equals(this.price, product.price) &&
-        Objects.equals(this.keywords, product.keywords);
+        Objects.equals(this.keywords, product.keywords) &&
+        Objects.equals(this.reviewRating, product.reviewRating) &&
+        Objects.equals(this.numberOfReviews, product.numberOfReviews);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, description, price, keywords);
+    return Objects.hash(id, name, description, price, keywords, reviewRating, numberOfReviews);
   }
 
   @Override
@@ -176,6 +249,8 @@ public class Product {
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    price: ").append(toIndentedString(price)).append("\n");
     sb.append("    keywords: ").append(toIndentedString(keywords)).append("\n");
+    sb.append("    reviewRating: ").append(toIndentedString(reviewRating)).append("\n");
+    sb.append("    numberOfReviews: ").append(toIndentedString(numberOfReviews)).append("\n");
     sb.append("}");
     return sb.toString();
   }
