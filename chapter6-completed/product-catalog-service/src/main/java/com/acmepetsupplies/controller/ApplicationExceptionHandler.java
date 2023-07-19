@@ -34,12 +34,12 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         }
         apiError.setTitle(status.getReasonPhrase());
         switch (status.value()) {
-            case 400: apiError.setDetail("Bad request. Please check                     the request is valid.");
+            case 400: apiError.setDetail("Bad request. Please check the request is valid.");
                 break;
             case 404:
-                apiError.setDetail("Resource not found. Please check                         the path and resource identifier in your request");
+                apiError.setDetail("Resource not found. Please check the path and resource identifier in your request");
                 break;
-            case 429: apiError.setDetail("Too many requests. Request                     quota exceeded in time window. Try again soon");
+            case 429: apiError.setDetail("Too many requests. Request quota exceeded in time window. Try again soon");
                 break;
             default: apiError.setDetail(status.getReasonPhrase());
                 break;
