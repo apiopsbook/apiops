@@ -1,2 +1,1 @@
-mvn clean compile
-mvn -f pom.xml spring-boot:start
+mvn clean compile && mvn -f pom.xml spring-boot:start
