@@ -1,0 +1,1 @@
+mvn -B -f pom.xml spring-boot:stop
