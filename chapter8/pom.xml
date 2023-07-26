@@ -12,6 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <springdoc.version>1.6.14</springdoc.version>
         <swagger-ui.version>4.15.5</swagger-ui.version>
+        <github.package>https://maven.pkg.github.com/ikenna/chapter8</github.package>
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -138,7 +139,7 @@
         <repository>
             <id>github</id>
             <name>GitHub OWNER Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/ikenna/chapter8</url> <!-- TODO change this -->
+            <url>${github.package}</url>
         </repository>
     </distributionManagement>
 </project>
