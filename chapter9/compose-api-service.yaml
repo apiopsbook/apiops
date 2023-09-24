@@ -1,0 +1,15 @@
+
+networks:
+  kong-net:
+    name: kong-net
+    external: true
+
+services:
+  product-api:
+    image: "ghcr.io/ikenna/products-api-service:${GITHUB_RUN_NUMBER:-0}"
+    ports:
+      - 8080:8080
+    networks:
+      - kong-net
+
+
