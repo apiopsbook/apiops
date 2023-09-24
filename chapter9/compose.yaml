@@ -54,6 +54,11 @@ services:
       KONG_ADMIN_LISTEN: 0.0.0.0:8001
     networks:
       - kong-net
+    healthcheck:
+      test: [ "CMD", "kong", "health" ]
+      interval: 10s
+      timeout: 10s
+      retries: 10
 
 
 
