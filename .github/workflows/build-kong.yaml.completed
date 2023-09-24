@@ -1,0 +1,118 @@
+name: Mainline merge
+
+on:
+  push:
+    branches:
+      - main
+env:
+  GITHUB_RUN_NUMBER: ${{ github.run_number }}
+
+jobs:
+  build:
+    name: Build
+    runs-on: self-hosted
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      LATEST_ARTIFACT_VERSION: ${{ steps.artifact-version.outputs.ARTIFACT_VERSION }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Create application jar
+        run: |
+          cd chapter8
+          ./run_app_build.sh
+      - name: Log in to the GitHub Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/<OWNER>/products-api-service:${{ github.run_number }}   #NOTE: To use this file, replace <OWNER> with your GitHub username
+          file: chapter8/Dockerfile
+      - name: Create output directory for API artifacts
+        run: mkdir build-output
+      - name: Bundle API definition file
+        run: |
+          cd chapter8/apis/product-catalog-api
+          npx @redocly/cli bundle openapi.yaml --output api.bundled.yaml
+          mv api.bundled.yaml ../../../build-output/api.bundled.yaml
+      - name: Filter out internal endpoints
+        run: |
+          npx openapi-filter --flags x-internal --verbose -- build-output/api.bundled.yaml build-output/api.yaml
+      - name: Remove unused components
+        run: |
+          npx openapi-format build-output/api.yaml --filterFile chapter9/unused-components-filter.yaml --sortFile chapter9/sort.json --output build-output/api.yaml
+      - name: Run API linting
+        run: |
+          npx @stoplight/spectral-cli lint build-output/api.yaml --ruleset chapter8/apis/rulesets/json-api.ruleset.yaml
+      - name: Publish updated API definition to registry
+        run: |
+          curl -X POST 'http://localhost:9090/apis/registry/v2/groups/acmeapis/artifacts?ifExists=UPDATE' \
+          --header 'Content-Type: application/x-yaml' \
+          --header 'X-Registry-ArtifactId: productsapi' \
+          --header 'X-Registry-ArtifactType: OPENAPI' \
+          --data-binary "@build-output/api.yaml" \
+          --output created-artifact.json \
+          --fail-with-body
+          cat created-artifact.json
+      - name: Get created artifact version
+        id: artifact-version
+        run: |
+          echo "ARTIFACT_VERSION=$(cat created-artifact.json | jq -j '.version')"  >> $GITHUB_OUTPUT
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Generate Java SDK
+        run: |
+          openapi-generator-cli generate \
+          --input-spec build-output/api.yaml  \
+          --generator-name java \
+          --output build-output/java-client \
+          --template-dir chapter8/java-template  \
+          --library okhttp-gson \
+          --additional-properties=invokerPackage=com.acmepetsupplies.client,apiPackage=com.acmepetsupplies.api,modelPackage=com.acmepetsupplies.model,groupId=com.acmepetsupplies,artifactId=acmepetsupplies-java-client,artifactVersion=1.0.0-SNAPSHOT
+      - name: Publish SDK to GitHub Pacakges
+        run: |
+          cd build-output/java-client
+          mvn --batch-mode deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy-and-test:
+    name: Deploy and test
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Deploy Products API service
+        run: |
+           docker compose -f chapter9/compose-api-service.yaml up -d
+      - name: Reconcile API gateway state
+        run: |
+          deck validate --state chapter9/kong.yml
+          deck sync --state chapter9/kong.yml --kong-addr http://localhost:8001
+      - name: Run API conformance tests
+        run: |
+          cd chapter8
+          ./run_integrationtest.sh
+      - name: Mark API definition as passing API conformance testing
+        env:
+          LATEST_API_VERSION: ${{ needs.build.outputs.LATEST_ARTIFACT_VERSION }}
+        run: |
+          curl -X PUT \
+          http://localhost:9090/apis/registry/v2/groups/acmeapis/artifacts/productsapi/versions/$LATEST_API_VERSION/meta \
+          --header "Content-Type: application/json" \
+          --data '{"labels": ["passed-conformance-test"] }' \
+          --fail-with-body
+
+            
+
+

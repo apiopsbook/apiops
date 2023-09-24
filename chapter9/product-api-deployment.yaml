@@ -16,7 +16,7 @@ spec:
         app: product-api
     spec:
       containers:
-        - image: ghcr.io/ikenna/products-api-service:APP_VERSION
+        - image: ghcr.io/<OWNER>/products-api-service:APP_VERSION  #NOTE: To use this file, replace <OWNER> with your GitHub username
           name: products-api-service
           resources: {}
       imagePullSecrets:
