@@ -1,0 +1,17 @@
+
+_format_version: "2.1"
+_transform: true
+
+services:
+  - name: Product_Catalog_API
+    protocol: http
+    host: product-api
+    port: 8080
+    path:  /
+    routes:
+      - name: viewProduct
+        methods:
+          - GET
+        paths:
+          - "~/v1/catalog/products/(.+)$"
+        strip_path: false

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: product-api
+  name: product-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-api
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: product-api
+    spec:
+      containers:
+        - image: ghcr.io/ikenna/products-api-service:APP_VERSION
+          name: products-api-service
+          resources: {}
+      imagePullSecrets:
+        - name: gchr-login-secret
