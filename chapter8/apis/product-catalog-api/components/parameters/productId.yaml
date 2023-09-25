@@ -14,3 +14,4 @@ components:
       schema:
         type: string
         format: uuid
+        example: 'd8ec6b7c-a5f9-16ac-76d0-7da97292c582'
