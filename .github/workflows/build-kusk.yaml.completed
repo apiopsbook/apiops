@@ -34,7 +34,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/<OWNER>/products-api-service:${{ github.run_number }}   #NOTE: To use this file, replace <OWNER> with your GitHub username
+          tags: ghcr.io/ikenna/products-api-service:${{ github.run_number }}   #NOTE: To use this file, replace <OWNER> with your GitHub username
           file: chapter8/Dockerfile
       - name: Create output directory for API artifacts
         run: mkdir build-output
@@ -93,26 +93,29 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Deploy Products API service
-        run: |
-           docker compose -f chapter9/compose-api-service.yaml up -d
+        run: | 
+          perl -pi -e "s/APP_VERSION/$GITHUB_RUN_NUMBER/g" chapter9/product-api-deployment.yaml
+          kubectl apply --filename chapter9/product-api-deployment.yaml
+          kubectl apply --filename chapter9/product-api-service.yaml
       - name: Reconcile API gateway state
+        env:
+          LATEST_ARTIFACT_VERSION: ${{ needs.build.outputs.LATEST_ARTIFACT_VERSION }}
         run: |
-          deck validate --state chapter9/kong.yml
-          deck sync --state chapter9/kong.yml --kong-addr http://localhost:8001
-      - name: Run API conformance tests
+          kusk deploy --in  http://localhost:9090/apis/registry/v2/groups/acmeapis/artifacts/productsapi/versions/$LATEST_ARTIFACT_VERSION
+      - name: Run smoke test
         run: |
-          cd chapter8
-          ./run_integrationtest.sh
+          curl --location 'http://localhost:8080/v1/catalog/products/1a7322e3-df81-8362-998c-50c67c6f8a15' \
+          --header 'Accept: application/vnd.api+json' \
+          --fail-with-body
       - name: Mark API definition as passing API conformance testing
         env:
-          LATEST_API_VERSION: ${{ needs.build.outputs.LATEST_ARTIFACT_VERSION }}
+          LATEST_ARTIFACT_VERSION: ${{ needs.build.outputs.LATEST_ARTIFACT_VERSION }}
         run: |
-          curl -X PUT \
-          http://localhost:9090/apis/registry/v2/groups/acmeapis/artifacts/productsapi/versions/$LATEST_API_VERSION/meta \
+          curl --request PUT \
+          http://localhost:9090/apis/registry/v2/groups/acmeapis/artifacts/productsapi/versions/$LATEST_ARTIFACT_VERSION/meta \
           --header "Content-Type: application/json" \
-          --data '{"labels": ["passed-conformance-test"] }' \
-          --fail-with-body
-
+          --data '{"labels": ["passed-conformance-test-kusk"] }' \
+          --fail-with-body 
             
 
 
