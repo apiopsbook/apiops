@@ -102,11 +102,10 @@ jobs:
           LATEST_ARTIFACT_VERSION: ${{ needs.build.outputs.LATEST_ARTIFACT_VERSION }}
         run: |
           kusk deploy --in  http://localhost:9090/apis/registry/v2/groups/acmeapis/artifacts/productsapi/versions/$LATEST_ARTIFACT_VERSION
-      - name: Run smoke test
+      - name: Run API conformance tests
         run: |
-          curl --location 'http://localhost:8080/v1/catalog/products/1a7322e3-df81-8362-998c-50c67c6f8a15' \
-          --header 'Accept: application/vnd.api+json' \
-          --fail-with-body
+          cd chapter9
+          portman --cliOptionsFile portman/portman-cli.json
       - name: Mark API definition as passing API conformance testing
         env:
           LATEST_ARTIFACT_VERSION: ${{ needs.build.outputs.LATEST_ARTIFACT_VERSION }}

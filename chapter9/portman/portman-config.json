@@ -1,0 +1,30 @@
+{
+  "version": 1.0,
+  "tests": {
+    "contractTests": [
+      {
+        "openApiOperation": "*::*",
+        "statusSuccess": {
+          "enabled": true
+        },
+        "statusCode": {
+          "enabled": true
+        },
+        "responseTime": {
+          "enabled": true,
+          "maxMs": 2000
+        },
+        "contentType": {
+          "enabled": true
+        },
+        "jsonBody": {
+          "enabled": true
+        },
+        "schemaValidation": {
+          "enabled": true,
+          "additionalProperties": false
+        }
+      }
+    ]
+  }
+}

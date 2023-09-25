@@ -1,0 +1,11 @@
+{
+  "local": "/Users/ikenna/dev/actions-runner/_work/apiops-chap9/apiops-chap9/build-output/api.yaml",
+  "output": "collection.postman.json",
+  "envFile": "portman/.env-portman",
+  "portmanConfigFile": "portman/portman-config.json",
+  "includeTests": true,
+  "syncPostman": false,
+  "runNewman": true,
+  "bundleContractTests": true,
+  "baseUrl": "http://localhost:8080"
+}
