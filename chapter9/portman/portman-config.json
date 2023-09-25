@@ -10,10 +10,6 @@
         "statusCode": {
           "enabled": true
         },
-        "responseTime": {
-          "enabled": true,
-          "maxMs": 2000
-        },
         "contentType": {
           "enabled": true
         },
