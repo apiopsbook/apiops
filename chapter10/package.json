@@ -1,0 +1,34 @@
+{
+  "name": "apiopsbook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apiopsbook/apiops.git"
+  },
+  "author": "Ikenna Nwaiwu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/apiopsbook/apiops/issues"
+  },
+  "homepage": "https://github.com/apiopsbook/apiops#readme",
+  "dependencies": {
+    "@stoplight/spectral-formats": "^1.5.0",
+    "@stoplight/spectral-functions": "^1.7.2",
+    "@stoplight/spectral-parsers": "^1.0.3",
+    "@stoplight/types": "^14.0.0",
+    "@types/jest": "^29.5.5",
+    "jest": "^29.7.0",
+    "@tsmx/json-traverse": "^1.0.5"
+  },
+  "devDependencies": {
+    "@stoplight/spectral-owasp-ruleset": "^1.4.3",
+    "@stoplight/spectral-ruleset-bundler": "^1.5.2",
+    "ts-jest": "^29.1.1",
+    "ts-node": "^10.9.1"
+  }
+}
