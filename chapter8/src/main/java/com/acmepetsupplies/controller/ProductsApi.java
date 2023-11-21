@@ -187,12 +187,29 @@ public interface ProductsApi {
         attributes.setDescription("Acme Uber Dog Rope Toy provides hours of fun for your dog.");
         attributes.setPrice(new BigDecimal(50));
         attributes.setKeywords(new HashSet<>(Arrays.asList("rope", "toy", "dog")));
-        ProductRelationships relationships = new ProductRelationships();
-        Product product = new Product(id.toString(), "product", attributes, relationships);
+        attributes.setNumberOfReviews(16);
+        attributes.reviewRating(4);
+        Product product = new Product(id.toString(), "product", attributes, createProductRelationships());
         product.setId(id.toString());
         ViewProduct200Response response = new ViewProduct200Response();
         response.data(product);
         return new ResponseEntity<ViewProduct200Response>(response, HttpStatus.OK);
+    }
+
+    private ProductRelationships createProductRelationships() {
+        ProductRelationshipsHasReviewsLinks links = new ProductRelationshipsHasReviewsLinks();
+        links.setRelated("/v1/catalog/products/dcd53ddb-8104-4e48-8cc0-5df1088c6113/reviews");
+        ProductRelationshipsHasReviews hasReviews = new ProductRelationshipsHasReviews();
+        hasReviews.setLinks(links);
+        ProductRelationships relationships = new ProductRelationships();
+        relationships.setHasReviews(hasReviews);
+        ProductRelationshipsInCategories inCategories = new ProductRelationshipsInCategories();
+        ProductRelationshipsInCategoriesDataInner dataInner = new ProductRelationshipsInCategoriesDataInner();
+        dataInner.setType("toys");
+        dataInner.setId(UUID.fromString("dcd53ddb-8104-4e48-8cc0-5df1088c6113"));
+        inCategories.setData(List.of(dataInner));
+        relationships.setInCategories(inCategories);
+        return relationships;
     }
 
 }

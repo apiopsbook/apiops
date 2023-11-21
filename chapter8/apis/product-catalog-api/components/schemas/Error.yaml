@@ -35,6 +35,7 @@ components:
                   a link to further details about this particular occurrence of the
                   problem
                 type: object
+                nullable: true
                 properties:
                   about:
                     $ref: './Link.yaml#/components/schemas/Link'
@@ -61,6 +62,7 @@ components:
               source:
                 description: contains references to the source of the error
                 type: object
+                nullable: true
                 properties:
                   pointer:
                     description: >-
@@ -77,4 +79,4 @@ components:
                   a JSON meta object with non-standard meta-information about the
                   error
                 type: object
-                additionalProperties: false
+                nullable: true

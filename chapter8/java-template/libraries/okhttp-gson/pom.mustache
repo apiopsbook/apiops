@@ -453,14 +453,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spotless.version>2.27.2</spotless.version>
     </properties>
-    <!-- Uncomment the distributionManagement node below to deploy your package. Replace OWNER with your GitHub account and REPOSITORY with the name of your GitHub repo -->
-    <!--
-        <distributionManagement>
-            <repository>
-                <id>github</id>
-                <name>GitHub OWNER Apache Maven Packages</name>
-                <url>https://maven.pkg.github.com/OWNER/REPOSITORY</url>
-            </repository>
-        </distributionManagement>
-    -->
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/OWNER/REPO_NAME</url>
+        </repository>
+    </distributionManagement>
 </project>

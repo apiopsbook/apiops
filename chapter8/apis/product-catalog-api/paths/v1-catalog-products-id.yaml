@@ -10,13 +10,6 @@ paths:
       summary: View a product's details
       description: View a product's details.
       operationId: viewProduct
-# Uncomment this to configure the Kusk API gateway
-#     x-kusk:
-#       upstream:
-#         service:
-#           name: productsapi-svc
-#           namespace: default
-#           port: 8080
       parameters:
         - $ref: '../components/parameters/productId.yaml#/components/parameters/productId'
       responses:
