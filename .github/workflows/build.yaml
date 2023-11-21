@@ -33,7 +33,7 @@ jobs:
         run: |
           cd chapter8
           ./run_app_build.sh
-      - name: Build - Log in to the GitHub Container Registry
+      - name: Build - Log in to the GitHub Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
         with:
           registry: ghcr.io
@@ -100,56 +100,29 @@ jobs:
           mvn --batch-mode deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Deploy-and-Test - Install Kusk CLI
+      - name: Deploy-and-Test - Install Kong Deck
         run: |
-          curl -sSLf https://raw.githubusercontent.com/kubeshop/kusk-gateway/main/cmd/kusk/scripts/install.sh | bash
-      - name: Deploy-and-Test - Start minikube
-        uses: medyagh/setup-minikube@master
-        with:
-          driver: docker
-      - name: Deploy-and-Test - Install Kusk Gateway
-        continue-on-error: true
+          curl -sL https://github.com/kong/deck/releases/download/v1.18.0/deck_1.18.0_linux_amd64.tar.gz -o deck.tar.gz
+          tar -xf deck.tar.gz -C /tmp
+          sudo cp /tmp/deck /usr/local/bin/
+          deck version
+      - name: Deploy-and-Test - Deploy Products API service
         run: |
-          kusk cluster install
-      - name: Deploy-and-Test - Setup Kusk port forwarding to port 9000
-        run: |
-          nohup kubectl port-forward svc/kusk-gateway-envoy-fleet -n kusk-system 9000:80 &
-      - name: Deploy-and-Test - Create GitHub Container Registry secret
-        run: |
-          kubectl create secret docker-registry ghcr-secret --docker-server=https://ghcr.io --docker-username=${{ github.repository_owner }} --docker-password=${{ secrets.GITHUB_TOKEN }} --docker-email=${{ github.event.pusher.email }}
-          kubectl get secret ghcr-secret -o jsonpath='{.data.*}'> build-output/foo.txt
-      - name: Deploy-and-Test - Deploy products API service
-        run: |
-          sed -i "s/APP_VERSION/${{ github.run_number }}/g" chapter9/product-api-deployment.yaml
-          sed -i "s/OWNER/${{ github.repository_owner }}/g" chapter9/product-api-deployment.yaml
-          cat chapter9/product-api-deployment.yaml
-          kubectl apply --filename chapter9/product-api-deployment.yaml
-          kubectl apply --filename chapter9/product-api-service.yaml
+          sed -i "s/OWNER/${{ github.repository_owner }}/g" chapter9/compose-api-service.yaml
+          cat chapter9/compose-api-service.yaml
+          docker compose -f chapter9/compose-api-service.yaml up -d
       - name: Deploy-and-Test - Reconcile API gateway state
         run: |
-          kusk deploy --in  http://localhost:9090/apis/registry/v2/groups/acmeapis/artifacts/productsapi/versions/${{ steps.artifact-version.outputs.ARTIFACT_VERSION }}
-      - name: Deploy-and-Test - Check status of the cluster
-        run: |
-          ./chapter9/check_cluster_status.sh
+          deck validate --state chapter9/kong.yaml
+          deck sync --state chapter9/kong.yaml --kong-addr http://localhost:8001
       - name: Deploy-and-Test - Run API conformance tests
         run: |
-          cd chapter9
-          npm install -g @apideck/portman
-          npm install -g newman-reporter-htmlextra
-          npm install -g newman
-          portman --cliOptionsFile portman/portman-cli.json
-          newman run collection.postman.json --verbose --environment portman/env.json --reporters cli,htmlextra  --reporter-htmlextra-export ../build-output/conformance-test-report.html
-      - name: Deploy-and-Test - Archive conformance test report
-        uses: actions/upload-artifact@v3
-        with:
-          name: conformance-test-report
-          path: |
-            build-output/conformance-test-report.html
+          cd chapter8
+          ./run_integrationtest.sh
       - name: Deploy-and-Test - Mark API definition as passing API conformance testing
         run: |
-          curl --request PUT \
+          curl -X PUT \
           http://localhost:9090/apis/registry/v2/groups/acmeapis/artifacts/productsapi/versions/${{ steps.artifact-version.outputs.ARTIFACT_VERSION }}/meta \
           --header "Content-Type: application/json" \
-          --data '{"labels": ["passed-conformance-test-kusk"] }' \
+          --data '{"labels": ["passed-conformance-test"] }' \
           --fail-with-body
-
