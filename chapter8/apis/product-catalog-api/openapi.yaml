@@ -11,6 +11,13 @@ info:
   version: '1.0'
 servers:
   - url: https://api.acme-pet-supplies.co.uk
+# Uncomment this to configure the Kusk API gateway
+x-kusk:
+  upstream:
+    service:
+      name: productsapi-svc
+      namespace: default
+      port: 8080
 tags:
   - name: Categories
     description: A category is a class of products with common characteristics

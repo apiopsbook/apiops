@@ -16,8 +16,8 @@ spec:
         app: product-api
     spec:
       containers:
-        - image: ghcr.io/<OWNER>/products-api-service:APP_VERSION  #NOTE: To use this file, replace <OWNER> with your GitHub username
+        - image: ghcr.io/OWNER/products-api-service:APP_VERSION
           name: products-api-service
           resources: {}
       imagePullSecrets:
-        - name: gchr-login-secret
+        - name: ghcr-secret
