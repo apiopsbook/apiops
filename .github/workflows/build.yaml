@@ -1,0 +1,153 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches:
+      - main
+env:
+  GITHUB_RUN_NUMBER: ${{ github.run_number }}
+jobs:
+  pipeline:
+    name: Pipeline
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Build - Checkout
+        uses: actions/checkout@v3
+      - name: Build - Start background services (Kong gateway and Apicurio API registry)
+        run: |
+          docker compose -f chapter9/compose.yaml up -d
+      - name: Build - Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build - Check Java version
+        run: |
+          mvn -version
+          echo $JAVA_HOME
+      - name: Build - Create application jar
+        run: |
+          cd chapter8
+          ./run_app_build.sh
+      - name: Build - Log in to the GitHub Container Registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build - Build and push Docker image
+        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/OWNER/products-api-service:${{ github.run_number }}  # Replace OWNER with your GitHub username
+          file: chapter8/Dockerfile
+      - name: Build - Create output directory for API artifacts
+        run: mkdir build-output
+      - name: Build - Bundle API definition file
+        run: |
+          cd chapter8/apis/product-catalog-api
+          npx @redocly/cli bundle openapi.yaml --output api.bundled.yaml
+          mv api.bundled.yaml ../../../build-output/api.bundled.yaml
+      - name: Build - Filter out internal endpoints
+        run: |
+          npx openapi-filter --flags x-internal --verbose -- build-output/api.bundled.yaml build-output/api.yaml
+      - name: Build - Remove unused components
+        run: |
+          npx openapi-format build-output/api.yaml --filterFile chapter9/unused-components-filter.yaml  --sortFile chapter9/sort.json   --output build-output/api.yaml
+      - name: Build - Run API linting
+        run: |
+          npx @stoplight/spectral-cli lint build-output/api.yaml --ruleset chapter8/apis/rulesets/json-api.ruleset.yaml
+      - name: Build - Archive artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-after-linting
+          path: |
+            build-output
+      - name: Build - Publish updated API definition to registry
+        run: |
+          curl -v -X POST 'http://localhost:9090/apis/registry/v2/groups/acmeapis/artifacts?ifExists=UPDATE'    \
+           --header 'Content-Type: application/x-yaml'     \
+           --header 'X-Registry-ArtifactId: productsapi'    \
+           --header 'X-Registry-ArtifactType: OPENAPI'     \
+           --data-binary "@build-output/api.yaml"    \
+           --output created-artifact.json   \
+           --fail-with-body
+      - name: Build - Get created artifact version
+        id: artifact-version
+        run: |
+          echo "ARTIFACT_VERSION=$(cat created-artifact.json | jq -j '.version')"  >> $GITHUB_OUTPUT
+      - name: Build - Generate Java SDK
+        run: |
+          sed -i "s/OWNER/${{ github.repository_owner }}/g" chapter8/java-template/libraries/okhttp-gson/pom.mustache
+          sed -i "s/REPO_NAME/${{ github.event.repository.name }}/g" chapter8/java-template/libraries/okhttp-gson/pom.mustache
+          tail -8  chapter8/java-template/libraries/okhttp-gson/pom.mustache
+          npm install -g @openapitools/openapi-generator-cli
+          openapi-generator-cli generate \
+          --input-spec build-output/api.yaml  \
+          --generator-name java \
+          --output build-output/java-client \
+          --template-dir chapter8/java-template  \
+          --library okhttp-gson \
+          --additional-properties=invokerPackage=com.acmepetsupplies.client,apiPackage=com.acmepetsupplies.api,modelPackage=com.acmepetsupplies.model,groupId=com.acmepetsupplies,artifactId=acmepetsupplies-java-client,artifactVersion=1.0.0-SNAPSHOT
+      - name: Build - Publish SDK to GitHub Packages
+        run: |
+          cd build-output/java-client
+          mvn --batch-mode deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy-and-Test - Install Kusk CLI
+        run: |
+          curl -sSLf https://raw.githubusercontent.com/kubeshop/kusk-gateway/main/cmd/kusk/scripts/install.sh | bash
+      - name: Deploy-and-Test - Start minikube
+        uses: medyagh/setup-minikube@master
+      - name: Deploy-and-Test - Install Kusk Gateway
+        continue-on-error: true
+        run: |
+          kusk cluster install
+      - name: Deploy-and-Test - Setup Kusk port forwarding to port 9000
+        run: |
+          nohup kubectl port-forward svc/kusk-gateway-envoy-fleet -n kusk-system 9000:80 &
+      - name: Deploy-and-Test - Create GitHub Container Registry secret
+        run: |
+          kubectl create secret docker-registry ghcr-secret --docker-server=https://ghcr.io --docker-username=${{ github.repository_owner }} --docker-password=${{ secrets.GITHUB_TOKEN }} --docker-email=${{ github.event.pusher.email }}
+          kubectl get secret ghcr-secret -o jsonpath='{.data.*}'> build-output/foo.txt
+      - name: Deploy-and-Test - Deploy products API service
+        run: |
+          sed -i "s/APP_VERSION/${{ github.run_number }}/g" chapter9/product-api-deployment.yaml
+          sed -i "s/OWNER/${{ github.repository_owner }}/g" chapter9/product-api-deployment.yaml
+          cat chapter9/product-api-deployment.yaml
+          kubectl apply --filename chapter9/product-api-deployment.yaml
+          kubectl apply --filename chapter9/product-api-service.yaml
+      - name: Deploy-and-Test - Reconcile API gateway state
+        run: |
+          kusk deploy --in  http://localhost:9090/apis/registry/v2/groups/acmeapis/artifacts/productsapi/versions/${{ steps.artifact-version.outputs.ARTIFACT_VERSION }}
+      - name: Deploy-and-Test - Check status of the cluster
+        run: |
+          ./chapter9/check_cluster_status.sh
+      - name: Deploy-and-Test - Run API conformance tests
+        run: |
+          cd chapter9
+          npm install -g @apideck/portman
+          npm install -g newman-reporter-htmlextra
+          npm install -g newman
+          portman --cliOptionsFile portman/portman-cli.json
+          newman run collection.postman.json --verbose --environment portman/env.json --reporters cli,htmlextra  --reporter-htmlextra-export ../build-output/conformance-test-report.html
+      - name: Deploy-and-Test - Archive conformance test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: conformance-test-report
+          path: |
+            build-output/conformance-test-report.html
+      - name: Deploy-and-Test - Mark API definition as passing API conformance testing
+        run: |
+          curl --request PUT \
+          http://localhost:9090/apis/registry/v2/groups/acmeapis/artifacts/productsapi/versions/${{ steps.artifact-version.outputs.ARTIFACT_VERSION }}/meta \
+          --header "Content-Type: application/json" \
+          --data '{"labels": ["passed-conformance-test-kusk"] }' \
+          --fail-with-body
+
