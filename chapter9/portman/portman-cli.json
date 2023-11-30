@@ -8,5 +8,5 @@
   "runNewman": false,
   "filterFile": "portman/oas-format-filter.json",
   "bundleContractTests": true,
-  "baseUrl": "http://localhost:8000"
+  "baseUrl": "http://localhost:9000"
 }

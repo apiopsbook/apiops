@@ -136,7 +136,7 @@ jobs:
           npm install -g newman-reporter-htmlextra
           npm install -g newman
           portman --cliOptionsFile portman/portman-cli.json
-          newman run collection.postman.json --verbose --environment portman/env.json --reporters cli,htmlextra  --reporter-htmlextra-export ../build-output/conformance-test-report.html
+          newman run collection.postman.json --verbose --reporters cli,htmlextra  --reporter-htmlextra-export ../build-output/conformance-test-report.html
       - name: Deploy-and-Test - Archive conformance test report
         uses: actions/upload-artifact@v3
         with:
