@@ -53,7 +53,7 @@ jobs:
           cd chapter8/apis/product-catalog-api
           npx @redocly/cli bundle openapi.yaml --output api.bundled.yaml
           mv api.bundled.yaml ../../../build-output/api.bundled.yaml
-      - name: Build - Filter out internal endpoints
+      - name: Build - Filter internal endpoints
         run: |
           npx openapi-filter --flags x-internal --verbose -- build-output/api.bundled.yaml build-output/api.yaml
       - name: Build - Remove unused components
