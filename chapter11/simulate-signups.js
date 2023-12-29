@@ -4,9 +4,7 @@ const {faker} = require('@faker-js/faker');
 const axios = require('axios').default;
 const {v4: uuidv4} = require('uuid');
 const fs = require('fs');
-const { program } = require('commander');
-
-
+const {program} = require('commander');
 
 
 function kongCreateConsumer(userName) {
@@ -90,6 +88,8 @@ function moesifCreateUser(user, moesifApiKey) {
 
 function createUserProfiles(count) {
     let profiles = [];
+
+
     for (let i = 0; i < count; i++) {
         const company = {
             companyId: uuidv4(),
@@ -98,15 +98,17 @@ function createUserProfiles(count) {
                 orgName: faker.company.name()
             }
         }
+        let firstName = faker.person.firstName();
+        let lastName = faker.person.lastName ();
         const user = {
-            username: faker.internet.userName(),
+            username: faker.internet.userName({firstName: firstName, lastName: lastName}),
             userId: null,
             apiKey: null,
             companyId: company.companyId,
             metadata: {
-                email: faker.internet.email(),
-                firstName: faker.person.firstName(),
-                lastName: faker.person.lastName(),
+                email: faker.internet.email({firstName: firstName, lastName: lastName}),
+                firstName: firstName,
+                lastName: lastName,
                 title: faker.person.jobTitle(),
                 address: {
                     street: faker.location.streetAddress(),

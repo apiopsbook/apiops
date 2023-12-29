@@ -37,26 +37,30 @@ function reviewsApiCall(productCatalogApiKey) {
 
 
 
-function getRandom() {
+function getRunCount() {
     const runs = [2, 5, 6];
     const random = Math.floor(Math.random() * runs.length);
     return runs[random];
 }
 
-function runRequests(user, numberOfRequests) {
-    return axios(productsApiCalls(user.sandboxApiKey)).then((response) => {
-        console.log(response.status);
-        return axios(categoriesApiCall(user.sandboxApiKey));
-    }).then((response) => {
-        console.log(response.status);
-        return axios(reviewsApiCall(user.sandboxApiKey));
-    }).then((response) => {
-        console.log(response.status);
-        return user.sandboxApiKey
-    }).catch((error) => {
-        console.log(error);
-    });
-
+function runRequests(user, runCount) {
+    for (let i = 0; i < runCount; i++) {
+        let productsRequest = productsApiCalls(user.sandboxApiKey);
+        let categoriesRequest = categoriesApiCall(user.sandboxApiKey);
+        let reviewsRequest = reviewsApiCall(user.sandboxApiKey);
+        axios(productsRequest).then((response) => {
+            console.log(`Request to ${productsRequest.url} for ${user.username} completed with status ${response.status}`);
+            return axios(categoriesRequest);
+        }).then((response) => {
+            console.log(`Request to ${categoriesRequest.url} for ${user.username} completed with status ${response.status}`);
+            return axios(reviewsRequest);
+        }).then((response) => {
+            console.log(`Request to ${reviewsRequest.url} for ${user.username} completed with status ${response.status}`);
+            return user.sandboxApiKey
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
 }
 
 
@@ -64,7 +68,7 @@ function runRequests(user, numberOfRequests) {
 const data = fs.readFileSync("signups.json", "utf8");
 const signups = JSON.parse(data);
 for (user of signups) {
-    let runCount = getRandom();
+    let runCount = getRunCount();
     console.log(`${user.username} running ${runCount}`);
     runRequests(user, runCount);
 }
