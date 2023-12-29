@@ -1,0 +1,1 @@
+ curl -i -X POST --url http://localhost:8001/plugins/ --data "name=moesif" --data "config.application_id=$MOESIF_API_KEY";

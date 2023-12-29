@@ -4,7 +4,11 @@ const {faker} = require('@faker-js/faker');
 const axios = require('axios').default;
 const {v4: uuidv4} = require('uuid');
 const fs = require('fs');
-const moesifApiKey = process.argv[3];
+const { program } = require('commander');
+
+
+
+
 function kongCreateConsumer(userName) {
     return {
         method: 'post',
@@ -26,7 +30,7 @@ function kongCreateAPIkey(userId) {
 }
 
 
-function moesifUserSignUpAction(user) {
+function moesifUserSignUpAction(user, moesifApiKey) {
     return {
         method: 'post',
         url: `https://api.moesif.net/v1/actions`,
@@ -44,7 +48,7 @@ function moesifUserSignUpAction(user) {
     }
 }
 
-function moesifCreateMoesifCompany(company) {
+function moesifCreateMoesifCompany(company, moesifApiKey) {
     return {
         method: 'post',
         url: `https://api.moesif.net/v1/companies`,
@@ -61,8 +65,8 @@ function moesifCreateMoesifCompany(company) {
     }
 }
 
-function moesifCreateUser(user) {
-    return {
+function moesifCreateUser(user, moesifApiKey) {
+    let userRequest = {
         method: 'post',
         url: `https://api.moesif.net/v1/users`,
         headers: {
@@ -79,7 +83,8 @@ function moesifCreateUser(user) {
             }
 
         }
-    }
+    };
+    return userRequest
 }
 
 
@@ -97,7 +102,7 @@ function createUserProfiles(count) {
             username: faker.internet.userName(),
             userId: null,
             apiKey: null,
-            company: company.companyId,
+            companyId: company.companyId,
             metadata: {
                 email: faker.internet.email(),
                 firstName: faker.person.firstName(),
@@ -114,42 +119,55 @@ function createUserProfiles(count) {
         }
         profiles.push({user: user, company: company});
     }
+
     return profiles;
 }
 
-function simulateSignUp(userProfiles) {
+function simulateSignUp(userProfiles, moesifApiKey) {
     const singUps = userProfiles.map((profiles) => {
-        return axios(moesifCreateMoesifCompany(profiles.company)).then(() => {
+        return axios(moesifCreateMoesifCompany(profiles.company, moesifApiKey)).then((response) => {
+            console.log(`Created company ${profiles.company.companyId} in Moesif. Moesif response: ${response.status}`);
             return axios(kongCreateConsumer(profiles.user.username));
         }).then((response) => {
             profiles.user.userId = response.data.id
             return axios(kongCreateAPIkey(profiles.user.userId))
         }).then((response) => {
             profiles.user.apiKey = response.data.key
-            moesifCreateUser(profiles.user);
-        }).then(() => {
-            moesifUserSignUpAction(profiles.user);
+            return axios(moesifCreateUser(profiles.user, moesifApiKey));
+        }).then((response) => {
+            console.log(`Created user ${profiles.user.userId} in Moesif. Moesif response: ${response.status}`);
+            return axios(moesifUserSignUpAction(profiles.user, moesifApiKey));
         })
             .then((response) => {
+                console.log(`Created action in Moesif for user ${profiles.user.userId} . Moesif response: ${response.status}`);
                 return {
+                    email: profiles.user.metadata.email,
                     username: profiles.user.username,
                     userId: profiles.user.userId,
                     sandboxApiKey: profiles.user.apiKey,
                     companyId: profiles.company.companyId,
                     company: profiles.company.metadata.orgName
                 };
-            });
-    });
+            })
+    })
 
     return Promise.all(singUps)
 }
 
 
 ////Main
-const numberOfUsersToCreate = process.argv[2];
+program
+    .requiredOption('-n, --numberOfUsers <numberOfUsers>', 'Number of users to create')
+    .requiredOption('-m, --moesifApiKey <moesifApiKey>', 'Moesif API key');
+
+program.parse();
+const options = program.opts();
+
+const numberOfUsersToCreate = options.numberOfUsers;
+moesifApiKey = options.moesifApiKey;
 console.log(`Number of users to create: ${numberOfUsersToCreate}`)
 let profiles = createUserProfiles(numberOfUsersToCreate);
-simulateSignUp(profiles).then((signUp) => {
+simulateSignUp(profiles, moesifApiKey).then((signUp) => {
     fs.writeFileSync("signups.json", JSON.stringify(signUp, null, 2));
     console.log("The following sign-ups were created and written to signups.json");
     console.log(JSON.stringify(signUp, null, 2));
