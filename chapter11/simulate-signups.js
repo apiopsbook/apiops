@@ -5,7 +5,7 @@ const axios = require('axios').default;
 const {v4: uuidv4} = require('uuid');
 const fs = require('fs');
 const {program} = require('commander');
-
+const dayjs = require('dayjs')
 
 function kongCreateConsumer(userName) {
     return {
@@ -29,6 +29,7 @@ function kongCreateAPIkey(userId) {
 
 
 function moesifUserSignUpAction(user, moesifApiKey) {
+
     return {
         method: 'post',
         url: `https://api.moesif.net/v1/actions`,
@@ -39,7 +40,6 @@ function moesifUserSignUpAction(user, moesifApiKey) {
             action_name: "Created API key",
             user_id: user.userId,
             request: {
-                // time: "2023-12-16T08:53:04Z",
                 uri: "http://localhost/devportal",
             }
         }
@@ -57,7 +57,8 @@ function moesifCreateMoesifCompany(company, moesifApiKey) {
             company_id: company.companyId,
             company_domain: company.companyDomain,
             metadata: {
-                org_name: company.metadata.orgName
+                org_name: company.metadata.orgName,
+                cohort: company.metadata.cohort
             }
         }
     }
@@ -73,11 +74,13 @@ function moesifCreateUser(user, moesifApiKey) {
         data: {
             user_id: user.userId,
             company_id: user.companyId,
+            modified_time: user.signUpDate,
             metadata: {
                 email: user.metadata.email,
                 first_name: user.metadata.firstName,
                 last_name: user.metadata.lastName,
                 title: user.metadata.title,
+                cohort: user.metadata.cohort
             }
 
         }
@@ -86,7 +89,7 @@ function moesifCreateUser(user, moesifApiKey) {
 }
 
 
-function createUserProfiles(count) {
+function createUserProfiles(count, cohort) {
     let profiles = [];
 
 
@@ -95,7 +98,8 @@ function createUserProfiles(count) {
             companyId: uuidv4(),
             companyDomain: faker.internet.domainName(),
             metadata: {
-                orgName: faker.company.name()
+                orgName: faker.company.name(),
+                cohort: cohort
             }
         }
         let firstName = faker.person.firstName();
@@ -105,6 +109,7 @@ function createUserProfiles(count) {
             userId: null,
             apiKey: null,
             companyId: company.companyId,
+            signUpDate: getSignUpDate(),
             metadata: {
                 email: faker.internet.email({firstName: firstName, lastName: lastName}),
                 firstName: firstName,
@@ -116,7 +121,8 @@ function createUserProfiles(count) {
                     state: faker.location.state(),
                     zip: faker.location.zipCode(),
                     country: faker.location.country()
-                }
+                },
+                cohort: cohort
             }
         }
         profiles.push({user: user, company: company});
@@ -141,12 +147,13 @@ function simulateSignUp(userProfiles, moesifApiKey) {
             return axios(moesifUserSignUpAction(profiles.user, moesifApiKey));
         })
             .then((response) => {
-                console.log(`Created action in Moesif for user ${profiles.user.userId} . Moesif response: ${response.status}`);
+                console.log(`Created signup-action for user ${profiles.user.userId} in Moesif. Moesif response: ${response.status}`);
                 return {
                     email: profiles.user.metadata.email,
                     username: profiles.user.username,
                     userId: profiles.user.userId,
                     sandboxApiKey: profiles.user.apiKey,
+                    signUpDate: profiles.user.signUpDate,
                     companyId: profiles.company.companyId,
                     company: profiles.company.metadata.orgName
                 };
@@ -156,22 +163,33 @@ function simulateSignUp(userProfiles, moesifApiKey) {
     return Promise.all(singUps)
 }
 
+function getSignUpDate(){
+    // let minsAgo = faker.helpers.rangeToNumber({ min: 1, max: 80 })
+    // let daysAgo = faker.helpers.arrayElement([0, 0, 0, 1, 1, 2, 3, 4, 5, 6])
+    // let signUpDate = dayjs().subtract(daysAgo, 'days').subtract(minsAgo, 'minutes').format('YYYY-MM-DDTHH:mm:ss[Z]')
+    let signUpDate = dayjs().format('YYYY-MM-DDTHH:mm:ss[Z]')
+    return signUpDate;
+}
 
-////Main
+
+//Main
 program
     .requiredOption('-n, --numberOfUsers <numberOfUsers>', 'Number of users to create')
-    .requiredOption('-m, --moesifApiKey <moesifApiKey>', 'Moesif API key');
+    .requiredOption('-m, --moesifApiKey <moesifApiKey>', 'Moesif API key')
+    .requiredOption('-c, --cohort <cohort>', 'Cohort name');
 
 program.parse();
 const options = program.opts();
 
 const numberOfUsersToCreate = options.numberOfUsers;
 moesifApiKey = options.moesifApiKey;
+let cohort = options.cohort;
 console.log(`Number of users to create: ${numberOfUsersToCreate}`)
-let profiles = createUserProfiles(numberOfUsersToCreate);
+let profiles = createUserProfiles(numberOfUsersToCreate, cohort);
 simulateSignUp(profiles, moesifApiKey).then((signUp) => {
-    fs.writeFileSync("signups.json", JSON.stringify(signUp, null, 2));
-    console.log("The following sign-ups were created and written to signups.json");
+    let outputFileName = `${cohort}.json`;
+    fs.writeFileSync(outputFileName, JSON.stringify(signUp, null, 2));
+    console.log(`The following sign-ups were created and written to ${outputFileName}`);
     console.log(JSON.stringify(signUp, null, 2));
 })
 
