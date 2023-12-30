@@ -73,20 +73,20 @@ function isNumber(str) {
 //Main
 
 program
-    .requiredOption('-c, --cohortFile <cohortFileName>', 'Cohort file name')
+    .requiredOption('-c, --cohort <cohort>', 'Cohort name')
     .requiredOption('-w, --waitMinutes <waitMinutes>', 'Wait time in minutes, as an integer');
 
 program.addHelpText('after', `
 
 Example call:
-  $ ./simulate-apicalls.js -w 5 -c cohort1.json`);
+  $ ./simulate-apicalls.js -w 5 -c cohort1`);
 
 program.showHelpAfterError();
 
 program.parse();
 const options = program.opts();
 
-let cohortFileName = options.cohortFile;
+let cohort = options.cohort;
 let waitMinutes = options.waitMinutes;
 let waitMillis = 0;
 
@@ -99,7 +99,7 @@ if(isNumber(waitMinutes)) {
 console.log(`${dayjs()}. Waiting for ${waitMinutes} minutes...`);
 new Promise(resolve => setTimeout(resolve, waitMillis)).then(() => {
     console.log(`${dayjs()}. Running...`);
-    const data = fs.readFileSync(cohortFileName, "utf8");
+    const data = fs.readFileSync(`${cohort}.json`, "utf8");
     const signups = JSON.parse(data);
     for (user of signups) {
         let runCount = getRunCount();

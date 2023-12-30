@@ -177,10 +177,13 @@ program
     .requiredOption('-n, --numberOfUsers <numberOfUsers>', 'Number of users to create')
     .requiredOption('-m, --moesifApiKey <moesifApiKey>', 'Moesif API key')
     .requiredOption('-c, --cohort <cohort>', 'Cohort name');
+program.addHelpText('after', `
 
+Example call:
+  $ ./simulate-signups.js -n 3 -c cohort1 -m $MOESIF_API_KEY`);
+program.showHelpAfterError();
 program.parse();
 const options = program.opts();
-
 const numberOfUsersToCreate = options.numberOfUsers;
 moesifApiKey = options.moesifApiKey;
 let cohort = options.cohort;
