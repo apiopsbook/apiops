@@ -8,7 +8,10 @@ const {program} = require("commander");
 function deleteUserRequest(userId, moesifMgtApiKey) {
     return {
         method: 'delete',
-        url: `https://api.moesif.com/v1/search/~/users/${userId}?delete_events=true`,
+        url: `https://api.moesif.com/v1/search/~/users/${userId}`,
+        params: {
+            delete_events: true
+        },
         headers: {
             'Authorization': moesifMgtApiKey,
         }
@@ -19,7 +22,10 @@ function deleteUserRequest(userId, moesifMgtApiKey) {
 function deleteCompanyRequest(companyId, moesifMgtApiKey) {
     return {
         method: 'delete',
-        url: `https://api.moesif.com/v1/search/~/companies/${companyId}?delete_events=true`,
+        url: `https://api.moesif.com/v1/search/~/companies/${companyId}`,
+        params: {
+            delete_events: true
+        },
         headers: {
             'Authorization': moesifMgtApiKey,
         }
