@@ -20,5 +20,10 @@ jobs:
         run: |
           cd chapter11
           ./start_kong.sh
+      - name: Check Kong is running
+        run: |
           curl -v  http://127.0.0.1:8001
+      - name: Stop Kong
+        run: |
+          cd chapter11
           ./stop_kong.sh
