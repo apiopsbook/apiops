@@ -22,7 +22,7 @@ jobs:
           ./start_kong.sh
       - name: Check Kong is running
         run: |
-          sleep 3s 
+          sleep 5s 
           curl -v  http://127.0.0.1:8001
       - name: Install dependencies
         run: |
