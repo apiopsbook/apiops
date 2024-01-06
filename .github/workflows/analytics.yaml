@@ -23,7 +23,7 @@ jobs:
       - name: Check Kong is running
         run: |
           sleep 5s 
-          curl -v  http://127.0.0.1:8001
+          curl -v  http://127.0.0.1:8001 | jq .
       - name: Install dependencies
         run: |
           cd chapter11
