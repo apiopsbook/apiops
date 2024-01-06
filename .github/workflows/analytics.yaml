@@ -20,4 +20,5 @@ jobs:
         run: |
           cd chapter11
           ./start_kong.sh
+          curl -v -X POST --url http://localhost:8001/
           ./stop_kong.sh
