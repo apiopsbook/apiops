@@ -22,8 +22,18 @@ jobs:
           ./start_kong.sh
       - name: Check Kong is running
         run: |
-          sleep 5s 
-          curl -v  http://127.0.0.1:8001/services
+          sleep 3s 
+          curl -v  http://127.0.0.1:8001
+      - name: Install dependencies
+        run: |
+          cd chapter11
+          npm install
+      - name: Simulate user sign-ups
+        run: |
+          cd chapter11
+          ./simulate-signups.js --numberOfUsers 3 --cohort cohort1 --moesifApiKey ${{ secrets.MOESIF_API_KEY }}
+          ./simulate-signups.js --numberOfUsers 3 --cohort cohort2  --moesifApiKey ${{ secrets.MOESIF_API_KEY }}
+          ./simulate-signups.js --numberOfUsers 2 --cohort cohort3  --moesifApiKey ${{ secrets.MOESIF_API_KEY }}
       - name: Stop Kong
         run: |
           cd chapter11
