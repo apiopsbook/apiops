@@ -43,7 +43,8 @@ jobs:
           ./restart_kong.sh
       - name: Test Prism
         run: |
-          curl -X GET --url http://127.0.0.1:80/sandbox/v1/catalog/products -H "x-api-key: foo-bar" .
+          curl -v --url http://localhost
+#          curl -v -X GET --url http://localhost/sandbox/v1/catalog/products -H "x-api-key: foo-bar" .
 #      - name: Simulate API calls
 #        run: |
 #          cd chapter11
