@@ -44,8 +44,7 @@ jobs:
           sleep 5s
       - name: Test Prism
         run: |
-          curl -v --url http://localhost
-#          curl -v -X GET --url http://localhost/sandbox/v1/catalog/products -H "x-api-key: foo-bar" .
+          curl -v -X GET --url http://localhost/sandbox/v1/catalog/products -H "x-api-key: foo-bar" .
 #      - name: Simulate API calls
 #        run: |
 #          cd chapter11
