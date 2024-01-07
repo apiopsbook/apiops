@@ -34,11 +34,15 @@ jobs:
           ./simulate-signups.js --numberOfUsers 3 --cohort cohort1 --moesifApiKey ${{ secrets.MOESIF_API_KEY }}
           ./simulate-signups.js --numberOfUsers 3 --cohort cohort2  --moesifApiKey ${{ secrets.MOESIF_API_KEY }}
           ./simulate-signups.js --numberOfUsers 2 --cohort cohort3  --moesifApiKey ${{ secrets.MOESIF_API_KEY }}
-      - name: Configure Kong
+      - name: Configure Kong Key Auth plugin
         run: |
-          cd chapter11
-          ./configure-keyauth-plugin.sh
+          curl -X POST http://localhost:8001/plugins/    --data "name=key-auth"  --data "config.key_names=x-api-key"
+      - name: Configure Moesif Kong plugin
+        run: |
+          curl -v -X POST --url http://localhost:8001/plugins/ --data "name=moesif" --data "config.application_id=${{ secrets.MOESIF_API_KEY }}" --data "config.user_id_header=x-consumer-id";  
           ./configure-moesif-plugin.sh
+      - name: Configure Moesif Kong plugin
+        run: |
           ./configure-routes.sh
           ./restart_kong.sh
           sleep 5s
