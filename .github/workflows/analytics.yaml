@@ -42,12 +42,6 @@ jobs:
           ./configure-moesif-plugin.sh
           ./configure-routes.sh
           ./restart-kong.sh
-#  simulate-sandbox-api-calls:
-#    name: simulate-sandbox-api-calls
-#    runs-on: ubuntu-latest
-#    permissions:
-#      contents: read
-#    steps:
       - name: Simulate API calls
         run: |
           cd chapter11
