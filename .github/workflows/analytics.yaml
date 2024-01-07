@@ -34,17 +34,17 @@ jobs:
           ./simulate-signups.js --numberOfUsers 3 --cohort cohort1 --moesifApiKey ${{ secrets.MOESIF_API_KEY }}
           ./simulate-signups.js --numberOfUsers 3 --cohort cohort2  --moesifApiKey ${{ secrets.MOESIF_API_KEY }}
           ./simulate-signups.js --numberOfUsers 2 --cohort cohort3  --moesifApiKey ${{ secrets.MOESIF_API_KEY }}
-      - name: Configure Kong
-        run: |
-          cd chapter11
-          ./configure-keyauth-plugin.sh
-          ./configure-moesif-plugin.sh
-          ./configure-routes.sh
-          ./restart_kong.sh
-          sleep 5s
-#      - name: Test Prism
+#      - name: Configure Kong
 #        run: |
-#          curl -v -X GET --url http://localhost/sandbox/v1/catalog/products -H "x-api-key: foo-bar"
+#          cd chapter11
+#          ./configure-keyauth-plugin.sh
+#          ./configure-moesif-plugin.sh
+#          ./configure-routes.sh
+#          ./restart_kong.sh
+#          sleep 5s
+      - name: Test Prism
+        run: |
+          curl -v -X GET --url http://localhost/sandbox/v1/catalog/products -H "x-api-key: foo-bar"
       - name: Simulate API calls
         run: |
           cd chapter11
