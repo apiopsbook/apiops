@@ -48,9 +48,9 @@ jobs:
       - name: Simulate API calls
         run: |
           cd chapter11
-          ./simulate-apicalls.js --waitMinutes 1 --cohort cohort1 --environment sandbox
-          ./simulate-apicalls.js --waitMinutes 1 --cohort cohort2 --environment sandbox
-          ./simulate-apicalls.js --waitMinutes 1 --cohort cohort1 --environment production
+          ./simulate-apicalls.js --waitMinutes 0.25 --cohort cohort1 --environment sandbox
+          ./simulate-apicalls.js --waitMinutes 0.5 --cohort cohort2 --environment sandbox
+          ./simulate-apicalls.js --waitMinutes 0.5 --cohort cohort1 --environment production
       - name: Stop Kong
         run: |
           cd chapter11
