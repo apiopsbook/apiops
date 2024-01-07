@@ -71,3 +71,10 @@ services:
       - kong-net
     volumes:
       - kong_data:/var/lib/postgresql/data
+  prism:
+    image: stoplight/prism:5
+    command: 'mock -h 0.0.0.0 /tmp/product-catalog.oas.yaml'
+    volumes:
+      - ./product-catalog.oas.yaml:/tmp/product-catalog.oas.yaml:ro
+    ports:
+      - '4010:4010'
