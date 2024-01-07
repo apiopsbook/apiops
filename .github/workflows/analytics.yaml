@@ -41,6 +41,7 @@ jobs:
           ./configure-moesif-plugin.sh
           ./configure-routes.sh
           ./restart_kong.sh
+          sleep 5s
       - name: Test Prism
         run: |
           curl -v --url http://localhost
