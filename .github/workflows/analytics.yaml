@@ -8,8 +8,8 @@ env:
   GITHUB_RUN_NUMBER: ${{ github.run_number }}
 
 jobs:
-  signups:
-    name: signups
+  send-events-to-moesif:
+    name: send-events-to-moesif
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -43,7 +43,7 @@ jobs:
           ./restart_kong.sh
       - name: Test Prism
         run: |
-          curl -X GET --url http://127.0.0.1:80/v1/catalog/products -H "x-api-key: foo-bar" | jq .
+          curl -X GET --url http://127.0.0.1:8000/v1/catalog/products -H "x-api-key: foo-bar" .
 #      - name: Simulate API calls
 #        run: |
 #          cd chapter11
