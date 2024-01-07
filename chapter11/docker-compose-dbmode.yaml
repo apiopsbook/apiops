@@ -14,9 +14,7 @@ services:
       dockerfile: Dockerfile
     image: kong-docker-demo
     volumes:
-      - ./configure-keyauth-plugin.sh:/tmp/configure-keyauth-plugin.sh
-      - ./configure-moesif-plugin.sh:/tmp/configure-moesif-plugin.sh
-      - ./configure-routes.sh:/tmp/configure-routes.sh
+      - ./kong.yml:/etc/kong/kong.yml
     user: kong
     depends_on:
       - db
@@ -50,7 +48,7 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-    command: bash -c "kong migrations bootstrap && /tmp/configure-keyauth-plugin.sh && /tmp/configure-moesif-plugin.sh && /tmp/configure-routes.sh && ./docker-entrypoint.sh kong docker-start"
+    command: bash -c "kong migrations bootstrap && ./docker-entrypoint.sh kong docker-start"
 
   db:
     image: library/postgres:11-alpine
