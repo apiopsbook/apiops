@@ -44,7 +44,7 @@ jobs:
           ./configure-keyauth-plugin.sh
           ./configure-moesif-plugin.sh
           ./configure-routes.sh
-          ./restart-kong.sh
+          ./restart_kong.sh
       - name: Simulate API calls
         run: |
           cd chapter11
