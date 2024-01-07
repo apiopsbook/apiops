@@ -3,40 +3,40 @@
 const axios = require('axios').default;
 const fs = require('fs');
 const {v4: uuidv4} = require('uuid');
-const {program} = require("commander");
+const { Command, Option } = require('commander');
+const program = new Command();
 const dayjs = require("dayjs");
 
 
-function productsApiCalls(productCatalogApiKey) {
+function productsApiCalls(productCatalogApiKey, basePath) {
     return {
         method: 'get',
-        url: `http://localhost:80/sandbox/v1/catalog/products`,
+        url: `http://localhost:80/${basePath}/v1/catalog/products`,
         headers: {
             'x-api-key': productCatalogApiKey,
         }
     }
 }
 
-function categoriesApiCall(productCatalogApiKey) {
+function categoriesApiCall(productCatalogApiKey, basePath) {
     return {
         method: 'get',
-        url: `http://localhost:80/sandbox/v1/catalog/categories`,
+        url: `http://localhost:80/${basePath}/v1/catalog/categories`,
         headers: {
             'x-api-key': productCatalogApiKey,
         }
     }
 }
 
-function reviewsApiCall(productCatalogApiKey) {
+function reviewsApiCall(productCatalogApiKey, basePath) {
     return {
         method: 'get',
-        url: `http://localhost:80/sandbox/v1/catalog/products/${uuidv4()}/reviews `,
+        url: `http://localhost:80/${basePath}/v1/catalog/products/${uuidv4()}/reviews `,
         headers: {
             'x-api-key': productCatalogApiKey,
         }
     }
 }
-
 
 
 function getRunCount() {
@@ -45,11 +45,11 @@ function getRunCount() {
     return runs[random];
 }
 
-function runRequests(user, runCount) {
+function runRequests(user, runCount, basePath) {
     for (let i = 0; i < runCount; i++) {
-        let productsRequest = productsApiCalls(user.sandboxApiKey);
-        let categoriesRequest = categoriesApiCall(user.sandboxApiKey);
-        let reviewsRequest = reviewsApiCall(user.sandboxApiKey);
+        let productsRequest = productsApiCalls(user.apiKey, basePath);
+        let categoriesRequest = categoriesApiCall(user.apiKey, basePath);
+        let reviewsRequest = reviewsApiCall(user.apiKey, basePath);
         axios(productsRequest).then((response) => {
             console.log(`Request to ${productsRequest.url} for ${user.username} completed with status ${response.status}`);
             return axios(categoriesRequest);
@@ -58,7 +58,7 @@ function runRequests(user, runCount) {
             return axios(reviewsRequest);
         }).then((response) => {
             console.log(`Request to ${reviewsRequest.url} for ${user.username} completed with status ${response.status}`);
-            return user.sandboxApiKey
+            return user.apiKey
         }).catch((error) => {
             console.log(error);
         });
@@ -74,12 +74,14 @@ function isNumber(str) {
 
 program
     .requiredOption('-c, --cohort <cohort>', 'Cohort name')
-    .requiredOption('-w, --waitMinutes <waitMinutes>', 'Wait time in minutes, as an integer');
+    .requiredOption('-w, --waitMinutes <waitMinutes>', 'Wait time in minutes, as an integer')
+    .addOption(new Option('-e, --environment <environment>', 'Environment').choices(['sandbox', 'production']).makeOptionMandatory(true));
+
 
 program.addHelpText('after', `
 
 Example call:
-  $ ./simulate-apicalls.js -w 5 -c cohort1`);
+  $ ./simulate-apicalls.js --waitMinutes 5 --cohort cohort1 --environment sandbox`);
 
 program.showHelpAfterError();
 
@@ -89,8 +91,16 @@ const options = program.opts();
 let cohort = options.cohort;
 let waitMinutes = options.waitMinutes;
 let waitMillis = 0;
+let basePath = "";
+if (options.environment === "sandbox") {
+    basePath = "sandbox";
+} else if (options.environment === "production") {
+    basePath = "api";
+} else {
+    throw new Error("Environment must be sandbox or production");
+}
 
-if(isNumber(waitMinutes)) {
+if (isNumber(waitMinutes)) {
     waitMinutes = parseFloat(waitMinutes);
     waitMillis = waitMinutes * 60 * 1000;
 } else {
@@ -104,7 +114,7 @@ new Promise(resolve => setTimeout(resolve, waitMillis)).then(() => {
     for (user of signups) {
         let runCount = getRunCount();
         console.log(`${user.username} running ${runCount}`);
-        runRequests(user, runCount);
+        runRequests(user, runCount, basePath);
     }
 });
 

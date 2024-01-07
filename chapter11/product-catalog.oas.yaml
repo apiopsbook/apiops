@@ -1,0 +1,849 @@
+openapi: 3.0.3
+info:
+  title: Product Catalog API
+  description: >-
+    The Product Catalog API enables customers browse Acme Pet Supplies great
+    range of pet products and their product reviews. 
+  contact:
+    name: John Smith
+    url: https://acme-pet-supplies.co.uk/docs
+    email: john.smith@acme-pet-supplies.co.uk
+  version: '1.0'
+servers:
+  - url: https://api.acme-pet-supplies.co.uk
+tags:
+  - name: Categories
+    description: A category is a class of products with common characteristics
+  - name: Products
+    description: A product is an item for sale on the store.
+  - name: Reviews
+    description: A review is a critical assessment of a product by a customer.
+paths:
+  /v1/catalog/categories:
+    get:
+      tags:
+        - Categories
+      summary: List all categories
+      description: List all categories.
+      operationId: listCategories
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/rateLimit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/rateLimitRemaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/rateLimitReset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/CategoriesResponse'
+        '401':
+          $ref: '#/components/responses/401Response'
+        '403':
+          $ref: '#/components/responses/403Response'
+        '406':
+          $ref: '#/components/responses/406Response'
+        '415':
+          $ref: '#/components/responses/415Response'
+        '429':
+          $ref: '#/components/responses/429Response'
+        '500':
+          $ref: '#/components/responses/500Response'
+      deprecated: false
+  /v1/catalog/products:
+    get:
+      tags:
+        - Products
+      summary: List all products
+      description: List all products.
+      operationId: listProducts
+      parameters:
+        - $ref: '#/components/parameters/include'
+        - $ref: '#/components/parameters/filterCategory'
+      responses:
+        '200':
+          description: OK
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/rateLimit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/rateLimitRemaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/rateLimitReset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/ProductsResponse'
+        '401':
+          $ref: '#/components/responses/401Response'
+        '403':
+          $ref: '#/components/responses/403Response'
+        '406':
+          $ref: '#/components/responses/406Response'
+        '415':
+          $ref: '#/components/responses/415Response'
+        '429':
+          $ref: '#/components/responses/429Response'
+        '500':
+          $ref: '#/components/responses/500Response'
+      deprecated: false
+  /v1/catalog/products/{id}:
+    get:
+      tags:
+        - Products
+      summary: View a product's details
+      description: View a product's details.
+      operationId: viewProduct
+      parameters:
+        - $ref: '#/components/parameters/productId'
+      responses:
+        '200':
+          description: OK
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/rateLimit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/rateLimitRemaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/rateLimitReset'
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/responses/400Response'
+        '401':
+          $ref: '#/components/responses/401Response'
+        '403':
+          $ref: '#/components/responses/403Response'
+        '404':
+          $ref: '#/components/responses/404Response'
+        '406':
+          $ref: '#/components/responses/406Response'
+        '415':
+          $ref: '#/components/responses/415Response'
+        '429':
+          $ref: '#/components/responses/429Response'
+        '500':
+          $ref: '#/components/responses/500Response'
+      deprecated: false
+  /v1/catalog/products/{id}/reviews:
+    get:
+      tags:
+        - Reviews
+      summary: List reviews
+      description: List all reviews for a product.
+      operationId: listProductReviews
+      parameters:
+        - $ref: '#/components/parameters/productId'
+      responses:
+        '200':
+          description: OK
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/rateLimit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/rateLimitRemaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/rateLimitReset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/ReviewsResponse'
+        '400':
+          $ref: '#/components/responses/400Response'
+        '401':
+          $ref: '#/components/responses/401Response'
+        '403':
+          $ref: '#/components/responses/403Response'
+        '406':
+          $ref: '#/components/responses/406Response'
+        '415':
+          $ref: '#/components/responses/415Response'
+        '429':
+          $ref: '#/components/responses/429Response'
+        '500':
+          $ref: '#/components/responses/500Response'
+      deprecated: false
+components:
+  headers:
+    rateLimit:
+      description: The quota units associated to the client in the current time-window.
+      schema:
+        type: integer
+    rateLimitRemaining:
+      description: Remaining quota units associated to the client.
+      schema:
+        type: integer
+    rateLimitReset:
+      description: Number of seconds until the quota resets.
+      schema:
+        type: integer
+  parameters:
+    productId:
+      name: id
+      in: path
+      description: Product identifier
+      required: true
+      style: simple
+      schema:
+        type: string
+        format: uuid
+    filterCategory:
+      name: filterCategory
+      required: false
+      in: query
+      description: Filter by category ID.
+      schema:
+        type: string
+        format: uuid
+        maxLength: 40
+        example: 1e32231d-b8a1-4145-b539-820301c2af64
+    include:
+      name: include
+      in: query
+      description: List of included related resources
+      required: false
+      schema:
+        type: string
+        maxLength: 30
+        example: category
+  schemas:
+    Category:
+      title: Category
+      required:
+        - id
+        - type
+        - attributes
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifier of the category.
+          example: 1e32231d-b8a1-4145-b539-820301c2af64
+        type:
+          type: string
+          maxLength: 8
+          example: category
+        attributes:
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              maxLength: 20
+              minLength: 0
+              type: string
+              description: Name of the product category.
+              example: Dogs
+        relationships:
+          type: object
+          additionalProperties: false
+          properties:
+            contains_products:
+              type: object
+              additionalProperties: false
+              properties:
+                link:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    related:
+                      type: string
+                      maxLength: 150
+                      example: >-
+                        https://api.acme-pet-supplies.com/v1/catalog/products?fields[catgory]=1e32231d-b8a1-4145-b539-820301c2af64
+      description: A product category.
+    Product:
+      title: Product
+      required:
+        - id
+        - type
+        - attributes
+        - relationships
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: Identifier for the product.
+          example: dcd53ddb-8104-4e48-8cc0-5df1088c6113
+        type:
+          type: string
+          maxLength: 7
+          example: product
+        attributes:
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              maxLength: 50
+              minLength: 1
+              type: string
+              description: Name of the product.
+              example: Acme Uber Dog Rope Toy
+            description:
+              maxLength: 300
+              minLength: 0
+              type: string
+              description: A description of the product.
+              example: >-
+                Acme Uber Dog Rope Toy provides hours of fun for your dog. Great
+                for bouncing, throwing and catching. 
+            price:
+              maximum: 1000000
+              minimum: 0
+              type: number
+              description: Price of the product.
+              example: 100
+            keywords:
+              maxItems: 20
+              minItems: 0
+              uniqueItems: true
+              type: array
+              items:
+                type: string
+              description: >-
+                A colleciton of words that describe the product, used for
+                searching for it.
+            reviewRating:
+              maximum: 5
+              minimum: 1
+              type: integer
+              description: Average product review rating.
+              format: int32
+              example: 5
+            numberOfReviews:
+              type: integer
+              description: Number of product reviews.
+              format: int32
+              example: 10
+        relationships:
+          type: object
+          additionalProperties: false
+          properties:
+            in_categories:
+              type: object
+              additionalProperties: false
+              uniqueItems: true
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        example: 1e32231d-b8a1-4145-b539-820301c2af64
+                      type:
+                        type: string
+                        maxLength: 8
+                        example: category
+            has_reviews:
+              type: object
+              additionalProperties: false
+              properties:
+                links:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    related:
+                      type: string
+                      maxLength: 100
+                      example: >-
+                        https://api.acme-pet-supplies.com/v1/catalog/products/dcd53ddb-8104-4e48-8cc0-5df1088c6113/reviews
+      description: An item in Acme's pet supplies catalog.
+    Review:
+      title: Review
+      required:
+        - productReviewId
+        - content
+        - rating
+        - authorName
+        - submittedDate
+        - productId
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifier for a product review.
+        type:
+          type: string
+          maxLength: 6
+          example: review
+        attributes:
+          type: object
+          additionalProperties: false
+          required:
+            - content
+            - rating
+            - authorName
+            - submittedDate
+          properties:
+            content:
+              maxLength: 500
+              minLength: 0
+              type: string
+              description: Review content.
+              example: >-
+                This dog toy is great! My dog loved to play with it. I
+                thoroughly recommend.
+            rating:
+              maximum: 5
+              minimum: 1
+              type: integer
+              description: >-
+                The rating of the review. A number in the range 1 to 5, 1 for
+                lowest and 5 for highest.
+              format: int32
+              example: 5
+            authorName:
+              type: string
+              description: Name of the author of the review.
+              maxLength: 30
+              example: Jill Baker
+            submittedDate:
+              type: string
+              format: date-time
+              description: Date the review was submitted.
+              example: '2022-04-12T23:20:50.52Z'
+        relationships:
+          type: object
+          additionalProperties: false
+          properties:
+            for_product:
+              type: object
+              properties:
+                links:
+                  type: object
+                  properties:
+                    related:
+                      type: string
+                      format: uri
+                      maxLength: 100
+                      example: >-
+                        https://api.acme-pet-supplies.com/v1/catalog/products/dcd53ddb-8104-4e48-8cc0-5df1088c6113
+      description: A review for a product.
+    Pagination:
+      title: Pagination
+      required:
+        - self
+      type: object
+      additionalProperties: false
+      properties:
+        self:
+          type: string
+          format: uri
+          maxLength: 100
+          description: Relative uri cursor pointing to the current page.
+        first:
+          type: string
+          format: uri
+          maxLength: 100
+          description: Cursor to the first page.
+        prev:
+          type: string
+          format: uri
+          maxLength: 100
+          description: Relative uri cursor to the previous page.
+        next:
+          type: string
+          format: uri
+          maxLength: 100
+          description: Relative uri  cursor to the next page.
+        last:
+          type: string
+          format: uri
+          description: Relative uri cursor to the last page.
+      description: An object containing pagination   information
+    CategoriesResponse:
+      title: CategoriesResponse
+      required:
+        - data
+        - links
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          maxItems: 25
+          items:
+            $ref: '#/components/schemas/Category'
+        links:
+          allOf:
+            - $ref: '#/components/schemas/Pagination'
+            - example:
+                self: >-
+                  https://api.acme-pet-supplies.com/v1/catalog/categories?cursor=bccf5512
+                first: >-
+                  https://api.acme-pet-supplies.com/v1/catalog/categories?cursor=fa0a11ec
+                prev: >-
+                  https://api.acme-pet-supplies.com/v1/catalog/categories?cursor=0242ac120
+                next: >-
+                  https://api.acme-pet-supplies.com/v1/catalog/categories?cursor=651b1f06
+                last: >-
+                  https://api.acme-pet-supplies.com/v1/catalog/categories?cursor=3a1893e2
+    ProductsResponse:
+      title: ProductsResponse
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          maxItems: 25
+          items:
+            $ref: '#/components/schemas/Product'
+          description: ''
+        included:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/Category'
+        links:
+          allOf:
+            - $ref: '#/components/schemas/Pagination'
+            - example:
+                self: >-
+                  https://api.acme-pet-supplies.com/v1/catalog/products?cursor=bccf5512
+                first: >-
+                  https://api.acme-pet-supplies.com/v1/catalog/products?cursor=fa0a11ec
+                prev: >-
+                  https://api.acme-pet-supplies.com/v1/catalog/products?cursor=0242ac120
+                next: >-
+                  https://api.acme-pet-supplies.com/v1/catalog/products?cursor=651b1f06
+                last: >-
+                  https://api.acme-pet-supplies.com/v1/catalog/products?cursor=3a1893e2
+    ReviewsResponse:
+      title: ReviewsResponse
+      required:
+        - data
+        - links
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          maxItems: 25
+          items:
+            $ref: '#/components/schemas/Review'
+          description: ''
+        links:
+          allOf:
+            - $ref: '#/components/schemas/Pagination'
+            - example:
+                self: >-
+                  https://api.acme-pet-supplies.com/v1/catalog/reviews?cursor=bccf5512
+                first: >-
+                  https://api.acme-pet-supplies.com/v1/catalog/reviews?cursor=fa0a11ec
+                prev: >-
+                  https://api.acme-pet-supplies.com/v1/catalog/reviews?cursor=0242ac120
+                next: >-
+                  https://api.acme-pet-supplies.com/v1/catalog/reviews?cursor=651b1f06
+                last: >-
+                  https://api.acme-pet-supplies.com/v1/catalog/reviews?cursor=3a1893e2
+    Link:
+      title: Link Object
+      description: a structured representation of a URL
+      type: object
+      required:
+        - href
+      properties:
+        href:
+          type: string
+          example: https://example.com/
+          maxLength: 200
+        meta:
+          type: object
+          additionalProperties: false
+    Error:
+      title: Error Response
+      description: >-
+        A JSON:API-compliant error response. This object is inherited by the
+        specific response type.
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          description: An array of Error objects
+          type: array
+          minItems: 1
+          items:
+            description: A JSON:API-compliant error object.
+            type: object
+            additionalProperties: false
+            required:
+              - status
+              - title
+            properties:
+              id:
+                description: >-
+                  a unique identifier for this particular occurrence of the
+                  problem
+                type: string
+                format: uuid
+              links:
+                description: >-
+                  a link to further details about this particular occurrence of
+                  the problem
+                type: object
+                properties:
+                  about:
+                    $ref: '#/components/schemas/Link'
+              status:
+                description: the HTTP status code applicable to this problem
+                type: integer
+              code:
+                description: an application-specific error code
+                type: string
+                maxLength: 10
+              title:
+                description: >-
+                  a short, human-readable summary of the problem that SHOULD NOT
+                  change from occurrence to occurrence of the problem, except
+                  for purposes of localization
+                type: string
+                maxLength: 100
+              detail:
+                description: >-
+                  a human-readable explanation specific to this occurrence of
+                  the problem. Like title, this field’s value can be localized
+                type: string
+                maxLength: 150
+              source:
+                description: contains references to the source of the error
+                type: object
+                properties:
+                  pointer:
+                    description: >-
+                      a JSON Pointer [RFC6901] to the associated entity in the
+                      request document
+                    type: string
+                    maxLength: 500
+                  parameter:
+                    description: indicates which URI query parameter caused the error
+                    type: string
+                    maxLength: 50
+              meta:
+                description: >-
+                  a JSON meta object with non-standard meta-information about
+                  the error
+                type: object
+                additionalProperties: false
+  responses:
+    401Response:
+      description: Not authorized
+      headers:
+        RateLimit-Limit:
+          description: The quota units associated to the client in the current time-window.
+          schema:
+            type: integer
+        RateLimit-Remaining:
+          description: Remaining quota units associated to the client.
+          schema:
+            type: integer
+        RateLimit-Reset:
+          description: Number of seconds until the quota resets.
+          schema:
+            type: integer
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            errors:
+              - title: Not authorized
+                status: 401
+                detail: Authentication failure.
+                id: 8011c394-30c9-11ed-a261-0242ac120002
+    403Response:
+      description: Forbidden
+      headers:
+        RateLimit-Limit:
+          description: The quota units associated to the client in the current time-window.
+          schema:
+            type: integer
+        RateLimit-Remaining:
+          description: Remaining quota units associated to the client.
+          schema:
+            type: integer
+        RateLimit-Reset:
+          description: Number of seconds until the quota resets.
+          schema:
+            type: integer
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            errors:
+              - title: Forbidden
+                status: 403
+                detail: >-
+                  Access to this resource is forbidden. Please check you are
+                  authorized to access this resource.
+                id: 747c7b00-30c9-11ed-a261-0242ac120002
+    406Response:
+      description: Not Acceptable
+      headers:
+        RateLimit-Limit:
+          description: The quota units associated to the client in the current time-window.
+          schema:
+            type: integer
+        RateLimit-Remaining:
+          description: Remaining quota units associated to the client.
+          schema:
+            type: integer
+        RateLimit-Reset:
+          description: Number of seconds until the quota resets.
+          schema:
+            type: integer
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            errors:
+              - title: Not Acceptable
+                status: 406
+                detail: >-
+                  Accept header contains the JSON:API media type and instances
+                  of that media type are modified with media type parameters.
+                id: 64ef46ea-30c9-11ed-a261-0242ac120002
+    415Response:
+      description: 415 Unsupported Media Type
+      headers:
+        RateLimit-Limit:
+          description: The quota units associated to the client in the current time-window.
+          schema:
+            type: integer
+        RateLimit-Remaining:
+          description: Remaining quota units associated to the client.
+          schema:
+            type: integer
+        RateLimit-Reset:
+          description: Number of seconds until the quota resets.
+          schema:
+            type: integer
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            errors:
+              - title: 415 Unsupported Media Type
+                status: 415
+                detail: >-
+                  Request specifies the header Content-Type:
+                  application/vnd.api+json with media type parameters.
+                id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+    429Response:
+      description: 429 Too Many Requests
+      headers:
+        RateLimit-Limit:
+          description: The quota units associated to the client in the current time-window.
+          schema:
+            type: integer
+        RateLimit-Remaining:
+          description: Remaining quota units associated to the client.
+          schema:
+            type: integer
+        RateLimit-Reset:
+          description: Number of seconds until the quota resets.
+          schema:
+            type: integer
+        Retry-After:
+          description: If request limit exceeded, retry after this time window.
+          schema:
+            type: integer
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            errors:
+              - title: 429 Too Many Requests
+                status: 429
+                detail: >-
+                  Too many requests. Request quota exceeded in time window. Try
+                  again soon
+                id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+    500Response:
+      description: 500 Internal Server Error
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            errors:
+              - title: 500 Internal Server Error
+                status: 500
+                detail: Internal server error
+                id: ef2692f4-3ca4-44d9-b70a-7cfd5d78d3a1
+    400Response:
+      description: Bad Request
+      headers:
+        RateLimit-Limit:
+          description: The quota units associated to the client in the current time-window.
+          schema:
+            type: integer
+        RateLimit-Remaining:
+          description: Remaining quota units associated to the client.
+          schema:
+            type: integer
+        RateLimit-Reset:
+          description: Number of seconds until the quota resets.
+          schema:
+            type: integer
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            errors:
+              - title: Bad Request
+                status: 400
+                detail: Bad request. Please check the request is valid.
+                id: 8011c394-30c9-11ed-a261-0242ac120002
+    404Response:
+      description: Not Found
+      headers:
+        RateLimit-Limit:
+          description: The quota units associated to the client in the current time-window.
+          schema:
+            type: integer
+        RateLimit-Remaining:
+          description: Remaining quota units associated to the client.
+          schema:
+            type: integer
+        RateLimit-Reset:
+          description: Number of seconds until the quota resets.
+          schema:
+            type: integer
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            errors:
+              - title: Not Found
+                status: 404
+                detail: Resource not found.
+                id: 6c4a6b54-30c9-11ed-a261-0242ac120002
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+security:
+  - ApiKeyAuth: []
