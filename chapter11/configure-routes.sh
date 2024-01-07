@@ -1,7 +1,7 @@
 curl -v -X POST \
     --url http://localhost:8001/services/ \
     --data 'name=Product_Catalog_API_Sandbox' \
-    --data 'url=http://host.docker.internal:4010'
+    --data 'url=http://kong-net:4010'
 
  curl -v -X POST \
   --url http://localhost:8001/services/Product_Catalog_API_Sandbox/routes/ \
@@ -12,7 +12,7 @@ curl -v -X POST \
 curl -v -X POST \
     --url http://localhost:8001/services/ \
     --data 'name=Product_Catalog_API' \
-    --data 'url=http://host.docker.internal:4010'
+    --data 'url=http://kong-net:4010'
 
  curl -v -X POST \
   --url http://localhost:8001/services/Product_Catalog_API_Sandbox/routes/ \

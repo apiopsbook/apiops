@@ -78,3 +78,5 @@ services:
       - ./product-catalog.oas.yaml:/tmp/product-catalog.oas.yaml:ro
     ports:
       - '4010:4010'
+    networks:
+      - kong-net
