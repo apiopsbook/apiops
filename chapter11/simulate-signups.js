@@ -37,7 +37,7 @@ function moesifUserSignUpAction(user, moesifApiKey) {
             'X-Moesif-Application-Id': moesifApiKey,
         },
         data: {
-            action_name: "Created API key",
+            action_name: "Sign-Up",
             user_id: user.userId,
             request: {
                 uri: "http://localhost/devportal",
@@ -152,7 +152,7 @@ function simulateSignUp(userProfiles, moesifApiKey) {
                     email: profiles.user.metadata.email,
                     username: profiles.user.username,
                     userId: profiles.user.userId,
-                    sandboxApiKey: profiles.user.apiKey,
+                    apiKey: profiles.user.apiKey,
                     signUpDate: profiles.user.signUpDate,
                     companyId: profiles.company.companyId,
                     company: profiles.company.metadata.orgName
