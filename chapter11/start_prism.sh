@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-npx prism mock product-catalog.oas.yaml --port 4010
+npx @stoplight/prism-cli mock product-catalog.oas.yaml --port 4010

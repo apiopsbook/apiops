@@ -20,46 +20,25 @@ jobs:
         run: |
           cd chapter11
           ./start_kong.sh
-      - name: Check Kong is running
-        run: |
-          sleep 5s 
-          curl -v  http://127.0.0.1:8001 | jq .plugins
-      - name: Install dependencies
-        run: |
-          cd chapter11
-          npm install
+          curl -v  http://127.0.0.1:8001
       - name: Simulate user sign-ups
         run: |
           cd chapter11
+          npm install
           ./simulate-signups.js --numberOfUsers 3 --cohort cohort1 --moesifApiKey ${{ secrets.MOESIF_API_KEY }}
           ./simulate-signups.js --numberOfUsers 3 --cohort cohort2  --moesifApiKey ${{ secrets.MOESIF_API_KEY }}
           ./simulate-signups.js --numberOfUsers 2 --cohort cohort3  --moesifApiKey ${{ secrets.MOESIF_API_KEY }}
       - name: Configure Kong Key Auth plugin
         run: |
           curl -v -X POST http://localhost:8001/plugins/    --data "name=key-auth"  --data "config.key_names=x-api-key"
-      - name: Configure Moesif Kong plugin
-        run: |
           curl -v -X POST --url http://localhost:8001/plugins/ --data "name=moesif" --data "config.application_id=${{ secrets.MOESIF_API_KEY }}" --data "config.user_id_header=x-consumer-id"
-      - name: Configure Kong routes
-        run: |
           cd chapter11
           ./configure-routes.sh
           ./restart_kong.sh
-          sleep 5s
-#      - name: Test Prism
-#        run: |
-#          curl -v -X GET --url http://localhost/sandbox/v1/catalog/products -H "x-api-key: foo-bar"
       - name: Simulate API calls
         run: |
           cd chapter11
-          ./simulate-apicalls.js --waitMinutes 0.25 --cohort cohort1 --environment sandbox
-          ./simulate-apicalls.js --waitMinutes 0.5 --cohort cohort2 --environment sandbox
-          ./simulate-apicalls.js --waitMinutes 0.5 --cohort cohort1 --environment production
-      - name: Stop Kong
-        run: |
-          cd chapter11
-          ./stop_kong.sh
-          
-          
-
-        # 3 7 2
+          ./simulate-apicalls.js --waitMinutes 3 --cohort cohort1 --environment sandbox
+          ./simulate-apicalls.js --waitMinutes 5 --cohort cohort2 --environment sandbox
+          ./simulate-apicalls.js --waitMinutes 7 --cohort cohort1 --environment production
+        
