@@ -1,0 +1,82 @@
+version: '3.3'
+
+volumes:
+  kong_data: {}
+
+networks:
+  kong-net:
+    external: false
+
+services:
+  kong:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: kong-docker-demo
+    volumes:
+      - ./kong.yml:/etc/kong/kong.yml
+    user: kong
+    depends_on:
+      - db
+    environment:
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_PROXY_LISTEN: '0.0.0.0:8000, 0.0.0.0:8443 ssl'
+      KONG_ADMIN_LISTEN: '0.0.0.0:8001, 0.0.0.0:8444 ssl'
+      KONG_DATABASE: postgres
+      KONG_PG_DATABASE: kong
+      KONG_PG_HOST: db
+      KONG_PG_USER: kong
+      KONG_PG_PASSWORD: abc123!
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_PLUGINS: 'key-auth,cors,acme,moesif'
+      KONG_LUA_SSL_TRUSTED_CERTIFICATE: /etc/ssl/certs/ca-certificates.crt
+    networks:
+      - kong-net
+    ports:
+      - "80:8000/tcp"
+      - "127.0.0.1:8001:8001/tcp"
+      - "443:8443/tcp"
+      - "127.0.0.1:8444:8444/tcp"
+    healthcheck:
+      test: ["CMD", "kong", "health"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    restart: on-failure
+    deploy:
+      restart_policy:
+        condition: on-failure
+    command: bash -c "kong migrations bootstrap && ./docker-entrypoint.sh kong docker-start"
+
+  db:
+    image: library/postgres:11-alpine
+    environment:
+      POSTGRES_DB: kong
+      POSTGRES_USER: kong
+      POSTGRES_PASSWORD: abc123!
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "kong"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    restart: on-failure
+    deploy:
+      restart_policy:
+        condition: on-failure
+    stdin_open: true
+    tty: true
+    networks:
+      - kong-net
+    volumes:
+      - kong_data:/var/lib/postgresql/data
+  prism:
+    image: stoplight/prism:5
+    command: 'mock -h 0.0.0.0 /tmp/product-catalog.oas.yaml'
+    volumes:
+      - ./product-catalog.oas.yaml:/tmp/product-catalog.oas.yaml:ro
+    ports:
+      - '4010:4010'
+    networks:
+      - kong-net

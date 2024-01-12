@@ -1,0 +1,44 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches:
+      - chapter11
+env:
+  GITHUB_RUN_NUMBER: ${{ github.run_number }}
+
+jobs:
+  send-events-to-moesif:
+    name: send-events-to-moesif
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Start Kong
+        run: |
+          cd chapter11
+          ./start_kong.sh
+          curl -v  http://127.0.0.1:8001
+      - name: Simulate user sign-ups
+        run: |
+          cd chapter11
+          npm install
+          ./simulate-signups.js --numberOfUsers 3 --cohort cohort1 --moesifApiKey ${{ secrets.MOESIF_API_KEY }}
+          ./simulate-signups.js --numberOfUsers 3 --cohort cohort2  --moesifApiKey ${{ secrets.MOESIF_API_KEY }}
+          ./simulate-signups.js --numberOfUsers 2 --cohort cohort3  --moesifApiKey ${{ secrets.MOESIF_API_KEY }}
+      - name: Configure Kong Key Auth plugin
+        run: |
+          curl -v -X POST http://localhost:8001/plugins/    --data "name=key-auth"  --data "config.key_names=x-api-key"
+          curl -v -X POST --url http://localhost:8001/plugins/ --data "name=moesif" --data "config.application_id=${{ secrets.MOESIF_API_KEY }}" --data "config.user_id_header=x-consumer-id"
+          cd chapter11
+          ./configure-routes.sh
+          ./restart_kong.sh
+      - name: Simulate API calls
+        run: |
+          cd chapter11
+          ./simulate-apicalls.js --waitMinutes 3 --cohort cohort1 --environment sandbox
+          ./simulate-apicalls.js --waitMinutes 5 --cohort cohort2 --environment sandbox
+          ./simulate-apicalls.js --waitMinutes 7 --cohort cohort1 --environment production
+        
