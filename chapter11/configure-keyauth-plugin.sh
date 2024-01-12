@@ -1,1 +1,0 @@
- curl -X POST http://localhost:8001/plugins/    --data "name=key-auth"  --data "config.key_names=x-api-key"

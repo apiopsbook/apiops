@@ -1,1 +1,0 @@
- curl -v -X POST --url http://localhost:8001/plugins/ --data "name=moesif" --data "config.application_id=$MOESIF_API_KEY" --data "config.user_id_header=x-consumer-id";
