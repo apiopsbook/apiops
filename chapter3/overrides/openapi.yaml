@@ -18,8 +18,6 @@ paths:
       responses:
         '200':
           description: OK
-        '404':
-          description: Not Found
     put:
       summary: Update a user by id
       parameters:
@@ -31,8 +29,6 @@ paths:
       responses:
         '200':
           description: OK
-        '404':
-          description: Not Found
     delete:
       summary: Delete a user by id
       parameters:
@@ -44,6 +40,4 @@ paths:
       responses:
         '204':
           description: No Content
-        '404':
-          description: Not Found
 
