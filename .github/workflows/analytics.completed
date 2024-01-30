@@ -3,7 +3,7 @@ name: Deployment pipeline
 on:
   push:
     branches:
-      - chapter11
+      - main
 env:
   GITHUB_RUN_NUMBER: ${{ github.run_number }}
 
