@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+
 env:
   GITHUB_RUN_NUMBER: ${{ github.run_number }}
 
@@ -15,7 +17,7 @@ jobs:
       contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Start Kong
         run: |
           cd chapter11
