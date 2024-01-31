@@ -15,7 +15,7 @@ jobs:
       packages: write
     steps:
       - name: Build - Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Build - Start background services (Kong gateway and Apicurio API registry)
         run: |
           docker compose -f chapter9/compose.yaml up -d

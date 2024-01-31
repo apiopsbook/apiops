@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout out pr branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout out pr branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: pr-branch
       - name: Check PR title
@@ -40,7 +40,7 @@ jobs:
         run: | 
           npx @stoplight/spectral-cli lint "./pr-branch/chapter8/apis/product-catalog.oas.yaml" --ruleset "./pr-branch/chapter8/apis/rulesets/json-api.ruleset.yaml"
       - name: Check out main branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
           path: base
