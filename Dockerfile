@@ -42,7 +42,7 @@ RUN npm install @redocly/cli@${REDOCLY_VERSION} -g
 # Install jq
 RUN apt-get install -y jq
 
-# Install yq by downloading yq package
+# Install yq
 RUN mkdir -p /tmp/yq && \
     curl -Lo yq_linux_amd64.tar.gz https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/yq_linux_amd64.tar.gz && \
     tar xf yq_linux_amd64.tar.gz --directory /tmp/yq && \
@@ -81,6 +81,6 @@ ENV PATH="/usr/local/bin:${PATH}"
 
 # Install Kong Gateway
 RUN curl -Lo kong-enterprise-edition-3.5.0.3.deb "https://packages.konghq.com/public/gateway-35/deb/ubuntu/pool/jammy/main/k/ko/kong-enterprise-edition_3.5.0.3/kong-enterprise-edition_3.5.0.3_$(dpkg --print-architecture).deb"
-RUN apt-get install -y ./kong-enterprise-edition-3.5.0.3.deb
+RUN apt-get install -y ./kong-enterprise-edition-3.5.0.3.deb && rm kong-enterprise-edition-3.5.0.3.deb
 
 
