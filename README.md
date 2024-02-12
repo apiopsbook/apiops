@@ -1,5 +1,4 @@
-# Automating API Delivery:
-## APIOps with OpenAPI
+# Automating API Delivery
 
 Source code for [Automating API Delivery: APIOps with OpenAPI](https://shortener.manning.com/Y1ja).
 
